@@ -70,36 +70,18 @@
       </div>
       <!-- 分享内容 -->
       <div class="shareMoneyContent clearfix">
-        <div class="shareMoneyItem fl">
-          <div class="shareImg">
-            <img src="../assets/imgs/3.png" alt>
-          </div>
-          <p class="one-txt-cut">商品标题商品标题商品标题商品标题</p>
-          <p>￥99.00</p>
-          <div class="shareBtn">
-            <div>去分享</div>
-          </div>
-        </div>
-        <div class="shareMoneyItem fl">
-          <div class="shareImg">
-            <img src="../assets/imgs/3.png" alt>
-          </div>
-          <p class="one-txt-cut">商品标题商品标题商品标题商品标题</p>
-          <p>￥99.00</p>
-          <div class="shareBtn">
-            <div>去分享</div>
-          </div>
-        </div>
-        <div class="shareMoneyItem fl">
-          <div class="shareImg">
-            <img src="../assets/imgs/3.png" alt>
-          </div>
-          <p class="one-txt-cut">商品标题商品标题商品标题商品标题</p>
-          <p>￥99.00</p>
-          <div class="shareBtn">
-            <div>去分享</div>
-          </div>
-        </div>
+        <ul class="clearfix" :style="{width: widthStyle + 'rem'}">
+          <li class="shareMoneyItem fl" ref="contentLiStyle" @click="clickMe">
+            <div class="shareImg">
+              <img src="../assets/imgs/3.png" alt>
+            </div>
+            <p class="one-txt-cut">商品标题商品标题商品标题商品标题</p>
+            <p>￥99.00</p>
+            <div class="shareBtn">
+              <div>去分享</div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -111,39 +93,102 @@
         <span class="fr">更多优惠</span>
       </div>
       <div class="CouponContent clearfix">
-        <div class="taoGouItem fl">
-          <div class="taoGouImg">
-            <img src="../assets/imgs/3.png" alt>
-          </div>
-          <div class="titleContent">
-            <p>商品标题</p>
-            <p>商品标题</p>
-            <p class="presentPrice">
-              券后价
-              <span>￥12.89</span>
-            </p>
-          </div>
-          <div class="CouponGetBtn">
-            <div class="CouponGet">领3元券</div>
-          </div>
-        </div>
-        <div class="taoGouItem fl">
-          <div class="taoGouImg">
-            <img src="../assets/imgs/3.png" alt>
-          </div>
-          <div class="titleContent">
-            <p>商品标题</p>
-            <p>商品标题</p>
-            <p class="presentPrice">
-              券后价
-              <span>￥12.89</span>
-            </p>
-          </div>
-          <div class="CouponGetBtn">
-            <div class="CouponGet">领3元券</div>
-          </div>
-        </div>
+        <!--   -->
+        <ul class="content clearfix" :style="{width: widthStyle + 'rem'}">
+          <li class="taoGouItem fl" ref="contentStyle">
+            <div class="taoGouImg">
+              <img src="../assets/imgs/3.png" alt>
+            </div>
+            <div class="titleContent">
+              <p class="one-txt-cut">商品标题</p>
+              <p class="one-txt-cut">商品标题</p>
+              <p class="presentPrice">
+                券后价
+                <span>￥12.89</span>
+              </p>
+            </div>
+            <div class="CouponGetBtn">
+              <div class="CouponGet">领3元券</div>
+            </div>
+          </li>
+          <li class="taoGouItem fl" ref="contentStyle">
+            <div class="taoGouImg">
+              <img src="../assets/imgs/3.png" alt>
+            </div>
+            <div class="titleContent">
+              <p class="one-txt-cut">商品标题</p>
+              <p class="one-txt-cut">商品标题</p>
+              <p class="presentPrice">
+                券后价
+                <span>￥12.89</span>
+              </p>
+            </div>
+            <div class="CouponGetBtn">
+              <div class="CouponGet">领3元券</div>
+            </div>
+          </li>
+          <li class="taoGouItem fl" ref="contentStyle">
+            <div class="taoGouImg">
+              <img src="../assets/imgs/3.png" alt>
+            </div>
+            <div class="titleContent">
+              <p class="one-txt-cut">商品标题</p>
+              <p class="one-txt-cut">商品标题</p>
+              <p class="presentPrice">
+                券后价
+                <span>￥12.89</span>
+              </p>
+            </div>
+            <div class="CouponGetBtn" ref="contentStyle">
+              <div class="CouponGet">领3元券</div>
+            </div>
+          </li>
+          <li class="taoGouItem fl" ref="contentStyle">
+            <div class="taoGouImg">
+              <img src="../assets/imgs/3.png" alt>
+            </div>
+            <div class="titleContent">
+              <p class="one-txt-cut">商品标题</p>
+              <p class="one-txt-cut">商品标题</p>
+              <p class="presentPrice">
+                券后价
+                <span>￥12.89</span>
+              </p>
+            </div>
+            <div class="CouponGetBtn">
+              <div class="CouponGet">领3元券</div>
+            </div>
+          </li>
+        </ul>
       </div>
+    </div>
+
+    <!-- 商品详情 -->
+    <div class="prductDetails">
+      <ul
+        v-infinite-scroll="loadMore"
+        infinite-scroll-disabled="loading"
+        infinite-scroll-distance="10"
+        class="prductDetailsContent clearfix"
+      >
+        <li class="clearfix" v-for="item in list">
+          <div class="leftImg">
+            <img src="../assets/imgs/3.png" alt>
+          </div>
+          <div class="rightContent">
+            <p class="txt-cut">标题标题标题标题标题标题标题标题标题</p>
+            <p class="oldPrice">
+              原价:
+              <span>￥12</span>
+            </p>
+            <p class="Price">
+              现价:
+              <span>￥110</span>
+            </p>
+          </div>
+        </li>
+      </ul>
+      <p v-if="loadingDom" class="loading">没有更多数据</p>
     </div>
 
     <!-- 底部按钮 -->
@@ -157,11 +202,29 @@
 
 <script>
 import Swiper from "swiper";
+import BScroll from "better-scroll";
 export default {
   data() {
     return {
-      imgArry: []
+      list: 5,
+      loading: false,
+      loadingDom: false,
+      widthStyle: 30
     };
+  },
+  methods: {
+    loadMore() {
+      this.list = 5;
+      for (var i = 0; i <= 5; i++) {
+        this.list += 5;
+      }
+    },
+    clickMe() {
+      alert("我被点击了");
+    }
+  },
+  created() {
+    //计算ul的长度
   },
   mounted() {
     var swiper1 = new Swiper(".banner", {
@@ -176,6 +239,20 @@ export default {
       },
       speed: 500
     });
+    let scroll = new BScroll(".CouponContent", {
+      scrollX: true,
+      click: true
+    });
+    let scroll1 = new BScroll(".shareMoneyContent", {
+      scrollX: true,
+      click: true
+    });
+
+    // let that = this;
+    // //  请求数据完成后获取每个li的高度给ul
+    // that.$nextTick(function() {
+    //   that.contentStyle = that.$refs.contentStyle.clientWidth;
+    // });
   }
 };
 </script>
@@ -282,17 +359,22 @@ export default {
       }
     }
     .shareMoneyContent {
+      width: 100%;
       text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+
       margin-top: 0.3rem;
       .shareMoneyItem:nth-child(2) {
-        margin: 0 1%;
+        margin: 0 0.2rem;
       }
       .shareMoneyItem {
-        width: 30%;
+        width: 5rem;
         padding: 0.2rem;
         .shareImg {
           width: 4rem;
           height: 4rem;
+          margin: 0 auto;
           img {
             width: 100%;
             height: 100%;
@@ -320,7 +402,6 @@ export default {
     width: 100%;
     margin-top: 0.5rem;
     font-size: 14px;
-    margin-bottom: 2.5rem;
     .CouponTop {
       height: 1.4rem;
       background-color: #ffffff;
@@ -345,10 +426,18 @@ export default {
       }
     }
     .CouponContent {
+      height: 10rem;
       padding: 0.5rem;
+      white-space: nowrap;
+
+      overflow: hidden;
       background-color: #f1f1f1;
+      .content {
+        height: 100%;
+      }
       .taoGouItem {
-        width: 48%;
+        width: 6rem;
+        margin-left: 1rem;
         .taoGouImg {
           width: 5rem;
           height: 5rem;
@@ -382,8 +471,48 @@ export default {
           }
         }
       }
-      .taoGouItem:nth-child(2n) {
-        margin-left: 3%;
+      .taoGouItem:first-child {
+        margin-left: 0rem;
+      }
+    }
+  }
+
+  //商品详情
+  .prductDetails {
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;
+    font-size: 16px;
+    width: 100%;
+    .prductDetailsContent {
+      li:last-child {
+        margin-bottom: 0rem;
+      }
+      li {
+        padding: 0.2rem;
+        margin-bottom: 0.5rem;
+        border: 1px solid #eee;
+        .leftImg {
+          float: left;
+          img {
+            width: 4rem;
+            height: 4rem;
+            padding: 0.2rem;
+          }
+        }
+        .rightContent {
+          margin-left: 5rem;
+          line-height: 1rem;
+          font-size: 16px;
+          .oldPrice {
+            text-decoration: line-through;
+            color: red;
+          }
+          .oldPrice,
+          .Price {
+            font-size: 14px;
+            line-height: 1rem;
+          }
+        }
       }
     }
   }
