@@ -17,4 +17,10 @@ export default {
   max-width: 750px;
   margin: 0 auto;
 }
+.mint-header {
+  background: #fff;
+  color: #ff7f01;
+  font-size: 16px;
+  height: 1.8rem;
+}
 </style>

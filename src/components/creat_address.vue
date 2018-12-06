@@ -1,6 +1,6 @@
 <template>
   <div class="creatAddress">
-    <mt-header fixed title="新增收货地址">
+    <mt-header fixed title="新增收货地址" style="height:1.8rem">
       <mt-button icon="back" slot="left" @click="goBack"></mt-button>
     </mt-header>
     <div class="setBox">
@@ -161,7 +161,8 @@ export default {
   height: 100%;
   background-color: #f1f1f1;
   .mint-header {
-    background-color: red;
+    background-color: #ff7f01;
+    font-size: 16px;
   }
   .mint-popup-bottom {
     width: 100%;
@@ -253,10 +254,10 @@ export default {
     padding-left: 0.5rem;
 
     .xuanze {
-      width: 0.8rem;
-      height: 0.8rem;
+      width: 0.5rem;
+      height: 0.5rem;
       border: 1px solid #aaaaaa;
-      margin: 0.3rem 0.8rem;
+      margin: 0.5rem 0.5rem;
       img {
         width: 100%;
         height: 100%;
@@ -266,7 +267,7 @@ export default {
   }
   .baocun {
     width: 100%;
-    margin-top: 1.5rem;
+    margin-top: 3.5rem;
     height: 1.5rem;
     line-height: 1.5rem;
     font-size: 18px;
@@ -275,7 +276,7 @@ export default {
       margin: 0 auto;
       border-radius: 0.6rem;
       text-align: center;
-      background-color: red;
+      background-color: #ff7f01;
       color: #fff;
     }
   }

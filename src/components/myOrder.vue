@@ -1,0 +1,304 @@
+<template>
+  <div id="myOrder">
+    <mt-header fixed title="我的订单">
+      <mt-button icon="back" size="small" slot="left"></mt-button>
+    </mt-header>
+    <mt-navbar v-model="selected">
+      <mt-tab-item id>全部</mt-tab-item>
+      <mt-tab-item id="1">待付款</mt-tab-item>
+      <mt-tab-item id="2">待收货</mt-tab-item>
+    </mt-navbar>
+
+    <!-- tab-container -->
+    <mt-tab-container v-model="selected">
+      <!--全部状态下-->
+      <mt-tab-container-item id>
+        <!--待付款列表信息-->
+        <div class="orderBox">
+          <p class="orderNum">
+            订单编号:
+            <span>124243</span>
+          </p>
+          <div class="goodsInfo">
+            <img src="../assets/imgs/swiper.png" alt>
+            <div class="name">
+              <p style="font-size: 16px;" class="txt-cut title">无抗鸡蛋无抗鸡蛋</p>
+              <p class="mount">132541245</p>
+              <div class="money">
+                <p class="jine">￥13241</p>
+                <p class="shul">x1324125</p>
+              </div>
+            </div>
+          </div>
+          <div class="total">
+            <p>
+              共132件商品，合计
+              <span>￥141234</span>
+            </p>
+          </div>
+          <div class="btns">
+            <div class="cancelBtn">套餐详情</div>
+            <div class="goPay">去支付</div>
+            <!--状态一-->
+            <div class="flag">代发货</div>
+          </div>
+        </div>
+
+        <!--列表信息-->
+        <div class="orderBox">
+          <p class="orderNum">
+            订单编号:
+            <span>1342142354125</span>
+          </p>
+
+          <div class="goodsInfo">
+            <img src="../assets/imgs/swiper.png" alt>
+            <div class="name">
+              <p style="font-size: 16px;width:50%;" class="txt-cut title">噶而过而过干A</p>
+              <p class="mount">tqe231412发乎r</p>
+              <div class="money">
+                <p class="jine">￥123</p>
+                <p class="shul">x4124</p>
+              </div>
+            </div>
+          </div>
+          <div class="total">
+            <p>
+              共141234件商品，合计
+              <span>￥141234</span>
+            </p>
+          </div>
+          <div class="btns">
+            <div class="goPay">套餐详情</div>
+            <div class="flag">待收货</div>
+          </div>
+        </div>
+      </mt-tab-container-item>
+
+      <mt-tab-container-item id="1">
+        <!--待付款列表信息-->
+        <div class="orderBox">
+          <p class="orderNum">
+            订单编号:
+            <span>124243</span>
+          </p>
+          <div class="goodsInfo">
+            <img src="../assets/imgs/swiper.png" alt>
+            <div class="name">
+              <p class="txt-cut title" style="font-size: 16px;width:50%;">无抗绿壳鸡蛋</p>
+              <p class="mount">132541245</p>
+              <div class="money clearfix">
+                <p class="jine">￥13241</p>
+                <p class="shul">x1324125</p>
+              </div>
+            </div>
+          </div>
+          <div class="total">
+            <p>
+              共132件商品，合计
+              <span>￥141234</span>
+            </p>
+          </div>
+          <div class="btns">
+            <div class="cancelBtn">套餐详情</div>
+            <div class="goPay">去支付</div>
+            <!--状态一-->
+            <div class="flag">待付款</div>
+          </div>
+        </div>
+      </mt-tab-container-item>
+
+      <!-- 待收货列表-->
+      <mt-tab-container-item id="2">
+        <div class="orderBox">
+          <p class="orderNum">
+            订单编号:
+            <span>1342142354125</span>
+          </p>
+
+          <div class="goodsInfo">
+            <img src="../assets/imgs/swiper.png" alt>
+            <div class="name">
+              <p style="font-size: 16px;width:50%;" class="txt-cut title">噶而过若干A</p>
+              <p class="mount">212223</p>
+              <div class="money">
+                <p class="jine">￥123</p>
+                <p class="shul">x4124</p>
+              </div>
+            </div>
+          </div>
+          <div class="total">
+            <p>
+              共141234件商品，合计
+              <span>￥141234</span>
+            </p>
+          </div>
+          <div class="btns">
+            <div class="goPay">套餐详情</div>
+            <div class="flag">待收货</div>
+          </div>
+        </div>
+      </mt-tab-container-item>
+    </mt-tab-container>
+  </div>
+</template>
+
+<script>
+import { Navbar, TabItem, Toast, MessageBox } from "mint-ui";
+export default {
+  name: "myOrder",
+  data() {
+    return {
+      openid: "",
+      id: "", //订单id
+      selected: "",
+      packageInfo: [],
+      allList: [],
+      obligationList: [], //tab 待付款列表信息循环
+      receivingList: [], //tab 待收货的列表信息循环
+      evaluateList: [], //tab 待评价列表信息循环
+      quanbu: [], //全部
+      goodsIdAll: "",
+      packageIdAll: "",
+      numberAll: "",
+      totalPriceAll: "",
+      aidAll: "",
+      orderSnAll: ""
+    };
+  },
+
+  mounted() {},
+  components: {}
+};
+</script>
+
+<style lang="scss" scoped>
+#myOrder {
+  height: 100%;
+  background: #f1f1f1;
+  .mint-navbar {
+    margin-top: 1.5rem;
+    background-color: #fff;
+    border-top: 7px solid #f1f1f1 !important;
+    a {
+      color: #000;
+    }
+  }
+
+  .mint-navbar .mint-tab-item.is-selected {
+    color: #ff7f01;
+    border-bottom: none;
+  }
+  .orderBox {
+    font-size: 14px;
+    margin-top: 0.3rem;
+    background: #ffffff;
+    padding: 0.5rem;
+    padding-right: 0;
+
+    .orderNum {
+      font-size: 12px;
+      color: #79797b;
+      margin-bottom: 10px;
+      span {
+        margin-left: 5px;
+      }
+    }
+    .goodsInfo {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #c1c5c8;
+      padding-top: 0.3rem;
+      padding-bottom: 1rem;
+      img {
+        width: 20%;
+      }
+      .name {
+        width: 80%;
+        padding-left: 0.8rem;
+        color: #252424;
+        font-size: 14px;
+        position: relative;
+        .title {
+          line-height: 1.5rem;
+        }
+        .mount {
+          margin-top: 0.6rem;
+          color: #c1c5c8;
+        }
+        .money {
+          display: flex;
+          align-items: center;
+          color: #c1c5c8;
+
+          .jine {
+            position: absolute;
+            width: 30%;
+            right: 0.4rem;
+            top: 0.2rem;
+            z-index: 9;
+            color: #000;
+            text-align: right;
+          }
+          .shul {
+            position: absolute;
+            width: 20%;
+            right: 0.4rem;
+            top: 2rem;
+            text-align: right;
+            z-index: 7;
+          }
+        }
+      }
+    }
+    .total {
+      text-align: right;
+      color: #252424;
+      p {
+        padding-top: 0.5rem;
+        padding-right: 0.5rem;
+        span {
+          color: #ff7f01;
+        }
+      }
+    }
+    .btns {
+      display: flex;
+      align-items: right;
+      font-size: 14px;
+      justify-content: flex-end;
+      text-align: right;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      margin-top: 0.5rem;
+      .cancelBtn {
+        width: 3rem;
+        line-height: 1.5rem;
+        text-align: center;
+        color: #79797b;
+        border: 1px solid #79797b;
+        border-radius: 2rem;
+        margin-right: 0.8rem;
+      }
+      .goPay {
+        width: 3rem;
+        text-align: center;
+        color: #ff7f01;
+        border: 1px solid #ff7f01;
+        border-radius: 2rem;
+        margin-right: 0.8rem;
+      }
+      .flag {
+        position: absolute;
+        left: 1rem;
+        text-align: center;
+        color: #ff7f01;
+        width: 3rem;
+        height: 1rem;
+        line-height: 1rem;
+      }
+    }
+  }
+}
+</style>
+

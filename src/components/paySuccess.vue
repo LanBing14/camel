@@ -1,6 +1,6 @@
 <template>
   <div id="pay_success">
-    <mt-header title="支付成功">
+    <mt-header title="支付成功" style="height:1.8rem">
       <mt-button icon="back" size="small" slot="left">回首页</mt-button>
     </mt-header>
     <!--支付成功-->
@@ -44,6 +44,7 @@ export default {
   .mint-header {
     background: #fff;
     color: #ff7f01;
+    font-size: 16px;
   }
   /*支付成功*/
   .paySuccess {

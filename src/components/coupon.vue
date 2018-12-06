@@ -1,6 +1,6 @@
 <template>
   <div class="coupon">
-    <mt-header title="优惠券"></mt-header>
+    <mt-header title="优惠券" style="height:1.8rem"></mt-header>
     <div class="navBar">
       <mt-navbar v-model="selected ">
         <mt-tab-item id="1">超值优惠券</mt-tab-item>

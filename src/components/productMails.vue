@@ -1,7 +1,7 @@
 <template>
   <div class="productMails">
     <div class="top">
-      <mt-header title="商城">
+      <mt-header title="商城" style="height:1.8rem">
         <mt-button icon="back" size="small" slot="left"></mt-button>
       </mt-header>
       <div class="userTou">
