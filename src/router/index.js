@@ -13,6 +13,7 @@ import myOrder from "@/components/myOrder";
 import getMoney from "@/components/getMoney";
 import guanzhu from "@/components/guanzhu";
 import getMoneySuccess from "@/components/getMoneySuccess";
+import invitedDetails from "@/components/invited_details";
 
 Vue.use(Router);
 
@@ -83,6 +84,11 @@ export default new Router({
       path: "/guanzhu",
       name: "关注",
       component: guanzhu
+    },
+    {
+      path: "/invitedDetails",
+      name: "邀请明细",
+      component: invitedDetails
     }
   ]
 });
