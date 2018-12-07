@@ -5,7 +5,7 @@ import creatAddress from "@/components/creat_address";
 import coupon from "@/components/coupon";
 import shareMake from "@/components/shareMake";
 import particular from "@/components/particular";
-import payMoney from "@/components/payMoney";
+import payConfirm from "@/components/payConfirm";
 import paySuccess from "@/components/paySuccess";
 import login from "@/components/login";
 import register from "@/components/register";
@@ -14,6 +14,9 @@ import getMoney from "@/components/getMoney";
 import guanzhu from "@/components/guanzhu";
 import getMoneySuccess from "@/components/getMoneySuccess";
 import invitedDetails from "@/components/invited_details";
+import packDetails from "@/components/packDetails";
+import payMoney from "@/components/payMoney";
+import exchangeGift from "@/components/exchangeGift";
 
 Vue.use(Router);
 
@@ -32,7 +35,7 @@ export default new Router({
     },
     {
       path: "/productMails",
-      name: "首页",
+      name: "商城",
       component: productMails
     },
     {
@@ -56,8 +59,13 @@ export default new Router({
       component: shareMake
     },
     {
-      path: "/payMoney",
+      path: "/payConfirm",
       name: "订单确认",
+      component: payConfirm
+    },
+    {
+      path: "/payMoney",
+      name: "订单支付",
       component: payMoney
     },
     {
@@ -89,6 +97,16 @@ export default new Router({
       path: "/invitedDetails",
       name: "邀请明细",
       component: invitedDetails
+    },
+    {
+      path: "/packDetails",
+      name: "订单详情",
+      component: packDetails
+    },
+    {
+      path: "/exchangeGift",
+      name: "礼品兑换",
+      component: exchangeGift
     }
   ]
 });

@@ -3,8 +3,7 @@
     <div class="content">
       <div class="loginModel">
         <div class="login">
-          <span>账户登录</span>|
-          <span class="public">账户注册</span>
+          <p>请绑定你登录的手机号码</p>
         </div>
         <div class="comment">
           <input type="text" placeholder="请输入手机号">
@@ -20,14 +19,8 @@
             @click="getYzm"
           >{{isbtn}}</button>
         </div>
-
-        <div class="comment">
-          <input type="text" placeholder="设置登录密码">
-        </div>
-        <router-link to="/login" class="makeZhu">已有账户立即登录</router-link>
         <div class="btnOne clearfix">
-          <span class="cancel fl">取消</span>
-          <span class="sure fr">确定</span>
+          <span class="sure">确定绑定</span>
         </div>
       </div>
     </div>
@@ -89,18 +82,16 @@ export default {
       font-size: 16px;
       padding: 0.3rem;
       border-radius: 0.2rem;
-
       .code {
-        width: 72%;
+        width: 78%;
         margin: 0 auto;
-        margin-top: 0.2rem;
+        margin-top: 0.8rem;
         background: #fff;
         border-radius: 0.8rem;
         position: relative;
         input {
-          height: 1.2rem;
-          margin-bottom: 0.2rem;
-          padding-left: 0.6rem;
+          height: 1.6rem;
+          padding-left: 0.8rem;
           background-color: #fff;
           border-radius: 0.8rem;
         }
@@ -108,7 +99,7 @@ export default {
         .getCode {
           width: 40%;
           font-size: 12px;
-          height: 1.4rem;
+          height: 1.6rem;
           border: none;
           background: #ff9254;
           color: #fff;
@@ -136,12 +127,11 @@ export default {
         color: #ff7f01;
       }
       .comment {
-        // width: 100%;
-        margin-top: 0.4rem;
+        margin-top: 0.5rem;
         box-sizing: border-box;
         input {
-          width: 65%;
-          height: 1.4rem;
+          width: 70%;
+          height: 1.6rem;
           padding-left: 0.8rem;
           margin-bottom: 0.2rem;
           background-color: #fff;
@@ -149,32 +139,15 @@ export default {
         }
       }
 
-      .makeZhu {
-        font-size: 12px;
-        color: #ff7f01;
-        margin: 0 auto;
-        line-height: 1rem;
-        display: block;
-        width: 43%;
-        border-bottom: 1px solid #ff7f01;
-      }
       .btnOne {
-        width: 70%;
-        margin: 0 auto;
-        margin-top: 1rem;
+        margin-top: 1.5rem;
         color: #fff;
-        .cancel {
-          width: 3.5rem;
-          height: 1.4rem;
-          line-height: 1.4rem;
-          border: 1px solid #999;
-          background-color: #999;
-          border-radius: 0.8rem;
-        }
         .sure {
-          width: 3.5rem;
-          height: 1.4rem;
-          line-height: 1.4rem;
+          width: 4rem;
+          height: 1.5rem;
+          margin: 0 auto;
+          line-height: 1.5rem;
+          display: block;
           border-radius: 0.8rem;
           border: 1px solid #ff7f01;
           background-color: #ff7f01;

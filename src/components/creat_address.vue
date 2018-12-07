@@ -160,8 +160,9 @@ export default {
 .creatAddress {
   height: 100%;
   background-color: #f1f1f1;
+  padding-top: 2rem;
   .mint-header {
-    background-color: #ff7f01;
+    background-color: #fff;
     font-size: 16px;
   }
   .mint-popup-bottom {
@@ -171,7 +172,6 @@ export default {
     border-radius: 0.4rem 0.4rem 0 0;
   }
   .setBox {
-    margin-top: 2rem;
     padding-bottom: 0.5rem;
     font-size: 16px;
     background: #ffffff;
