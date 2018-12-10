@@ -1,7 +1,7 @@
 <template>
   <div id="invite_details">
     <mt-header fixed title="提现明细">
-      <mt-button icon="back" size="small" slot="left"></mt-button>
+      <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
     </mt-header>
     <!--邀请-->
     <div class="inviteBg">
@@ -17,11 +17,36 @@
                 <span class="redWay fl red" v-if="isShang">+89</span>
                 <span class="redWay fl red">-89</span>
               </div>
-              <span class="fr">2018-10-22 13:15</span>
+              <span class="fr" style="fontSize:14px">2018-10-22 13:15</span>
             </div>
             <div class="phoneInfo">
               <p class="phone">用户123****432购买了您推荐的</p>
               <p class="money">(商品标题)</p>
+            </div>
+            <p class="wayRemind" v-if="isDon">可提现</p>
+            <p class="wayRemind red">冻结中</p>
+            <p class="wayRemind" v-if="isZhuan">已转账</p>
+          </div>
+        </li>
+        <li class="invite">
+          <div class="inviteItem">
+            <div class="name clearfix">
+              <div class="way fl">
+                <span class="fl" v-if="isShang">赏金</span>
+                <span class="fl">提现</span>
+              </div>
+              <div class="wayRed fl">
+                <span class="redWay fl red" v-if="isShang">+89</span>
+                <span class="redWay fl red">-89</span>
+              </div>
+              <span class="fr" style="fontSize:14px">2018-10-22 13:15</span>
+            </div>
+            <div class="phoneInfo" v-if="isShang">
+              <p class="phone">用户123****432购买了您推荐的</p>
+              <p class="money">(商品标题)</p>
+            </div>
+            <div class="phoneInfo">
+              <p class="tixianWays">提现至(支付宝/微信)</p>
             </div>
             <p class="wayRemind" v-if="isDon">可提现</p>
             <p class="wayRemind red">冻结中</p>
@@ -44,6 +69,11 @@ export default {
       isDon: false
     };
   },
+  methods: {
+    goback() {
+      this.$router.go(-1);
+    }
+  },
   created() {
     document.title = "邀请明细";
   },
@@ -54,25 +84,23 @@ export default {
 
 <style lang="scss" scoped>
 #invite_details {
-  background: #ff7f01;
   height: 100%;
+  background-color: #f1f1f1;
   font-size: 16px;
   .red {
-    color: red !important;
+    color: #ff7f01 !important;
   }
   .inviteBg {
     padding-top: 1.8rem;
     .invite {
-      width: 95%;
+      width: 100%;
       margin: 0 auto;
-      margin-top: 0.5rem;
       padding: 0.6rem;
+      margin-top: 0.2rem;
       box-sizing: border-box;
-      border-radius: 0.5rem;
       background-color: #fff;
       .inviteItem {
         position: relative;
-
         .name {
           .way {
             float: left;
@@ -81,7 +109,7 @@ export default {
             }
           }
           span:last-child {
-            color: #e1e1e1;
+            color: #999;
           }
           .redWay {
             margin-left: 0.5rem;
@@ -90,7 +118,11 @@ export default {
         .phoneInfo {
           margin-top: 0.4rem;
           line-height: 1rem;
-          color: #e1e1e1;
+          font-size: 14px;
+          color: #999;
+          .tixianWays {
+            line-height: 2rem;
+          }
         }
         .wayRemind {
           position: absolute;

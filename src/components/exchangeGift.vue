@@ -1,7 +1,7 @@
 <template>
   <div class="exchangeGift">
     <mt-header title="礼品兑换" fixed>
-      <mt-button icon="back" size="small" slot="left"></mt-button>
+      <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
     </mt-header>
     <!-- 商品详情 -->
     <div class="prductDetails">
@@ -45,6 +45,9 @@ export default {
     };
   },
   methods: {
+    goback() {
+      this.$router.go(-1);
+    },
     loadMore() {
       this.list = 5;
       for (var i = 0; i <= 5; i++) {
@@ -64,10 +67,8 @@ export default {
 <style lang="scss" scoped>
 .exchangeGift {
   background-color: #f1f1f1;
-  padding-top: 1.5rem; //商品详情
+  padding-top: 2rem; //商品详情
   .prductDetails {
-    margin-bottom: 2.5rem;
-    margin-top: 0.5rem;
     font-size: 16px;
     width: 100%;
 
@@ -96,7 +97,7 @@ export default {
           line-height: 1rem;
           font-size: 16px;
           .oldPrice {
-            color: #ccc;
+            color: #ccc !important;
           }
           .oldPrice,
           .Price {

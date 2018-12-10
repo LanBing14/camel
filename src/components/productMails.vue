@@ -2,11 +2,11 @@
   <div class="productMails">
     <div class="top">
       <mt-header title="商城" style="height:1.8rem">
-        <mt-button icon="back" size="small" slot="left"></mt-button>
+        <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
       </mt-header>
-      <div class="userTou">
+      <router-link class="userTou" to="/myInfo">
         <img src="../assets/imgs/user.png" alt>
-      </div>
+      </router-link>
     </div>
     <!-- 轮播图 -->
     <div class="swiper-container banner">
@@ -24,9 +24,10 @@
 
     <!-- 中间图片
     -->
-    <div class="middlePic">
-      <img src="../assets/imgs/3.png" alt>
-    </div>
+    <router-link to="/exchangeGift" class="middlePic">
+      <img src="../assets/imgs/jinfen.png" alt>
+    </router-link>
+
     <!-- 商品详情 -->
     <div class="prductDetails">
       <div class="shareMoneyTop publiColor">
@@ -62,7 +63,26 @@
           </li>
         </ul>
       </div>
-      <p v-if="loadingDom" class="loading">没有更多数据</p>
+      <p v-if="loadingDom" class="loading">没有更多数据了</p>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="box" v-if="isShow" @click="hiddleToggle"></div>
+    <div class="boxModel" v-if="showLing">
+      <div class="boxtitle">
+        <p style="fontSize:16px">领取礼品提醒</p>
+        <p>恭喜您成为骆驼管家VIP用户，可免费领取升级大礼包一份~！</p>
+      </div>
+      <div class="btn">
+        <span>暂不领取</span>
+        <span>立即领取</span>
+      </div>
+    </div>
+    <div class="boxModel" v-if="showWeiLing">
+      <div class="btn">
+        <span>暂不领取</span>
+        <span>立即领取</span>
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +96,9 @@ export default {
       list: [],
       loading: false,
       loadingDom: false,
+      isShow: false,
+      showWeiLing: false,
+      showLing: false,
       page: "1"
     };
   },
@@ -83,6 +106,12 @@ export default {
     loadMore() {
       this.page++;
       this.getList();
+    },
+    goback() {
+      this.$route.go(-1);
+    },
+    hiddleToggle() {
+      this.isShow = false;
     },
     // 获取首页信息
     getList() {
@@ -93,9 +122,11 @@ export default {
         })
         .then(res => {
           var info = res.data.data;
-          console.log(info);
           if (res.data.status == "1") {
             this.list = this.list.concat(info);
+            if (res.data.data.length == 0) {
+              this.loadingDom = true;
+            }
           }
         });
     },
@@ -124,16 +155,6 @@ export default {
       scrollY: true,
       click: true
     });
-    // let scroll = new BScroll(".CouponContent", {
-    //   scrollX: true,
-    //   click: true
-    // });
-
-    // let that = this;
-    // //  请求数据完成后获取每个li的高度给ul
-    // that.$nextTick(function() {
-    //   that.contentStyle = that.$refs.contentStyle.clientWidth;
-    // });
   }
 };
 </script>
@@ -142,8 +163,71 @@ export default {
   // height: 100%;
   background: #f1f1f1;
   position: relative;
+  /*蒙版*/
+  .box {
+    opacity: 0.9;
+    background: #000;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .boxModel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url("../assets/imgs/bg.jpg") no-repeat;
+    background-size: contain;
+    width: 80%;
+    z-index: 999;
+    height: 10rem;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 0.4rem;
+    .boxtitle {
+      position: absolute;
+      bottom: 30%;
+      p:first-child {
+        margin-bottom: 0.2rem;
+      }
+    }
+    .btn {
+      position: absolute;
+      width: 100%;
+      bottom: -3%;
+      left: 0;
+      padding-top: 1rem;
+      height: 2rem;
+      font-size: 14px;
+      background-color: #fff;
+      border-radius: 0 0 0.4rem 0.4rem;
+
+      span {
+        width: 3rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        display: inline-block;
+        text-align: center;
+        border-radius: 0.8rem;
+        border: 1px solid #000;
+      }
+      span:nth-child(2n) {
+        margin-left: 1rem;
+        border: 1px solid #ff7f01;
+        color: #ff7f01;
+      }
+    }
+  }
   .publiColor {
     color: #ff7f01;
+  }
+  .loading {
+    text-align: center;
   }
   //头部
   .top {
@@ -296,19 +380,18 @@ export default {
   }
   .middlePic {
     width: 100%;
-    height: 3.6rem;
-    margin-top: 0.5rem;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
+    height: 5.46rem;
+    display: block;
+    margin-top: 0.1rem;
     img {
       width: 100%;
-      height: 3.6rem;
+      height: 5.46rem;
     }
   }
   //商品详情
   .prductDetails {
-    margin-top: 0.5rem;
-    padding: 0.3rem;
+    // margin-top: 0.5rem;
+    padding: 0.2rem;
     font-size: 16px;
     box-sizing: border-box;
     width: 100%;

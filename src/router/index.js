@@ -7,7 +7,6 @@ import shareMake from "@/components/shareMake";
 import particular from "@/components/particular";
 import payConfirm from "@/components/payConfirm";
 import paySuccess from "@/components/paySuccess";
-import login from "@/components/login";
 import register from "@/components/register";
 import myOrder from "@/components/myOrder";
 import getMoney from "@/components/getMoney";
@@ -15,8 +14,10 @@ import guanzhu from "@/components/guanzhu";
 import getMoneySuccess from "@/components/getMoneySuccess";
 import invitedDetails from "@/components/invited_details";
 import packDetails from "@/components/packDetails";
-import payMoney from "@/components/payMoney";
 import exchangeGift from "@/components/exchangeGift";
+import myInfo from "@/components/myInfo";
+import myAddress from "@/components/myAddress";
+import editAddress from "@/components/editAddress";
 
 Vue.use(Router);
 
@@ -24,17 +25,12 @@ export default new Router({
   mode: "history",
   routes: [
     {
-      path: "/login",
-      name: "登录",
-      component: login
-    },
-    {
       path: "/register",
       name: "注册",
       component: register
     },
     {
-      path: "/productMails",
+      path: "/",
       name: "商城",
       component: productMails
     },
@@ -42,6 +38,17 @@ export default new Router({
       path: "/creatAddress",
       name: "地址",
       component: creatAddress
+    },
+    {
+      path: "/myAddress",
+      name: "我的收货地址",
+      component: myAddress
+    },
+    ,
+    {
+      path: "/editAddress",
+      name: "编辑收货地址",
+      component: editAddress
     },
     {
       path: "/coupon",
@@ -55,18 +62,13 @@ export default new Router({
     },
     {
       path: "/shareMake",
-      name: "分享赚",
+      name: "我分享的人",
       component: shareMake
     },
     {
       path: "/payConfirm",
       name: "订单确认",
       component: payConfirm
-    },
-    {
-      path: "/payMoney",
-      name: "订单支付",
-      component: payMoney
     },
     {
       path: "/paySuccess",
@@ -107,6 +109,11 @@ export default new Router({
       path: "/exchangeGift",
       name: "礼品兑换",
       component: exchangeGift
+    },
+    {
+      path: "/myInfo",
+      name: "我的",
+      component: myInfo
     }
   ]
 });

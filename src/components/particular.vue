@@ -1,64 +1,62 @@
 <template>
   <div id="product_details">
     <div class="header">
-      <img src="../assets/imgs/right.png" alt class="imgSl fl">
-      <a href="#miao" class="fl first">商品</a>
+      <div @click="goback">
+        <img src="../assets/imgs/right.png" alt class="imgSl fl">
+      </div>
+
+      <a href="#miao" class="fl first" :class="firstColor">商品</a>
       <a href="#wang" class="fl">详情</a>
       <a href="#meng" class="fl">评价</a>
     </div>
     <div class="swipeImg" id="miao">
       <mt-swipe :auto="3000">
         <mt-swipe-item>
-          <img src="../assets/imgs/swiper.png" alt>
+          <img :src="img" alt>
         </mt-swipe-item>
       </mt-swipe>
     </div>
     <!--商品名称-->
     <div class="productInfo">
       <div class="infoOne">
-        <p class="eggName txt-cut">标题标题标题标题标题标题标题标题标题标题标题标题标题</p>
+        <p class="eggName txt-cut">{{title}}</p>
       </div>
       <div class="colorPrice">
-        <span>￥70</span>
-      </div>
-      <div class="infoTwo clearfix">
-        <p class="active1">包月发送</p>
-        <p class="active2">快递 freight元</p>
-        <p class="active3">月销 sale</p>
+        <span>￥{{price}}</span>
       </div>
     </div>
     <!--选择套餐-->
-    <div class="chooseSpecial" @click="chooseModel">
-      <p class="choose">选择套餐</p>
+    <div class="chooseSpecial clearfix" @click="chooseModel">
+      <p class="choose fl">
+        分享好友可赚
+        <span style="color:#ff7f01">￥{{sharePrice}}</span>
+      </p>
+      <img src="../assets/imgs/right.png" alt class="fr img">
     </div>
     <!--全部评价-->
     <div class="all_evaluate" id="meng">
-      <div class="titleBox">全部评价</div>
+      <div class="titleBox">全部评价({{commentCount}})</div>
       <div class="userEvaluate">
         <div class="evaluateBox">
           <div class="useImg">
-            <img src="../assets/imgs/tou.png">
+            <img :src="img">
           </div>
-          <p class="userName one-txt-cut">幸福幸福幸福</p>
-          <p class="userPhone">手机</p>
+          <p class="userName one-txt-cut">{{commentFirst.username}}</p>
+          <!-- <p class="userPhone">{{}}</p> -->
         </div>
-        <div
-          class="content"
-        >手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机手机</div>
+        <div class="content">{{commentFirst.content}}</div>
       </div>
       <div class="evaluateBtn">全部评价</div>
     </div>
     <!--商品详情-->
     <div class="productDetails" id="wang">
       <p class="detailTop">商品详情</p>
-      <div class="contImg">
-        <img src="../assets/imgs/long.png" alt>
-      </div>
+      <div class="contImg" v-html="content"></div>
     </div>
     <div class="buyAndRob">
       <div class="buy">
         <span class="free">省钱购</span>
-        <span style="fontSize: 14px">8元</span>
+        <span style="fontSize: 14px">积分价{{scorePrice}}元</span>
       </div>
     </div>
 
@@ -68,31 +66,28 @@
     <div class="choice-style" v-if="isShow">
       <div class="choice-box">
         <div class="goods-details">
-          <img alt class="good-picture" src="../assets/imgs/user.png">
+          <img alt class="good-picture" :src="img">
           <div class="money">
             <p class="price">
-              ￥sellPrice
-              <span class="greyIcon">原价￥marketPrice</span>
+              ￥{{sellPrice}}
+              <span class="greyIcon">原价￥{{marketPrice}}</span>
             </p>
-            <p class="style">库存stock件</p>
+            <p class="style">库存{{stock}}件</p>
           </div>
         </div>
         <div class="choice">
           <p class="colors">套餐规格</p>
           <div class="color-choice">
-            <!-- <div
-              v-for="(list,key) in packageList"
+            <div
+              class="colorItem"
+              v-for="(list,key) in packageArray"
               :key="key"
-              class="color"
-              :class="{active:iskey==key}"
+              :class="{activeModel:iskey==key}"
               @click="choice(key)"
-            >number/dateTime个月</div>-->
-            <div class="colorItem activeModel">122/20个月</div>
-            <div class="colorItem">122/20个月</div>
-            <div class="colorItem">122/20个月</div>
+            >{{list.number}}枚/{{list.dateTime}}个月</div>
           </div>
         </div>
-        <p class="infuse">每月配送30枚，共dateTime个月</p>
+        <p class="infuse">每月配送30枚，共{{dateTime}}个月</p>
         <div class="numbers">
           <p class="number">购买数量</p>
           <div class="modified">
@@ -101,24 +96,42 @@
             <div class="plus" @click="sums">+</div>
           </div>
         </div>
-        <div class="yes">确认</div>
+        <div class="yes" @click="goConfirmation">确认</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import qs from "qs";
+import { Toast } from "mint-ui";
 export default {
   name: "product_details",
   data() {
     return {
       packageList: [],
       isShow: false,
+      iskey: 0,
+      commentCount: "",
+      firstColor: "",
       islogin: false,
       zhuceModel: true,
-      mount: 1
+      price: "",
+      mount: 1,
+      title: "",
+      sellPrice: "",
+      img: "",
+      sale: "",
+      content: "",
+      isFreight: 0,
+      pictureArray: [],
+      packageArray: [],
+      dateTime: "",
+      sharePrice: "",
+      stock: "",
+      scorePrice: "",
+      marketPrice: "",
+      commentFirst: {},
+      packageId: ""
     };
   },
   methods: {
@@ -128,21 +141,63 @@ export default {
     //规格选中后的样式
     choice: function(i) {
       this.iskey = i;
-      this.sellPrice = this.packageList[i].sellPrice;
-      this.stock = this.packageList[i].stock;
-      this.number = this.packageList[i].number;
-      this.dateTime = this.packageList[i].dateTime;
-      this.avgPrice = this.packageList[i].avgPrice;
-      this.price = this.sellPrice / this.stock;
-      this.packageId = this.packageList[i].id;
-      this.marketPrice = this.packageList[i].marketPrice;
+      this.sellPrice = this.packageArray[i].sellPrice;
+      this.stock = this.packageArray[i].stock;
+      this.number = this.packageArray[i].number;
+      this.dateTime = this.packageArray[i].dateTime;
+      this.packageId = this.packageArray[i].id;
+      this.marketPrice = this.packageArray[i].marketPrice;
+    },
+    goConfirmation() {
+      this.$router.push({
+        path: "/payConfirm",
+        query: {
+          packageId: this.packageId,
+          number: this.mount,
+          sellPrice: this.sellPrice
+        }
+      });
+    },
+    getList() {
+      // var paramInfo = qs.stringify({
+      //       url: LoUrl,
+      //       openid: openid
+      //     });
+      this.$axios
+        .post("/index/productDetail", {
+          id: this.$route.query.id
+        })
+        .then(res => {
+          var info = res.data.data;
+          console.log(info);
+          if (res.data.status == "1") {
+            this.title = info.title;
+            this.price = info.sellPrice;
+            this.img = info.img;
+            this.content = info.content;
+            this.sharePrice = info.sharePrice;
+            this.commentCount = info.commentCount;
+            this.scorePrice = info.scorePrice;
+            this.commentFirst = info.commentFirst[0];
+            this.packageArray = info.packageArray;
+            this.sellPrice = info.packageArray[0].sellPrice;
+            this.marketPrice = info.packageArray[0].marketPrice;
+            this.stock = info.packageArray[0].stock;
+            this.dateTime = info.packageArray[0].dateTime;
+
+            //产品相册
+          }
+        });
+    },
+    goback() {
+      this.$router.go(-1);
     },
     sums: function() {
-      this.amount++;
+      this.mount++;
     },
     sum: function() {
-      if (this.amount >= 2) {
-        this.amount--;
+      if (this.mount >= 2) {
+        this.mount--;
       } else {
         Toast({
           message: "数量不能小于1",
@@ -151,7 +206,12 @@ export default {
       }
     }
   },
-  created() {},
+  created() {
+    if (!this.firstColor) {
+      this.firstColor = "firstColor";
+    }
+    this.getList();
+  },
   mounted() {},
   components: {}
 };
@@ -160,6 +220,10 @@ export default {
 <style lang="scss" scoped>
 #product_details {
   background-color: #f1f1f1;
+  .img {
+    margin-top: 0.6rem;
+    width: 0.8rem;
+  }
   .header {
     width: 100%;
     height: 2rem;
@@ -172,8 +236,9 @@ export default {
     .imgSl {
       transform: rotate(180deg);
       color: #000;
-      margin-top: 0.3rem;
-      width: 1.3rem;
+      margin-top: 0.8rem;
+      margin-left: 0.8rem;
+      width: 0.6rem;
     }
     .first {
       margin-left: 1.8rem;
@@ -183,6 +248,10 @@ export default {
       text-align: center;
       font-size: 16px;
       width: 18%;
+    }
+    .firstColor {
+      color: #ff7f01;
+      border-bottom: 1px solid #ff7f01;
     }
     a.border {
       color: #ff7f01;
@@ -283,9 +352,11 @@ export default {
         .useImg {
           width: 1.5rem;
           height: 1.5rem;
+          border-radius: 0.8rem;
           img {
             width: 100%;
             height: 100%;
+            border-radius: 0.8rem;
           }
         }
         .userName {

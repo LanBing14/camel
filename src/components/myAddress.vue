@@ -1,0 +1,236 @@
+<template>
+  <div class="myAddress">
+    <mt-header fixed title="我的收货地址" style="height:1.8rem">
+      <mt-button icon="back" slot="left" @click="goback"></mt-button>
+    </mt-header>
+    <div class="other" @click="addBtn">
+      <img src="../assets/imgs/add.png" alt>
+    </div>
+    <div class="modelContent">
+      <div class="Consignee">
+        <div class="messages">
+          <p class="name">
+            {{receiver}}
+            <span class="phone">{{phone}}</span>
+          </p>
+          <p class="address">{{province}}{{city}}{{county}}{{detail}}</p>
+          <p class="Moaddress" v-if="itemShow ==0">默认地址</p>
+        </div>
+        <div class="handelbtn">
+          <p class="edit" @click="editBtn">编辑</p>
+          <p @click="deleBtn">删除地址</p>
+        </div>
+      </div>
+      <div class="Consignee">
+        <div class="messages">
+          <p class="name">
+            {{receiver}}
+            <span class="phone">{{phone}}</span>
+          </p>
+          <p class="address txt-cut">{{province}}{{city}}{{county}}{{detail}}</p>
+          <p class="Moaddress" v-if="itemShow">默认地址</p>
+        </div>
+        <div class="handelbtn">
+          <p class="edit" @click="editBtn">编辑</p>
+          <p @click="deleBtn">删除地址</p>
+        </div>
+      </div>
+      <p class="none">没有更多了</p>
+    </div>
+
+    <div class="box" v-show="isShow" @click="hiddleToggle"></div>
+    <div class="modelConfirm" v-show="isShow">
+      <p>确定删除该地址吗?</p>
+      <div class="bgn">
+        <span class="fl" @click="cancel">取消</span>
+        <span class="fr">确定</span>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      province: "上海市",
+      city: "上海市",
+      itemShow: 0,
+      isShow: false,
+      county: "闵行区",
+      receiver: "依稀",
+      phone: "15434565434",
+      detail: "吴宝路428号台尚创意园A6楼201室"
+    };
+  },
+  methods: {
+    goback() {
+      this.$router.go(-1);
+    },
+    cancel() {
+      this.isShow = false;
+    },
+    deleBtn() {
+      this.isShow = true;
+    },
+    addBtn() {
+      this.$router.push("/creatAddress");
+    },
+    editBtn() {
+      this.$router.push("/editAddress");
+    },
+    hiddleToggle() {
+      this.isShow = false;
+    }
+  }
+};
+</script>
+<style lang="scss" scoped>
+.myAddress {
+  height: 100%;
+  background-color: #f1f1f1;
+  padding-top: 2rem;
+  position: relative;
+  /*蒙版*/
+  .box {
+    opacity: 0.9;
+    background: #000;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .modelConfirm {
+    width: 75%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    border-radius: 0.2rem;
+    padding: 1rem;
+    z-index: 100;
+    font-size: 16px;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+    p {
+      margin-bottom: 1.5rem;
+    }
+    .bgn {
+      span {
+        border: 1px solid #000;
+        width: 3.76rem;
+        line-height: 1.36rem;
+        height: 1.36rem;
+        border-radius: 0.8rem;
+      }
+      span:last-child {
+        color: #ff7f01;
+        border: 1px solid #ff7f01;
+      }
+    }
+  }
+  .modelContent {
+    background: #f1f1f1;
+    width: 100%;
+    font-size: 16px;
+    .none {
+      text-align: center;
+      font-size: 14px;
+      line-height: 2rem;
+      color: #c1c5c8;
+    }
+    .Consignee {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      margin-bottom: 0.2rem;
+      font-size: 16px;
+      height: 3.2rem;
+      padding: 0.3rem 0.1rem 0.4rem 0.2rem;
+      border-bottom: none;
+      .yixuan {
+        font-size: 12px;
+        width: 2rem;
+        color: #ff7f01;
+        margin-right: -2rem;
+      }
+      .right {
+        margin-left: 1rem;
+      }
+      .messages {
+        width: 79%;
+        padding-left: 0.5rem;
+        .name {
+          .phone {
+            font-size: 14px;
+            color: #999;
+            margin-left: 0.3rem;
+          }
+        }
+        .Moaddress {
+          font-size: 12px;
+          color: #ff7f01;
+          line-height: 1rem;
+        }
+        .address {
+          width: 90%;
+          margin-top: 0.2rem;
+          line-height: 0.6rem;
+          font-size: 14px;
+          overflow: hidden;
+        }
+      }
+      .handelbtn {
+        width: 15%;
+        text-align: center;
+        font-size: 12px;
+        color: #999;
+        .edit {
+          width: 100%;
+          line-height: 1.5rem;
+        }
+        p:last-child {
+          width: 100%;
+          line-height: 1rem;
+        }
+      }
+    }
+
+    .bottomXiu {
+      width: 70%;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 16px;
+      margin-bottom: 0.5rem;
+      span {
+        width: 35%;
+        line-height: 1.5rem;
+        color: #fff;
+        border-radius: 0.8rem;
+      }
+      span:first-child {
+        border: 1px solid #999;
+        background-color: #999;
+      }
+      span:last-child {
+        border: 1px solid #ff7f01;
+        background-color: #ff7f01;
+      }
+    }
+  }
+  .other {
+    position: fixed;
+    right: 0.6rem;
+    top: 0.1rem;
+    z-index: 99;
+    img {
+      width: 0.7rem;
+    }
+  }
+}
+</style>
+

@@ -11,11 +11,16 @@ export default {
 </script>
 
 <style>
+.publiColor {
+  color: #ff7f01;
+  font-size: 14px;
+}
 #app {
   height: 100%;
   color: #333;
   max-width: 750px;
   margin: 0 auto;
+  /* font-size: PingFang-SC-Medium; */
 }
 .mint-header {
   background: #fff;

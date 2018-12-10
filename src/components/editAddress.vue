@@ -147,11 +147,12 @@ export default {
   },
   mounted() {
     var that = this;
-    this.$nextTick(() => {
-      setTimeout(() => {
-        that.slots[0].defaultIndex = 0;
-      }, 100);
-    });
+    this.address = "上海市-上海市-闵行区";
+    // this.$nextTick(() => {
+    //   setTimeout(() => {
+    //     that.slots[0].defaultIndex = 0;
+    //   }, 100);
+    // });
   },
   components: {
     "mt-picker": Picker,
@@ -255,7 +256,6 @@ export default {
     background-color: #fff;
     line-height: 1.7rem;
     padding-left: 0.5rem;
-
     .xuanze {
       width: 0.7rem;
       height: 0.7rem;

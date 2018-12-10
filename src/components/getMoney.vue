@@ -1,7 +1,7 @@
 <template>
   <div class="getMoney">
     <mt-header title="提现" fixed style="height:1.8rem">
-      <mt-button icon="back" size="small" slot="left"></mt-button>
+      <mt-button icon="back" size="small" slot="left" @click="goBack"></mt-button>
     </mt-header>
     <div class="getNow">
       <p>提现金额</p>
@@ -87,6 +87,9 @@ export default {
     placeNow() {
       this.hintShow = true;
     },
+    goBack() {
+      this.$router.go(-1);
+    },
     cancel() {
       this.hintShow = false;
     },
@@ -117,11 +120,13 @@ export default {
   height: 100%;
   background: #f1f1f1;
   font-size: 16px;
+  padding-top: 1.8rem;
+
   text-align: center;
   .getNow {
     background-color: #fff;
-    margin-top: 0.5rem;
     padding-bottom: 1rem;
+    margin-top: 0.2rem;
     .reti {
       font-size: 12px;
       margin-left: 1rem;
@@ -250,24 +255,24 @@ export default {
       width: 100%;
       margin-top: 0.5rem;
       display: flex;
+      font-size: 16px;
       align-items: center;
       justify-content: center;
       .cancel {
-        width: 30%;
-        line-height: 2rem;
-        border-radius: 2rem;
-        background-color: #999;
+        width: 25%;
+        line-height: 1.8rem;
+        border-radius: 0.8rem;
         border: 1px solid #999;
         margin-right: 2%;
-        color: #fff;
       }
       .true {
-        width: 50%;
-        line-height: 2rem;
-        background: #ff7f01;
-        border-radius: 2rem;
-        color: #ffffff;
-        margin-left: 2%;
+        width: 48%;
+        line-height: 1.8rem;
+        // background: #ff7f01;
+        border-radius: 0.8rem;
+        border: 1px solid #ff7f01;
+        color: #ff7f01;
+        margin-left: 8%;
       }
     }
   }

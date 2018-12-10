@@ -51,10 +51,10 @@
       <div class="total">
         <p class="left">
           30分积分抵扣
-          <span>Y10</span>
+          <span>￥10</span>
         </p>
-        <div class="moren">
-          <img src="../assets/imgs/gouxuan.png" alt>
+        <div class="moren" @click="toggle">
+          <img src="../assets/imgs/gouxuan.png" alt v-show="isXuan">
         </div>
       </div>
       <div class="total">
@@ -69,13 +69,12 @@
         需付金额
         <span>￥{{totalPrice}}</span>
       </div>
-      <mt-button class="pay" style="height:60px;border-radius:0" v-if="isPaying" type="danger">去支付</mt-button>
-      <mt-button class="pay2" style="height:60px;border-radius:0" disabled v-else type="default">支付中</mt-button>
+      <mt-button class="pay" style="height:60px;border-radius:0" type="danger" @click="gopay">去支付</mt-button>
     </div>
 
     <!-- 模态框 -->
     <!--蒙版-->
-    <div class="box" id="box" v-if="isShow"></div>
+    <div class="box" id="box" v-if="isShow || payMoneyModel" @click="hiddleToggle"></div>
     <div class="choice-style" v-if="isShow">
       <div class="modelContent">
         <!-- meiyige  -->
@@ -103,14 +102,31 @@
           <p class="yixuan" v-if="itemShow">已选</p>
           <img src="../assets/imgs/right.png" alt class="right">
         </div>
-
         <p class="none">没有更多了</p>
-
         <div class="bottomXiu clearfix">
           <span class="fl" @click="cancel">取消</span>
           <span class="fr" @click="addBtn">新增地址</span>
         </div>
       </div>
+    </div>
+
+    <div class="payWay" v-if="payMoneyModel">
+      <p class="zhifuWay">请选择支付方式</p>
+      <div class="itemWay clearfix" @click="getType(1)">
+        <img src="../assets/imgs/weixin.png" alt>
+        <span class="zhifu">微信支付</span>
+        <span class="choose fr">
+          <img src="../assets/imgs/gouxuan.png" alt v-show="isShowPic">
+        </span>
+      </div>
+      <div class="itemWay clearfix" @click="getType(2)">
+        <img src="../assets/imgs/zhifubao.png" alt>
+        <span class="zhifu">支付宝支付</span>
+        <span class="choose fr">
+          <img src="../assets/imgs/gouxuan.png" alt v-show="!isShowPic">
+        </span>
+      </div>
+      <p class="zhifuAtOnce">立即支付</p>
     </div>
   </div>
 </template>
@@ -118,16 +134,17 @@
 export default {
   data() {
     return {
-      weiShow: true,
+      isXuan: false,
+      payMoneyModel: false,
+      isShowPic: false,
+      isShow: false,
+      itemShow: false,
       sName: "",
       receiver: "依稀",
       phone: "15434565434",
-      isShow: false,
       province: "江苏省",
       city: "徐州市",
       county: "盐城市",
-      itemShow: false,
-      isPaying: true,
       totalPrice: "222",
       freight: "13",
       detail: "111111111"
@@ -140,13 +157,29 @@ export default {
     cancel() {
       this.isShow = false;
     },
+    gopay() {
+      this.payMoneyModel = true;
+    },
+    toggle() {
+      this.isXuan = !this.isXuan;
+    },
     xuanModel() {
       this.isShow = true;
+    },
+    getType(index) {
+      if (index == 1) {
+        this.isShowPic = true;
+      } else if (index == 2) {
+        this.isShowPic = false;
+      }
     },
     addBtn() {
       this.$router.push("/creatAddress");
     },
-    getType(index) {}
+    hiddleToggle() {
+      this.isShow = false;
+      this.payMoneyModel = false;
+    }
   },
   created() {
     document.title = "订单确定";
@@ -158,9 +191,56 @@ export default {
   height: 100%;
   background: #f1f1f1;
   padding-top: 2rem;
-  .mint-header {
+  .payWay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    width: 100%;
     font-size: 16px;
-    background: #ff7f01;
+    background-color: #fff;
+    .zhifuWay {
+      padding-left: 1rem;
+      line-height: 1.5rem;
+      color: #999;
+      border-bottom: 1px solid #f1f1f1;
+
+      font-size: 14px;
+    }
+    .itemWay {
+      padding: 0.4rem 0.6rem;
+      border-bottom: 1px solid #f1f1f1;
+      img {
+        width: 0.8rem;
+      }
+      .zhifu {
+        margin-left: 0.5rem;
+      }
+      .choose {
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 50%;
+        margin-right: 0.2rem;
+        border: 1px solid #ccc;
+        position: relative;
+        img {
+          width: 0.9rem;
+          height: 0.9rem;
+          position: absolute;
+          left: -1px;
+          top: -1px;
+        }
+      }
+    }
+
+    .zhifuAtOnce {
+      width: 100%;
+      background-color: #ff7f01;
+      line-height: 2rem;
+      text-align: center;
+      font-size: 16px;
+      color: #fff;
+    }
   }
   /*收货人信息*/
   .Consignee {
@@ -169,10 +249,9 @@ export default {
     background-color: #fff;
     font-size: 16px;
     padding: 0.6rem 0.5rem;
-    border-top: 1px solid #c1c5c8;
-    border-bottom: 1px solid #c1c5c8;
+    margin-bottom: 0.2rem;
     .sign {
-      width: 0.7rem;
+      width: 0.6rem;
     }
     .messages {
       width: 82%;

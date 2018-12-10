@@ -10,6 +10,7 @@ import axios from "./util/http";
 import Mint from "mint-ui";
 import "mint-ui/lib/style.css";
 Vue.prototype.$axios = axios;
+
 import qs from "qs";
 Vue.use(qs);
 Vue.use(Mint);

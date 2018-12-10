@@ -1,14 +1,15 @@
 <template>
   <div class="get_success">
     <mt-header title="提现成功" fixed style="height:1.8rem">
-      <mt-button icon="back" size="small" slot="left"></mt-button>
+      <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
     </mt-header>
     <div class="paySuccess">
-      <p class="pay_ture">您已成功申请提现</p>
-      <p class="pay_info">我们会在两个工作日审核您的提现申请,请您耐心等待</p>
+      <img src="../assets/imgs/zhifuchenggong.png" alt class="success">
+      <p class="pay_ture publiColor">提现成功</p>
       <p class="pay_price">12342</p>
+      <p class="pay_info">我们会在两个工作日审核您的提现申请,请您耐心等待</p>
     </div>
-    <div class="details">
+    <div class="details" @click="goMingXi">
       <p>查看明细</p>
     </div>
   </div>
@@ -22,8 +23,12 @@ export default {
   },
   methods: {
     //点击跳转商品详情
-    goBack() {},
-    goShare() {}
+    goBack() {
+      this.$router.go(-1);
+    },
+    goMingXi() {
+      this.$router.push("/invitedDetails");
+    }
   },
   mounted() {},
   components: {}
@@ -34,34 +39,37 @@ export default {
 .get_success {
   height: 100%;
   font-size: 14px;
+  padding-top: 2rem;
   background-color: #f1f1f1;
   .paySuccess {
     text-align: center;
-    margin: 2rem auto;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    background-color: #fff;
+    img {
+      width: 2rem;
+    }
     .pay_ture {
-      padding-top: 1rem;
-      line-height: 2rem;
+      line-height: 1.2rem;
       font-size: 16px;
     }
     .pay_info {
-      line-height: 1rem;
       width: 90%;
       margin: 0 auto;
-      background-color: rgb(223, 222, 222);
       font-size: 12px;
+      margin-top: 1rem;
     }
     .pay_price {
       color: #ff7f01;
-      font-size: 20px;
-      line-height: 2rem;
-      margin-top: 1rem;
+      font-size: 14px;
     }
   }
   .details {
+    margin-top: 1rem;
     text-align: center;
     p {
       width: 4.5rem;
-      line-height: 2rem;
+      line-height: 1.6rem;
       border-radius: 1rem;
       background-color: #ff7f01;
       color: #fff;
