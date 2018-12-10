@@ -176,10 +176,9 @@ export default {
 #myOrder {
   height: 100%;
   background: #f1f1f1;
+  padding-top: 2rem;
   .mint-navbar {
-    margin-top: 1.5rem;
     background-color: #fff;
-    border-top: 7px solid #f1f1f1 !important;
     a {
       color: #000;
     }
@@ -191,8 +190,8 @@ export default {
   }
   .orderBox {
     font-size: 14px;
-    margin-top: 0.3rem;
     background: #ffffff;
+    margin-top: 0.2rem;
     padding: 0.5rem;
     padding-right: 0;
 
