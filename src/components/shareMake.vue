@@ -65,7 +65,7 @@ export default {
     margin-top: 0.2rem;
     font-size: 14px;
     .makeItem {
-      padding: 0.3rem;
+      padding: 0.5rem 0.3rem;
       background-color: #fff;
       margin-bottom: 0.2rem;
       .imgBox {
