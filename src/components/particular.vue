@@ -1,15 +1,9 @@
 <template>
   <div id="product_details">
-    <div class="header">
-      <div @click="goback">
-        <img src="../assets/imgs/right.png" alt class="imgSl fl">
-      </div>
-
-      <a href="#miao" class="fl first" :class="firstColor">商品</a>
-      <a href="#wang" class="fl">详情</a>
-      <a href="#meng" class="fl">评价</a>
-    </div>
-    <div class="swipeImg" id="miao">
+    <mt-header title="商品详情" style="height:1.8rem" fixed>
+      <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
+    </mt-header>
+    <div class="swipeImg">
       <mt-swipe :auto="3000">
         <mt-swipe-item>
           <img :src="img" alt>
@@ -26,15 +20,14 @@
       </div>
     </div>
     <!--选择套餐-->
-    <div class="chooseSpecial clearfix" @click="chooseModel">
+    <div class="chooseSpecial clearfix">
       <p class="choose fl">
         分享好友可赚
         <span style="color:#ff7f01">￥{{sharePrice}}</span>
       </p>
-      <img src="../assets/imgs/right.png" alt class="fr img">
     </div>
     <!--全部评价-->
-    <div class="all_evaluate" id="meng">
+    <div class="all_evaluate">
       <div class="titleBox">全部评价({{commentCount}})</div>
       <div class="userEvaluate">
         <div class="evaluateBox">
@@ -49,19 +42,19 @@
       <div class="evaluateBtn">全部评价</div>
     </div>
     <!--商品详情-->
-    <div class="productDetails" id="wang">
+    <div class="productDetails">
       <p class="detailTop">商品详情</p>
       <div class="contImg" v-html="content"></div>
     </div>
     <div class="buyAndRob">
-      <div class="buy">
+      <div class="buy" @click="chooseModel">
         <span class="free">省钱购</span>
         <span style="fontSize: 14px">积分价{{scorePrice}}元</span>
       </div>
     </div>
 
     <!--蒙版-->
-    <div class="box" id="box" v-if="isShow "></div>
+    <div class="box" id="box" v-if="isShow " @click="hiddleToggle"></div>
     <!--选择规格-->
     <div class="choice-style" v-if="isShow">
       <div class="choice-box">
@@ -113,8 +106,6 @@ export default {
       iskey: 0,
       commentCount: "",
       firstColor: "",
-      islogin: false,
-      zhuceModel: true,
       price: "",
       mount: 1,
       title: "",
@@ -137,6 +128,12 @@ export default {
   methods: {
     chooseModel() {
       this.isShow = true;
+    },
+    goback() {
+      this.$router.go(-1);
+    },
+    hiddleToggle() {
+      this.isShow = false;
     },
     //规格选中后的样式
     choice: function(i) {
@@ -184,8 +181,6 @@ export default {
             this.marketPrice = info.packageArray[0].marketPrice;
             this.stock = info.packageArray[0].stock;
             this.dateTime = info.packageArray[0].dateTime;
-
-            //产品相册
           }
         });
     },
@@ -220,53 +215,11 @@ export default {
 <style lang="scss" scoped>
 #product_details {
   background-color: #f1f1f1;
-  .img {
-    margin-top: 0.6rem;
-    width: 0.8rem;
-  }
-  .header {
-    width: 100%;
-    height: 2rem;
-    line-height: 2rem;
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    left: 0;
-    background-color: #ffffff;
-    .imgSl {
-      transform: rotate(180deg);
-      color: #000;
-      margin-top: 0.8rem;
-      margin-left: 0.8rem;
-      width: 0.6rem;
-    }
-    .first {
-      margin-left: 1.8rem;
-    }
-    a {
-      color: #ccc;
-      text-align: center;
-      font-size: 16px;
-      width: 18%;
-    }
-    .firstColor {
-      color: #ff7f01;
-      border-bottom: 1px solid #ff7f01;
-    }
-    a.border {
-      color: #ff7f01;
-      border-bottom: 1px solid #ff7f01;
-    }
-    a:hover {
-      color: #ff7f01;
-      border-bottom: 1px solid #ff7f01;
-    }
-  }
+  padding-top: 2rem;
 
   .swipeImg {
     width: 100%;
     height: 12rem;
-    margin-top: 2.1rem;
     img {
       width: 100%;
       height: 100%;
