@@ -20,8 +20,10 @@
               <span class="fr" style="fontSize:14px">2018-10-22 13:15</span>
             </div>
             <div class="phoneInfo">
-              <p class="phone">用户123****432购买了您推荐的</p>
-              <p class="money">(商品标题)</p>
+              <p class="phone">
+                用户123****432购买了您推荐的
+                (商品标题)
+              </p>
             </div>
             <p class="wayRemind" v-if="isDon">可提现</p>
             <p class="wayRemind red">冻结中</p>
@@ -41,12 +43,8 @@
               </div>
               <span class="fr" style="fontSize:14px">2018-10-22 13:15</span>
             </div>
-            <div class="phoneInfo" v-if="isShang">
-              <p class="phone">用户123****432购买了您推荐的</p>
-              <p class="money">(商品标题)</p>
-            </div>
             <div class="phoneInfo">
-              <p class="tixianWays">提现至(支付宝/微信)</p>
+              <p class="phone">提现至(支付宝/微信)</p>
             </div>
             <p class="wayRemind" v-if="isDon">可提现</p>
             <p class="wayRemind red">冻结中</p>
@@ -116,13 +114,12 @@ export default {
           }
         }
         .phoneInfo {
+          width: 60%;
           margin-top: 0.4rem;
           line-height: 1rem;
           font-size: 14px;
           color: #999;
-          .tixianWays {
-            line-height: 2rem;
-          }
+          height: 1.5rem;
         }
         .wayRemind {
           position: absolute;
