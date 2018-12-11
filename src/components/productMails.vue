@@ -390,7 +390,6 @@ export default {
   }
   //商品详情
   .prductDetails {
-    // margin-top: 0.5rem;
     padding: 0.2rem;
     font-size: 16px;
     box-sizing: border-box;
@@ -424,7 +423,7 @@ export default {
             height: 100%;
           }
           .couponZhuan {
-            width: 50%;
+            width: 3.14rem;
             border: 1px solid #ff7f01;
             border-left: none;
             font-size: 12px;
@@ -441,7 +440,7 @@ export default {
           position: relative;
           margin-top: 0.5rem;
           .couponKou {
-            width: 45%;
+            width: 2.74rem;
             border: 1px solid #ff7f01;
             border-right: none;
             border-radius: 0.8rem 0 0 0.8rem;
@@ -471,7 +470,8 @@ export default {
         }
       }
       li:nth-child(2n) {
-        float: right;
+        float: left;
+        margin-left: 0.4rem;
       }
     }
   }

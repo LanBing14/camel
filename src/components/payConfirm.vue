@@ -29,12 +29,12 @@
     <div class="productInfo">
       <img src="../assets/imgs/swiper.png" alt class="goodPic">
       <div class="line1">
-        <p class="name txt-cut">鸡蛋鸡蛋鸡蛋鸡鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋蛋鸡蛋鸡蛋</p>
-        <p class="money">￥12222</p>
+        <p class="name txt-cut">{{title}}</p>
+        <p class="money">￥{{sellPrice}}</p>
       </div>
       <div class="line2">
-        <p class="guige">344枚/13个月</p>
-        <p class="num">x122</p>
+        <p class="guige">{{num}}枚/{{dateTime}}个月</p>
+        <p class="num">x{{number}}</p>
       </div>
     </div>
 
@@ -42,7 +42,7 @@
     <div class="others">
       <div class="total">
         <p class="left">商品合计</p>
-        <p class="right">￥{{totalPrice}}</p>
+        <p class="right">￥{{price}}</p>
       </div>
       <div class="total">
         <p class="left">运费</p>
@@ -50,8 +50,8 @@
       </div>
       <div class="total">
         <p class="left">
-          30分积分抵扣
-          <span>￥10</span>
+          {{userScore}}分积分抵扣
+          <span>￥{{userScorePrice}}</span>
         </p>
         <div class="moren" @click="toggle">
           <img src="../assets/imgs/gouxuan.png" alt v-show="isXuan">
@@ -59,7 +59,7 @@
       </div>
       <div class="total">
         <p class="left">买家留言</p>
-        <input type="text" class="infos" placeholder="请留言" v-model="sName">
+        <input type="text" class="infos" placeholder="请留言" v-model="remark">
       </div>
     </div>
 
@@ -67,7 +67,7 @@
     <div class="payInfo">
       <div class="need">
         需付金额
-        <span>￥{{totalPrice}}</span>
+        <span>￥{{price}}</span>
       </div>
       <mt-button class="pay" style="height:60px;border-radius:0" type="danger" @click="gopay">去支付</mt-button>
     </div>
@@ -131,6 +131,7 @@
   </div>
 </template>
 <script>
+import qs from "qs";
 export default {
   data() {
     return {
@@ -139,7 +140,7 @@ export default {
       isShowPic: false,
       isShow: false,
       itemShow: false,
-      sName: "",
+      remark: "",
       receiver: "依稀",
       phone: "15434565434",
       province: "江苏省",
@@ -147,7 +148,20 @@ export default {
       county: "盐城市",
       totalPrice: "222",
       freight: "13",
-      detail: "111111111"
+      detail: "111111111",
+      title: "",
+      sellPrice: "",
+      totalPrice: "",
+      userScore: "",
+      freight: "",
+      userScorePrice: "",
+      userAddress: [],
+      number: "",
+      dateTime: "",
+      num: "",
+      orderId: "",
+      orderSn: "",
+      price: ""
     };
   },
   methods: {
@@ -159,9 +173,43 @@ export default {
     },
     gopay() {
       this.payMoneyModel = true;
+      //生成订单
+      this.getPayist();
+    },
+    //生成订单
+    getPayist() {
+      this.$axios({
+        method: "post",
+        url: "/order/buy",
+        params: {
+          goodsId: this.$route.query.goodsId,
+          number: this.$route.query.number,
+          packageId: this.$route.query.packageId,
+          //地址
+          aid: 1,
+          phone: "12345678901",
+          totalPrice: this.totalPrice,
+          remark: this.remark,
+          score: this.userScore
+        }
+      }).then(res => {
+        console.log(res.data.data);
+        if (res.data.data.status == 1) {
+          var info = res.data.data;
+          //订单id
+          this.orderId = info.orderId;
+          //订单编号
+          this.orderSn = info.orderSn;
+        }
+      });
     },
     toggle() {
       this.isXuan = !this.isXuan;
+      if (this.isXuan) {
+        this.price = Number(this.total - this.userScorePrice);
+      } else {
+        this.price = this.total;
+      }
     },
     xuanModel() {
       this.isShow = true;
@@ -173,6 +221,39 @@ export default {
         this.isShowPic = false;
       }
     },
+    //订单信息
+    getList() {
+      this.$axios({
+        method: "post",
+        url: "/order/preorder",
+        params: {
+          goodsId: this.$route.query.goodsId,
+          number: this.$route.query.number,
+          packageId: this.$route.query.packageId,
+          aid: 0,
+          phone: "12345678901"
+        }
+      }).then(res => {
+        if (res.data.data.status == 1) {
+          var info = res.data.data;
+          this.title = info.title;
+          this.sellPrice = info.sellPrice;
+          //产品积分
+          this.score = info.score;
+          this.totalPrice = info.totalPrice;
+          this.total = info.totalPrice;
+          this.price = info.totalPrice;
+          //用户可用积分
+          this.userScore = info.userScore;
+          this.userScorePrice = info.userScorePrice;
+          this.freight = info.freight;
+          //用户地址
+          this.userAddress = info.userAddress;
+          this.num = info.packageInfo[0].number;
+          this.dateTime = info.packageInfo[0].dateTime;
+        }
+      });
+    },
     addBtn() {
       this.$router.push("/creatAddress");
     },
@@ -183,7 +264,10 @@ export default {
   },
   created() {
     document.title = "订单确定";
-  }
+    this.number = this.$route.query.number;
+    this.getList();
+  },
+  mounted() {}
 };
 </script>
 <style lang="scss" scoped>
@@ -461,11 +545,11 @@ export default {
         right: 1rem;
         top: 0.6rem;
         img {
-          width: 0.9rem;
-          height: 0.9rem;
+          width: 1rem;
+          height: 1rem;
           position: absolute;
-          top: 0px;
-          right: 0px;
+          top: -2px;
+          right: -2px;
         }
       }
       .infos {

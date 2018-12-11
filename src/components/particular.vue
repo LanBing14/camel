@@ -103,7 +103,7 @@ export default {
     return {
       packageList: [],
       isShow: false,
-      iskey: 0,
+      iskey: -1,
       commentCount: "",
       firstColor: "",
       price: "",
@@ -122,7 +122,8 @@ export default {
       scorePrice: "",
       marketPrice: "",
       commentFirst: {},
-      packageId: ""
+      packageId: "",
+      goodsId: ""
     };
   },
   methods: {
@@ -136,13 +137,16 @@ export default {
       this.isShow = false;
     },
     //规格选中后的样式
-    choice: function(i) {
+    choice(i) {
       this.iskey = i;
       this.sellPrice = this.packageArray[i].sellPrice;
       this.stock = this.packageArray[i].stock;
       this.number = this.packageArray[i].number;
       this.dateTime = this.packageArray[i].dateTime;
+      //套餐id
       this.packageId = this.packageArray[i].id;
+      //产品id
+      this.goodsId = this.packageArray[i].goodsId;
       this.marketPrice = this.packageArray[i].marketPrice;
     },
     goConfirmation() {
@@ -150,16 +154,12 @@ export default {
         path: "/payConfirm",
         query: {
           packageId: this.packageId,
-          number: this.mount,
-          sellPrice: this.sellPrice
+          goodsId: this.goodsId,
+          number: this.mount
         }
       });
     },
     getList() {
-      // var paramInfo = qs.stringify({
-      //       url: LoUrl,
-      //       openid: openid
-      //     });
       this.$axios
         .post("/index/productDetail", {
           id: this.$route.query.id
@@ -181,6 +181,7 @@ export default {
             this.marketPrice = info.packageArray[0].marketPrice;
             this.stock = info.packageArray[0].stock;
             this.dateTime = info.packageArray[0].dateTime;
+            this.choice(0);
           }
         });
     },
