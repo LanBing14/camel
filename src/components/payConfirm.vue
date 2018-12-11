@@ -91,7 +91,7 @@
             <p class="address">{{item.province}}{{item.city}}{{item.county}}{{item.detail}}</p>
             <p class="Moaddress" v-if="item.isDefault == 1">默认地址</p>
           </div>
-          <p class="yixuan">已选</p>
+          <p class="yixuan" v-if="item.id == isKey">已选</p>
           <img src="../assets/imgs/right.png" alt class="right">
         </div>
         <p class="none">没有更多了</p>
@@ -128,6 +128,7 @@ export default {
   data() {
     return {
       myprovince: "",
+      isKey: -1,
       mycity: "",
       myreceiver: "",
       mycounty: "",
@@ -169,7 +170,7 @@ export default {
       this.$router.go(-1);
     },
     toggleCurrent(item) {
-      this.itemShow = true;
+      this.isKey = item.id;
       this.myprovince = item.province;
       this.myCity = item.city;
       this.myreceiver = item.receiver;
@@ -242,6 +243,7 @@ export default {
             this.mycounty = morenArr[0].county;
             this.mydetail = morenArr[0].detail;
             this.myphone = morenArr[0].phone;
+            this.toggleCurrent(morenArr[0]);
           }
         });
     },
