@@ -18,7 +18,7 @@
       </p>
       <div class="apply_for" @click="placeNow">提现</div>
     </div>
-    <div class="box" id="box" v-show="hintShow" @click="hintShow == false"></div>
+    <div class="box" id="box" v-show="hintShow" @click="cancel"></div>
     <div class="hintBox" v-show="hintShow">
       <div class="attention">
         <select class="attens" v-model="slects" @change="switcher(slects)">
@@ -50,10 +50,12 @@
 
         <div class="phoneCode" v-if="weiBang">
           <input type="text" placeholder="输入验证码" class="codeInput">
-          <button class="getCode" :disabled="dis">
-            获取验证码
-            <span v-if="isTrue">({{promptTo}}s)</span>
-          </button>
+          <button
+            class="getCode"
+            :disabled="isDis"
+            @click="getCode"
+            :class="{isDesActive:isDis}"
+          >{{isbtn}}</button>
         </div>
       </div>
       <div class="btns">
@@ -69,12 +71,11 @@ export default {
     return {
       hintShow: false,
       accounts: "",
-      tishi: "",
       names: "",
       isShow: true,
+      isDis: false,
       dis: false,
       slects: "",
-      promptTo: "",
       isTrue: true,
       bankShow: false,
       weiBang: false,
@@ -111,6 +112,28 @@ export default {
         this.bankShow = true;
         this.weiBang = true;
       }
+    },
+    //获取验证码
+    getCode() {
+      this.isDis = true;
+      this.CountDown();
+    },
+    //倒计时
+    CountDown() {
+      let times = 60;
+      this.isbtn = times + "s";
+      var inter = setInterval(
+        function() {
+          times = times - 1;
+          this.isbtn = times + "s";
+          if (times == 0) {
+            clearInterval(inter);
+            this.isbtn = "获取验证码";
+            this.isDis = false;
+          }
+        }.bind(this),
+        1000
+      );
     }
   }
 };
@@ -154,7 +177,7 @@ export default {
     }
   }
   .box {
-    opacity: 0.2;
+    opacity: 0.5;
     background: #040000;
     z-index: 9;
     width: 100%;
@@ -235,6 +258,9 @@ export default {
           outline: none;
           border: none;
         }
+        .isDesActive {
+          background: #999 !important;
+        }
       }
     }
     :-moz-placeholder {
@@ -261,15 +287,14 @@ export default {
       .cancel {
         width: 25%;
         line-height: 1.8rem;
-        border-radius: 0.8rem;
+        border-radius: 1.8rem;
         border: 1px solid #999;
         margin-right: 2%;
       }
       .true {
         width: 48%;
         line-height: 1.8rem;
-        // background: #ff7f01;
-        border-radius: 0.8rem;
+        border-radius: 1.8rem;
         border: 1px solid #ff7f01;
         color: #ff7f01;
         margin-left: 8%;

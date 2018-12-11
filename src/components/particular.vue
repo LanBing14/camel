@@ -27,7 +27,7 @@
       </p>
     </div>
     <!--全部评价-->
-    <div class="all_evaluate">
+    <!-- <div class="all_evaluate">
       <div class="titleBox">全部评价({{commentCount}})</div>
       <div class="userEvaluate">
         <div class="evaluateBox">
@@ -35,12 +35,11 @@
             <img :src="img">
           </div>
           <p class="userName one-txt-cut">{{commentFirst.username}}</p>
-          <!-- <p class="userPhone">{{}}</p> -->
         </div>
         <div class="content">{{commentFirst.content}}</div>
       </div>
       <div class="evaluateBtn">全部评价</div>
-    </div>
+    </div>-->
     <!--商品详情-->
     <div class="productDetails">
       <p class="detailTop">商品详情</p>
@@ -48,8 +47,8 @@
     </div>
     <div class="buyAndRob">
       <div class="buy" @click="chooseModel">
-        <span class="free">省钱购</span>
-        <span style="fontSize: 14px">积分价{{scorePrice}}元</span>
+        <p class="free">省钱购</p>
+        <p style="fontSize: 14px">积分价￥{{scorePrice}}元</p>
       </div>
     </div>
 
@@ -173,9 +172,7 @@ export default {
             this.img = info.img;
             this.content = info.content;
             this.sharePrice = info.sharePrice;
-            this.commentCount = info.commentCount;
             this.scorePrice = info.scorePrice;
-            this.commentFirst = info.commentFirst[0];
             this.packageArray = info.packageArray;
             this.sellPrice = info.packageArray[0].sellPrice;
             this.marketPrice = info.packageArray[0].marketPrice;
@@ -216,7 +213,7 @@ export default {
 <style lang="scss" scoped>
 #product_details {
   background-color: #f1f1f1;
-  padding-top: 2rem;
+  padding-top: 1.8rem;
 
   .swipeImg {
     width: 100%;
@@ -362,7 +359,7 @@ export default {
       color: #fff;
       .free {
         font-size: 16px;
-        line-height: 1rem;
+        line-height: 1.1rem;
       }
       p {
         font-size: 14px;
@@ -376,10 +373,13 @@ export default {
     .detailTop {
       height: 1.5rem;
       line-height: 1.5rem;
+      background-color: #fff;
       padding-left: 0.6rem;
-      margin-top: 0.5rem;
+      margin-top: 0.1rem;
     }
     .contImg {
+      text-align: center;
+
       width: 100%;
       height: 100%;
       img {
@@ -390,7 +390,7 @@ export default {
   }
   /*蒙版*/
   .box {
-    opacity: 0.9;
+    opacity: 0.8;
     background: #000;
     z-index: 99;
     width: 100%;
@@ -522,10 +522,11 @@ export default {
         background-color: #ff7f01;
         position: fixed;
         bottom: 0;
-        height: 2rem;
+        height: 2.3rem;
         width: 100%;
+        font-size: 18px;
         text-align: center;
-        line-height: 2rem;
+        line-height: 2.4rem;
       }
     }
   }

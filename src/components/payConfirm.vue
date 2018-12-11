@@ -9,10 +9,10 @@
       <img src="../assets/imgs/map.png" class="sign">
       <div class="messages">
         <p class="name">
-          {{receiver}}
-          <span class="phone">{{phone}}</span>
+          {{myreceiver}}
+          <span class="phone">{{myphone}}</span>
         </p>
-        <p class="address">{{province}}{{city}}{{county}}{{detail}}</p>
+        <p class="address">{{myprovince}}{{mycity}}{{mycounty}}{{mydetail}}</p>
       </div>
       <img src="../assets/imgs/right.png" alt class="right">
     </div>
@@ -77,29 +77,21 @@
     <div class="box" id="box" v-if="isShow || payMoneyModel" @click="hiddleToggle"></div>
     <div class="choice-style" v-if="isShow">
       <div class="modelContent">
-        <!-- meiyige  -->
-        <div class="Consignee">
+        <div
+          class="Consignee"
+          v-for="(item,index) in myaddress"
+          :key="index"
+          @click="toggleCurrent(item)"
+        >
           <div class="messages">
             <p class="name">
-              {{receiver}}
-              <span class="phone">{{phone}}</span>
+              {{item.receiver}}
+              <span class="phone">{{item.phone}}</span>
             </p>
-            <p class="address">{{province}}{{city}}{{county}}{{detail}}</p>
-            <p class="Moaddress" v-if="itemShow ==0">默认地址</p>
+            <p class="address">{{item.province}}{{item.city}}{{item.county}}{{item.detail}}</p>
+            <p class="Moaddress" v-if="item.isDefault == 1">默认地址</p>
           </div>
-          <p class="yixuan" v-if="itemShow==0">已选</p>
-          <img src="../assets/imgs/right.png" alt class="right">
-        </div>
-        <div class="Consignee">
-          <div class="messages">
-            <p class="name">
-              {{receiver}}
-              <span class="phone">{{phone}}</span>
-            </p>
-            <p class="address">{{province}}{{city}}{{county}}{{detail}}</p>
-            <p class="Moaddress" v-if="itemShow">默认地址</p>
-          </div>
-          <p class="yixuan" v-if="itemShow">已选</p>
+          <p class="yixuan">已选</p>
           <img src="../assets/imgs/right.png" alt class="right">
         </div>
         <p class="none">没有更多了</p>
@@ -135,6 +127,12 @@ import qs from "qs";
 export default {
   data() {
     return {
+      myprovince: "",
+      mycity: "",
+      myreceiver: "",
+      mycounty: "",
+      mydetail: "",
+      myphone: "",
       isXuan: false,
       payMoneyModel: false,
       isShowPic: false,
@@ -161,12 +159,23 @@ export default {
       num: "",
       orderId: "",
       orderSn: "",
-      price: ""
+      price: "",
+      myaddress: [],
+      morenArr: []
     };
   },
   methods: {
     goBack() {
       this.$router.go(-1);
+    },
+    toggleCurrent(item) {
+      this.itemShow = true;
+      this.myprovince = item.province;
+      this.myCity = item.city;
+      this.myreceiver = item.receiver;
+      this.mycounty = item.county;
+      this.mydetail = item.detail;
+      this.myphone = item.phone;
     },
     cancel() {
       this.isShow = false;
@@ -178,6 +187,11 @@ export default {
     },
     //生成订单
     getPayist() {
+      if (this.isXuan) {
+        this.score = this.userScore;
+      } else {
+        this.score = 0;
+      }
       this.$axios({
         method: "post",
         url: "/order/buy",
@@ -190,7 +204,7 @@ export default {
           phone: "12345678901",
           totalPrice: this.totalPrice,
           remark: this.remark,
-          score: this.userScore
+          score: this.score
         }
       }).then(res => {
         console.log(res.data.data);
@@ -202,6 +216,34 @@ export default {
           this.orderSn = info.orderSn;
         }
       });
+    },
+    //获取地址信息
+    getAddress() {
+      this.$axios
+        .post("/userCenter/userAddressList", {
+          phone: "12345678901"
+        })
+        .then(res => {
+          if (res.data.status == 1) {
+            this.myaddress = res.data.data;
+            // for (let i in this.myaddress) {
+            //   this.myaddress[i]["selected"] = 0;
+            // }
+            // this.myaddress[0]["selected"] = 1;
+            var morenArr = [];
+            this.myaddress.forEach(function(v) {
+              if (v.isDefault == 1) {
+                morenArr.push(v);
+              }
+            });
+            this.myprovince = morenArr[0].province;
+            this.myCity = morenArr[0].city;
+            this.myreceiver = morenArr[0].receiver;
+            this.mycounty = morenArr[0].county;
+            this.mydetail = morenArr[0].detail;
+            this.myphone = morenArr[0].phone;
+          }
+        });
     },
     toggle() {
       this.isXuan = !this.isXuan;
@@ -230,6 +272,7 @@ export default {
           goodsId: this.$route.query.goodsId,
           number: this.$route.query.number,
           packageId: this.$route.query.packageId,
+          //地址
           aid: 0,
           phone: "12345678901"
         }
@@ -240,6 +283,7 @@ export default {
           this.sellPrice = info.sellPrice;
           //产品积分
           this.score = info.score;
+          //产品总价
           this.totalPrice = info.totalPrice;
           this.total = info.totalPrice;
           this.price = info.totalPrice;
@@ -251,6 +295,7 @@ export default {
           this.userAddress = info.userAddress;
           this.num = info.packageInfo[0].number;
           this.dateTime = info.packageInfo[0].dateTime;
+          this.getAddress();
         }
       });
     },
@@ -361,7 +406,8 @@ export default {
       background: #f1f1f1;
       width: 100%;
       bottom: 0;
-      min-height: 15.46rem;
+      max-height: 15.46rem;
+      overflow: hidden;
       font-size: 16px;
       z-index: 999;
       overflow-y: auto;
@@ -595,7 +641,7 @@ export default {
   }
   /*蒙版*/
   .box {
-    opacity: 0.9;
+    opacity: 0.8;
     background: #000;
     z-index: 99;
     width: 100%;

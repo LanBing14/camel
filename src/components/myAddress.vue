@@ -7,32 +7,18 @@
       <img src="../assets/imgs/add.png" alt>
     </div>
     <div class="modelContent">
-      <div class="Consignee">
+      <div class="Consignee" v-for="(item,index) in address" :key="index">
         <div class="messages">
           <p class="name">
-            {{receiver}}
-            <span class="phone">{{phone}}</span>
+            {{item.receiver}}
+            <span class="phone">{{item.phone}}</span>
           </p>
-          <p class="address">{{province}}{{city}}{{county}}{{detail}}</p>
-          <p class="Moaddress" v-if="itemShow ==0">默认地址</p>
+          <p class="address">{{item.province}}{{item.city}}{{item.county}}{{item.detail}}</p>
+          <p class="Moaddress" v-if="item.isDefault == 1">默认地址</p>
         </div>
         <div class="handelbtn">
-          <p class="edit" @click="editBtn">编辑</p>
-          <p @click="deleBtn">删除地址</p>
-        </div>
-      </div>
-      <div class="Consignee">
-        <div class="messages">
-          <p class="name">
-            {{receiver}}
-            <span class="phone">{{phone}}</span>
-          </p>
-          <p class="address txt-cut">{{province}}{{city}}{{county}}{{detail}}</p>
-          <p class="Moaddress" v-if="itemShow">默认地址</p>
-        </div>
-        <div class="handelbtn">
-          <p class="edit" @click="editBtn">编辑</p>
-          <p @click="deleBtn">删除地址</p>
+          <p class="edit" @click="editBtn(item)">编辑</p>
+          <p @click="deleBtn(item)">删除地址</p>
         </div>
       </div>
       <p class="none">没有更多了</p>
@@ -59,12 +45,13 @@ export default {
       county: "闵行区",
       receiver: "依稀",
       phone: "15434565434",
+      address: [],
       detail: "吴宝路428号台尚创意园A6楼201室"
     };
   },
   methods: {
     goback() {
-      this.$router.go(-1);
+      this.$router.push("/myInfo");
     },
     cancel() {
       this.isShow = false;
@@ -75,12 +62,32 @@ export default {
     addBtn() {
       this.$router.push("/creatAddress");
     },
-    editBtn() {
-      this.$router.push("/editAddress");
+    editBtn(item) {
+      this.$router.push({
+        path: "/editAddress",
+        query: {
+          id: item.id
+        }
+      });
     },
     hiddleToggle() {
       this.isShow = false;
+    },
+    getList() {
+      this.$axios
+        .post("/userCenter/userAddressList", {
+          phone: "12345678901"
+        })
+        .then(res => {
+          if (res.data.status == 1) {
+            this.address = res.data.data;
+            console.log(this.address);
+          }
+        });
     }
+  },
+  created() {
+    this.getList();
   }
 };
 </script>

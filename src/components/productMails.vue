@@ -112,6 +112,8 @@ export default {
     },
     hiddleToggle() {
       this.isShow = false;
+      this.showLing = false;
+      this.showWeiLing = false;
     },
     // 获取首页信息
     getList() {
@@ -165,7 +167,7 @@ export default {
   position: relative;
   /*蒙版*/
   .box {
-    opacity: 0.9;
+    opacity: 0.8;
     background: #000;
     z-index: 99;
     width: 100%;

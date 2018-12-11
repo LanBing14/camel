@@ -6,11 +6,11 @@
     <div class="setBox">
       <div class="infos">
         收货人
-        <input type="text" class="infosItem" placeholder="请输入收货人姓名" v-model="userName">
+        <input type="text" class="infosItem" placeholder="请输入收货人姓名" v-model="sName">
       </div>
       <div class="infos">
         手机号
-        <input type="text" class="infosItem" placeholder="请输入收货人手机号" v-model="phone">
+        <input type="text" class="infosItem" placeholder="请输入收货人手机号" v-model="shouPhone">
       </div>
       <div class="linkage" @click="cityChange">
         <div class="three">
@@ -26,16 +26,16 @@
         </div>
       </div>
     </div>
-    <textarea v-model="detailed" placeholder="详细地址"></textarea>
+    <textarea v-model="detail" placeholder="详细地址"></textarea>
     <!-- 设为默认地址 -->
     <div class="MorenAddress clearfix">
       <p class="fl">设为默认地址</p>
-      <div class="xuanze fr" @click="toggle">
-        <img src="../assets/imgs/gouxuan.png" alt v-show="show">
+      <div class="xuanze fr" @click="goDefault">
+        <img src="../assets/imgs/gouxuan.png" alt v-show="showChoice">
       </div>
     </div>
     <!-- 保存 -->
-    <div class="baocun">
+    <div class="baocun" @click="addAddress">
       <p>保存</p>
     </div>
     <mt-popup v-model="popupVisible" position="bottom" class="mint-popup">
@@ -51,17 +51,17 @@
   </div>
 </template>
 <script>
-import { Picker, Popup } from "mint-ui";
+import { Picker, Popup, Toast } from "mint-ui";
 import address from "./common/city.json";
 
 export default {
   data() {
     return {
       popupVisible: false,
-      userName: "",
-      phone: "",
-      show: false,
-      detailed: "",
+      sName: "",
+      shouPhone: "",
+      showChoice: false,
+      detail: "",
       regionInit: false, //禁止地区选择器自动初始化，picker组件会默认进行初始化，导致一进入页面就会默认选中一个初始3级地址
       slots: [
         {
@@ -105,9 +105,11 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
-    toggle() {
-      this.show = !this.show;
+    /*设置默认地址*/
+    goDefault() {
+      this.showChoice = !this.showChoice;
     },
+
     cityChange(e) {
       e.stopPropagation();
       this.popupVisible = true;
@@ -143,6 +145,66 @@ export default {
       } else {
         this.regionInit = true;
       }
+    },
+    addAddress() {
+      var that = this;
+
+      if (that.sName == "" || that.shouPhone == "" || that.detail == "") {
+        Toast({
+          message: "姓名、手机号、详情地址都不能为空",
+          duration: 1500
+        });
+        return false;
+      }
+      var addresss = new Array(); //定义一数组
+      addresss = that.address.split("-"); //字符分割
+      var i = 0;
+      if (that.showChoice) {
+        i = 1;
+      }
+      that.editAddress(
+        addresss[0],
+        addresss[1],
+        addresss[2],
+        that.sName,
+        that.shouPhone,
+        that.detail,
+        i
+      );
+    },
+    editAddress(
+      province,
+      city,
+      county,
+      receiver,
+      shouPhone,
+      detail,
+      isDefault
+    ) {
+      this.$axios
+        .post("/userCenter/editAddress", {
+          phone: "12345678901",
+          name: receiver,
+          editPhone: shouPhone,
+          province: province,
+          city: city,
+          county: county,
+          detail: detail,
+          isDefault: isDefault, //1默认 0普通,
+          id: 0 //新增穿0
+        })
+        .then(res => {
+          Toast({
+            message: "添加成功",
+            duration: 1500
+          });
+          this.$router.push({
+            path: "/myAddress",
+            query: {
+              number: res.data.data.id
+            }
+          });
+        });
     }
   },
   mounted() {

@@ -49,7 +49,7 @@ export default {
     },
     //倒计时
     CountDown() {
-      let times = 90;
+      let times = 60;
       this.isbtn = times + "s";
       var inter = setInterval(
         function() {

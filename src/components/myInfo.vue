@@ -6,16 +6,16 @@
     <div class="top">
       <div class="topLeft fl">
         <div class="fl">
-          <img src="../assets/imgs/users.png" alt>
+          <img :src="img || imgUrl" alt>
         </div>
         <div class="fr infoTitle">
-          <p>孙开心</p>
-          <p>12345678909</p>
+          <p>{{username}}</p>
+          <p>{{phone}}</p>
         </div>
       </div>
       <div class="fr topRight">
         <img src="../assets/imgs/jifen.png" alt>
-        <span>500积分</span>
+        <span>{{score}}积分</span>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
         <div class="fl">
           <img src="../assets/imgs/money.png" alt>
           <span>我的赏金</span>
-          <span>21</span>
+          <span>￥{{balance}}</span>
         </div>
         <div class="goTi fr" @click="goTiXian">去提现</div>
       </div>
@@ -55,16 +55,46 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      phone: "",
+      username: "",
+      score: "",
+      balance: "",
+      parentId: "",
+      imgUrl: require("../assets/imgs/users.png"),
+      img: ""
+    };
   },
   methods: {
     goTiXian() {
       this.$router.push("/getMoney");
     },
-
+    getList() {
+      this.$axios
+        .post("/userCenter/personCenter", {
+          phone: "12345678901"
+        })
+        .then(res => {
+          var info = res.data.data;
+          console.log(info);
+          var info = res.data.data;
+          this.phone = info.phone;
+          this.img = info.img;
+          this.score = info.score;
+          //产品积分
+          this.username = info.username;
+          //产品总价
+          this.balance = info.balance;
+          //上级id
+          this.parentId = info.parentId;
+        });
+    },
     goback() {
       this.$router.go(-1);
     }
+  },
+  created() {
+    this.getList();
   }
 };
 </script>
@@ -82,6 +112,8 @@ export default {
     .topLeft {
       padding: 0.6rem;
       div {
+        width: 1.5rem;
+
         img {
           width: 1.5rem;
         }
