@@ -9,7 +9,7 @@
       <img src="../assets/imgs/map.png" class="sign">
       <div class="messages">
         <p class="name">
-          {{myreceiver}}
+          <span>{{myreceiver}}</span>
           <span class="phone">{{myphone}}</span>
         </p>
         <p class="address">{{myprovince}}{{mycity}}{{mycounty}}{{mydetail}}</p>
@@ -123,7 +123,7 @@
   </div>
 </template>
 <script>
-import qs from "qs";
+import { Picker, Popup, Toast } from "mint-ui";
 export default {
   data() {
     return {
@@ -140,14 +140,14 @@ export default {
       isShow: false,
       itemShow: false,
       remark: "",
-      receiver: "依稀",
-      phone: "15434565434",
-      province: "江苏省",
-      city: "徐州市",
-      county: "盐城市",
-      totalPrice: "222",
-      freight: "13",
-      detail: "111111111",
+      receiver: "",
+      phone: "",
+      province: "",
+      city: "",
+      county: "",
+      totalPrice: "",
+      freight: "",
+      detail: "",
       title: "",
       sellPrice: "",
       totalPrice: "",
@@ -162,7 +162,8 @@ export default {
       orderSn: "",
       price: "",
       myaddress: [],
-      morenArr: []
+      morenArr: [],
+      myId: 0
     };
   },
   methods: {
@@ -177,13 +178,30 @@ export default {
       this.mycounty = item.county;
       this.mydetail = item.detail;
       this.myphone = item.phone;
+      this.myId = item.id;
+      this.isShow = false;
+      this.getList();
     },
     cancel() {
       this.isShow = false;
     },
     gopay() {
-      this.payMoneyModel = true;
       //生成订单
+      if (
+        this.myreceiver == "" ||
+        this.myCity == "" ||
+        this.mycounty == "" ||
+        this.mydetail == "" ||
+        this.myphone == "" ||
+        this.myprovince == ""
+      ) {
+        Toast({
+          message: "请去新增地址",
+          duration: 1500
+        });
+        return false;
+      }
+      this.payMoneyModel = true;
       this.getPayist();
     },
     //生成订单
@@ -201,14 +219,13 @@ export default {
           number: this.$route.query.number,
           packageId: this.$route.query.packageId,
           //地址
-          aid: 1,
+          aid: this.myId,
           phone: "12345678901",
           totalPrice: this.totalPrice,
           remark: this.remark,
           score: this.score
         }
       }).then(res => {
-        console.log(res.data.data);
         if (res.data.data.status == 1) {
           var info = res.data.data;
           //订单id
@@ -227,13 +244,11 @@ export default {
         .then(res => {
           if (res.data.status == 1) {
             this.myaddress = res.data.data;
-            // for (let i in this.myaddress) {
-            //   this.myaddress[i]["selected"] = 0;
-            // }
-            // this.myaddress[0]["selected"] = 1;
             var morenArr = [];
             this.myaddress.forEach(function(v) {
               if (v.isDefault == 1) {
+                morenArr.push(v);
+              } else {
                 morenArr.push(v);
               }
             });
@@ -243,6 +258,7 @@ export default {
             this.mycounty = morenArr[0].county;
             this.mydetail = morenArr[0].detail;
             this.myphone = morenArr[0].phone;
+            this.myId = morenArr[0].id;
             this.toggleCurrent(morenArr[0]);
           }
         });
@@ -274,8 +290,7 @@ export default {
           goodsId: this.$route.query.goodsId,
           number: this.$route.query.number,
           packageId: this.$route.query.packageId,
-          //地址
-          aid: 0,
+          aid: this.myId,
           phone: "12345678901"
         }
       }).then(res => {
@@ -297,7 +312,6 @@ export default {
           this.userAddress = info.userAddress;
           this.num = info.packageInfo[0].number;
           this.dateTime = info.packageInfo[0].dateTime;
-          this.getAddress();
         }
       });
     },
@@ -312,6 +326,9 @@ export default {
   created() {
     document.title = "订单确定";
     this.number = this.$route.query.number;
+    // 获取地址信息
+    this.getAddress();
+    //获取订单信息
     this.getList();
   },
   mounted() {}
@@ -384,12 +401,15 @@ export default {
     .sign {
       width: 0.6rem;
     }
+    .right {
+      width: 0.8rem;
+    }
     .messages {
       width: 82%;
       padding-left: 0.8rem;
       .name {
         .phone {
-          margin-left: 1rem;
+          margin-left: 0.2rem;
         }
       }
       .address {
@@ -426,7 +446,7 @@ export default {
         background-color: #fff;
         font-size: 16px;
         height: 3.2rem;
-        padding: 0.3rem 0.2rem 0rem 0.2rem;
+        padding: 0.3rem 0.5rem 0rem 0.2rem;
         border-bottom: none;
         .yixuan {
           font-size: 12px;

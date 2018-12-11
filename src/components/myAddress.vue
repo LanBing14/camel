@@ -18,7 +18,7 @@
         </div>
         <div class="handelbtn">
           <p class="edit" @click="editBtn(item)">编辑</p>
-          <p @click="deleBtn(item)">删除地址</p>
+          <p @click="deleBtn(item.id)">删除地址</p>
         </div>
       </div>
       <p class="none">没有更多了</p>
@@ -29,12 +29,14 @@
       <p>确定删除该地址吗?</p>
       <div class="bgn">
         <span class="fl" @click="cancel">取消</span>
-        <span class="fr">确定</span>
+        <span class="fr" @click="makeSure">确定</span>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { Picker, Popup, Toast } from "mint-ui";
+
 export default {
   data() {
     return {
@@ -46,18 +48,23 @@ export default {
       receiver: "依稀",
       phone: "15434565434",
       address: [],
+      deleteId: "",
       detail: "吴宝路428号台尚创意园A6楼201室"
     };
   },
   methods: {
     goback() {
-      this.$router.push("/myInfo");
+      this.$router.go(-1);
     },
     cancel() {
       this.isShow = false;
     },
-    deleBtn() {
+    makeSure() {
+      this.deleList();
+    },
+    deleBtn(id) {
       this.isShow = true;
+      this.deleteId = id;
     },
     addBtn() {
       this.$router.push("/creatAddress");
@@ -81,7 +88,23 @@ export default {
         .then(res => {
           if (res.data.status == 1) {
             this.address = res.data.data;
-            console.log(this.address);
+          }
+        });
+    },
+    deleList(id) {
+      this.$axios
+        .post("/userCenter/delAddress", {
+          phone: "12345678901",
+          id: this.deleteId
+        })
+        .then(res => {
+          if (res.data.status == 1) {
+            Toast({
+              message: "删除成功",
+              duration: 1500
+            });
+            this.isShow = false;
+            this.getList();
           }
         });
     }
