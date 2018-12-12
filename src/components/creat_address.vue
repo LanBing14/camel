@@ -240,6 +240,9 @@ export default {
         });
     }
   },
+  created() {
+    document.title = "新增收货地址";
+  },
   mounted() {
     var that = this;
     this.$nextTick(() => {

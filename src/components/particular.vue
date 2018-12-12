@@ -104,7 +104,6 @@ export default {
       isShow: false,
       iskey: -1,
       commentCount: "",
-      firstColor: "",
       price: "",
       mount: 1,
       title: "",
@@ -200,9 +199,7 @@ export default {
     }
   },
   created() {
-    if (!this.firstColor) {
-      this.firstColor = "firstColor";
-    }
+    document.title = "商品详情";
     this.getList();
   },
   mounted() {},

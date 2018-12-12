@@ -4,108 +4,103 @@
       <mt-button icon="back" size="small" slot="left"></mt-button>
     </mt-header>
     <mt-navbar v-model="selected">
-      <mt-tab-item id="0">全部</mt-tab-item>
-      <mt-tab-item id="1">待付款</mt-tab-item>
-      <mt-tab-item id="2">待收货</mt-tab-item>
+      <mt-tab-item id>全部</mt-tab-item>
+      <mt-tab-item id="0">待付款</mt-tab-item>
+      <mt-tab-item id="1">待收货</mt-tab-item>
     </mt-navbar>
     <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="0">
-        <div class="orderBox">
+      <mt-tab-container-item id>
+        <div class="orderBox" v-for="(item,index) in orderList" :key="index">
           <p class="orderNum">
             订单编号:
-            <span>124243</span>
+            <span>{{item.orderSn}}</span>
           </p>
-          <div class="goodsInfo">
-            <img src="../assets/imgs/swiper.png" alt>
+          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" :key="i">
+            <img :src="it.goodsArray.img" alt>
             <div class="name">
-              <p style="font-size: 16px;" class="txt-cut title">无抗鸡蛋无抗鸡蛋</p>
-              <p class="mount">132541245</p>
+              <p style="font-size: 16px;" class="txt-cut title">{{it.goodsArray.title}}</p>
+              <p class="mount">{{it.number}}枚/{{it.packageDateTime}}个月</p>
               <div class="money">
-                <p class="jine">￥13241</p>
-                <p class="shul">x1324125</p>
+                <p class="jine">￥{{it.packageSellPrice}}</p>
+                <p class="shul">x{{item.number}}</p>
               </div>
             </div>
           </div>
           <div class="total">
             <p>
-              共132件商品，合计
-              <span>￥141234</span>
+              共{{item.number}}件商品，合计
+              <span>￥{{item.amount}}</span>
             </p>
           </div>
-          <div class="btns" v-if="cancelDing">
-            <div class="cancelBtn">取消订单</div>
+          <div class="btns" v-if="item.statusValue == '未支付'">
             <div class="goPay">去支付</div>
-            <!--状态一-->
-            <div class="flag">待付款</div>
+            <div class="flag">{{item.statusValue}}</div>
           </div>
-          <div class="btns">
-            <div class="goPay">订单详情</div>
-            <div class="flag">待收货</div>
+          <div class="btns" v-else>
+            <div class="goPay" @click="detailBtn(item.id)">订单详情</div>
+            <div class="flag">{{item.statusValue}}</div>
           </div>
         </div>
       </mt-tab-container-item>
 
-      <mt-tab-container-item id="1">
+      <mt-tab-container-item id="0">
         <!--待付款列表信息-->
-        <div class="orderBox">
+        <div class="orderBox" v-for="(item,index) in orderList" :key="index">
           <p class="orderNum">
             订单编号:
-            <span>124243</span>
+            <span>{{item.orderSn}}</span>
           </p>
-          <div class="goodsInfo">
-            <img src="../assets/imgs/swiper.png" alt>
+          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" :key="i">
+            <img :src="it.goodsArray.img" alt>
             <div class="name">
-              <p class="txt-cut title" style="font-size: 16px;width:50%;">无抗绿壳鸡蛋</p>
-              <p class="mount">132541245</p>
+              <p class="txt-cut title" style="font-size: 16px;width:50%;">{{it.goodsArray.title}}</p>
+              <p class="mount">{{it.number}}枚/{{it.packageDateTime}}个月</p>
               <div class="money clearfix">
-                <p class="jine">￥13241</p>
-                <p class="shul">x1324125</p>
+                <p class="jine">￥{{it.packageSellPrice}}</p>
+                <p class="shul">x{{item.number}}</p>
               </div>
             </div>
           </div>
           <div class="total">
             <p>
-              共132件商品，合计
-              <span>￥141234</span>
+              共{{item.number}}件商品，合计
+              <span>￥{{item.amount}}</span>
             </p>
           </div>
           <div class="btns">
-            <div class="cancelBtn">取消订单</div>
             <div class="goPay">去支付</div>
-            <!--状态一-->
-            <div class="flag">待付款</div>
+            <div class="flag">{{item.statusValue}}</div>
           </div>
         </div>
       </mt-tab-container-item>
 
       <!-- 待收货列表-->
-      <mt-tab-container-item id="2">
-        <div class="orderBox">
+      <mt-tab-container-item id="1">
+        <div class="orderBox" v-for="(item,index) in orderList" :key="index">
           <p class="orderNum">
             订单编号:
-            <span>1342142354125</span>
+            <span>{{item.orderSn}}</span>
           </p>
-
-          <div class="goodsInfo">
-            <img src="../assets/imgs/swiper.png" alt>
+          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" :key="i">
+            <img :src="it.goodsArray.img" alt>
             <div class="name">
-              <p style="font-size: 16px;width:50%;" class="txt-cut title">噶而过若干A</p>
-              <p class="mount">212223</p>
-              <div class="money">
-                <p class="jine">￥123</p>
-                <p class="shul">x4124</p>
+              <p class="txt-cut title" style="font-size: 16px;width:50%;">{{it.goodsArray.title}}</p>
+              <p class="mount">{{it.number}}枚/{{it.packageDateTime}}个月</p>
+              <div class="money clearfix">
+                <p class="jine">￥{{it.packageSellPrice}}</p>
+                <p class="shul">x{{item.number}}</p>
               </div>
             </div>
           </div>
           <div class="total">
             <p>
-              共141234件商品，合计
-              <span>￥141234</span>
+              共{{item.number}}件商品，合计
+              <span>￥{{item.amount}}</span>
             </p>
           </div>
           <div class="btns">
-            <div class="goPay">订单详情</div>
-            <div class="flag">待收货</div>
+            <div class="goPay" @click="detailBtn(item.id)">订单详情</div>
+            <div class="flag">{{item.statusValue}}</div>
           </div>
         </div>
       </mt-tab-container-item>
@@ -119,32 +114,42 @@ export default {
   name: "myOrder",
   data() {
     return {
-      selected: "0",
-      cancelDing: false
+      selected: "",
+      cancelDing: false,
+      orderList: [],
+      selectId: ""
     };
   },
   methods: {
-    test() {
-      console.log(111);
+    detailBtn(id) {
+      console.log(id);
+      this.$router.push({
+        path: "/packDetails",
+        query: {
+          id: id
+        }
+      });
     },
     getList() {
       this.$axios
-        .post("/userCenter/personCenter", {
-          phone: this.selected
+        .post("/order/myOrderList", {
+          phone: "12345678901",
+          status: this.selected
         })
         .then(res => {
-          var info = res.data.data;
-          console.log(info);
+          this.orderList = res.data.data;
         });
     }
   },
   created() {
-    // this.getList();
+    document.title = "我的订单";
+    this.getList();
   },
   mounted() {},
   watch: {
     selected() {
-      // this.getList();
+      this.selectId = this.selected;
+      this.getList();
     }
   },
   components: {}
@@ -153,7 +158,6 @@ export default {
 
 <style lang="scss" scoped>
 #myOrder {
-  height: 100%;
   background: #f1f1f1;
   padding-top: 2rem;
   .mint-navbar {

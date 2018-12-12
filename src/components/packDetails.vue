@@ -1,31 +1,28 @@
 <template>
   <div class="packDetails">
     <mt-header fixed title="订单详情">
-      <mt-button icon="back" size="small" slot="left"></mt-button>
+      <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
     </mt-header>
     <!-- 信息发货 -->
     <div class="infoWay">
       <img src="../assets/imgs/daishouhuo.png" alt>
-      <span>待收货</span>
+      <span>{{infoObj.statusValue }}</span>
     </div>
-    <div class="infoWay" v-show="isShow">
-      <img src="../assets/imgs/daipingjia.png" alt>
-      <span>待评价</span>
-    </div>
+
     <!-- /*收货人信息*/ -->
-    <div class="Consignee" v-show="isShow">
+    <div class="Consignee">
       <img src="../assets/imgs/map.png" class="sign">
       <div class="messages">
         <p class="name">
-          {{receiver}}
-          <span class="phone">{{phone}}</span>
+          {{infoObj.name}}
+          <span class="phone">{{infoObj.phone}}</span>
         </p>
-        <p class="address">{{province}}{{city}}{{county}}{{detail}}</p>
+        <p class="address">{{infoObj.address}}</p>
       </div>
       <img src="../assets/imgs/right.png" alt class="right">
     </div>
     <!-- 发货地址 -->
-    <div class="sendInfo">
+    <!-- <div class="sendInfo">
       <div class="sendItem">
         <img src="../assets/imgs/car.png" alt>
       </div>
@@ -54,17 +51,17 @@
           @click="copy"
         >复制单号</button>
       </div>
-    </div>
+    </div>-->
     <!--商品信息-->
     <div class="productInfo">
-      <img src="../assets/imgs/swiper.png" alt class="goodPic">
+      <img :src="orderGoods.img" alt class="goodPic">
       <div class="line1">
-        <p class="name txt-cut">鸡蛋鸡蛋鸡蛋鸡鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋鸡蛋蛋鸡蛋鸡蛋</p>
-        <p class="money">￥12222</p>
+        <p class="name txt-cut">{{orderGoods.title}}</p>
+        <p class="money">￥{{goodsArray.packageSellPrice}}</p>
       </div>
       <div class="line2">
-        <p class="guige">344枚/13个月</p>
-        <p class="num">x122</p>
+        <p class="guige">{{goodsArray.number}}枚/{{goodsArray.packageDateTime}}个月</p>
+        <p class="num">x{{infoObj.number}}</p>
       </div>
     </div>
     <div class="sendWay">
@@ -72,21 +69,21 @@
         <p>
           配送方式:
           <span>快递</span>
-          <span>￥0.00</span>
+          <span>￥{{infoObj.freight}}</span>
         </p>
         <p>
           积分抵扣:
-          <span>0</span>
+          <span>{{infoObj.discount}}</span>
         </p>
         <p>
           <span>买家留言:</span>
-          请及时留言
+          {{infoObj.remark}}
         </p>
       </div>
       <div class="sendWayBot clearfix">
         <p>
           总计
-          <span>￥234</span>
+          <span>￥{{infoObj.amount}}</span>
         </p>
       </div>
     </div>
@@ -96,11 +93,11 @@
       <div class="clearfix">
         <p>
           <span class="fl">下单时间</span>
-          <span class="fr">2018/8/23/20:21</span>
+          <span class="fr">{{infoObj.addTime}}</span>
         </p>
         <p>
           <span class="fl">付款时间</span>
-          <span class="fr">2018/8/23/20:21</span>
+          <span class="fr">{{infoObj.payTime}}</span>
         </p>
       </div>
     </div>
@@ -120,10 +117,16 @@ export default {
       city: "徐州市",
       detail: "111111111111111111111111",
       county: "盐城市",
-      copyContent: "34123412423412343"
+      copyContent: "34123412423412343",
+      infoObj: {},
+      orderGoods: {},
+      goodsArray: {}
     };
   },
   methods: {
+    goback() {
+      this.$router.go(-1);
+    },
     copy() {
       var copybtn = document.getElementsByClassName("btn");
       var clipboard = new Clipboard(copybtn);
@@ -136,7 +139,24 @@ export default {
       clipboard.on("error", function() {
         Toast("复制失败，请手动复制");
       });
+    },
+    getList() {
+      this.$axios
+        .post("/order/theOrderInfo", {
+          phone: "12345678901",
+          id: this.$route.query.id
+        })
+        .then(res => {
+          this.infoObj = res.data.data;
+          this.orderGoods = res.data.data.orderGoods[0].goodsArray;
+          this.goodsArray = res.data.data.orderGoods[0];
+          console.log(this.infoObj);
+        });
     }
+  },
+  created() {
+    document.title = "订单详情";
+    this.getList();
   },
   mounted() {
     var copybtn = document.getElementsByClassName("btn");

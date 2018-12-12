@@ -133,6 +133,7 @@ export default {
     }
   },
   created() {
+    document.title = "商城";
     this.getList();
   },
   mounted() {
