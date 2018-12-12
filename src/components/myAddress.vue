@@ -49,7 +49,8 @@ export default {
       phone: "",
       address: [],
       deleteId: "",
-      detail: ""
+      detail: "",
+      phoneArr: []
     };
   },
   methods: {
@@ -88,6 +89,11 @@ export default {
         .then(res => {
           if (res.data.status == 1) {
             this.address = res.data.data;
+            // var reg = /(\d{3})\d{4}(\d{4})/;
+            // this.phoneArr = this.address.map(function(v) {
+            //   v.phone = v.phone.replace(reg, "$1****$2");
+            //   return v;
+            // });
           }
         });
     },
@@ -214,7 +220,7 @@ export default {
         }
       }
       .handelbtn {
-        width: 15%;
+        width: 18%;
         text-align: center;
         font-size: 12px;
         color: #999;

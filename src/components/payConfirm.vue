@@ -38,7 +38,7 @@
         <p class="money">￥{{sellPrice}}</p>
       </div>
       <div class="line2">
-        <p class="guige">{{num}}枚/{{dateTime}}个月</p>
+        <p class="guige">30枚/{{dateTime}}个月</p>
         <p class="num">x{{number}}</p>
       </div>
     </div>
@@ -51,7 +51,7 @@
       </div>
       <div class="total">
         <p class="left">运费</p>
-        <p class="right">{{freight}}</p>
+        <p class="right">￥{{freight}}</p>
       </div>
       <div class="total">
         <p class="left">

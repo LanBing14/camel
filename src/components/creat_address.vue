@@ -111,6 +111,7 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
+
     /*设置默认地址*/
     goDefault() {
       this.showChoice = !this.showChoice;
@@ -164,7 +165,6 @@ export default {
     },
     addAddress() {
       var that = this;
-
       if (that.sName == "" || that.shouPhone == "" || that.detail == "") {
         Toast({
           message: "姓名、手机号、详情地址都不能为空",
@@ -179,6 +179,7 @@ export default {
         });
         return false;
       }
+
       if (
         this.address.substring(0, 3) == "青海省" ||
         this.address.substring(0, 2) == "西藏" ||

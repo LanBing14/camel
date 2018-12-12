@@ -1,9 +1,7 @@
 <template>
   <div class="productMails">
     <div class="top">
-      <mt-header title="商城" style="height:1.8rem">
-        <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
-      </mt-header>
+      <mt-header title="商城" style="height:1.8rem"></mt-header>
       <router-link class="userTou" to="/myInfo">
         <img src="../assets/imgs/user.png" alt>
       </router-link>
@@ -31,7 +29,7 @@
     <!-- 商品详情 -->
     <div class="prductDetails">
       <div class="shareMoneyTop publiColor">
-        <span>热门好货</span>
+        <img src="../assets/imgs/hotpic.png" alt>
       </div>
       <div class="shareMoneyContent">
         <ul
@@ -107,9 +105,7 @@ export default {
       this.page++;
       this.getList();
     },
-    goback() {
-      // this.$route.go(-1);
-    },
+
     hiddleToggle() {
       this.isShow = false;
       this.showLing = false;
@@ -321,65 +317,6 @@ export default {
     }
   }
 
-  // 分享转赏金
-  .shareMoney {
-    margin-top: 0.5rem;
-    width: 100%;
-    background-color: #fff;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    padding: 0.9rem 0rem 0.4rem 0rem;
-    font-size: 14px;
-    .shareMoneyTop {
-      height: 1.4rem;
-      font-size: 16px;
-      text-align: center;
-      padding: 0.1rem 0.1rem 0.1rem 0rem;
-    }
-    .shareMoneyContent {
-      width: 100%;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      margin-top: 0.3rem;
-
-      .shareMoneyItem {
-        width: 4.5rem;
-        padding: 0.2rem;
-        background-color: #fff;
-        p {
-          line-height: 0.8rem;
-        }
-        .shareImg {
-          width: 3.6rem;
-          height: 4.32rem;
-          margin: 0 auto;
-          margin-bottom: 0.2rem;
-
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-        .shareBtn {
-          height: 1rem;
-          line-height: 1rem;
-          margin-top: 0.2rem;
-
-          div {
-            margin: 0 auto;
-            width: 2.6rem;
-            border-radius: 25px;
-            font-size: 14px;
-            color: #ff7f01;
-            text-align: center;
-            background-color: #fff;
-            border: 1px solid #eeeeee;
-          }
-        }
-      }
-    }
-  }
   .middlePic {
     width: 100%;
     height: 5.46rem;
@@ -401,6 +338,9 @@ export default {
       font-size: 16px;
       text-align: center;
       padding: 0.8rem 0.1rem 0.1rem 0rem;
+      img {
+        width: 5rem;
+      }
     }
     .prductDetailsContent {
       li {

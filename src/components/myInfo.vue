@@ -10,7 +10,7 @@
         </div>
         <div class="fr infoTitle">
           <p>{{username}}</p>
-          <p>{{phone}}</p>
+          <p>{{myphone}}</p>
         </div>
       </div>
       <div class="fr topRight">
@@ -56,7 +56,7 @@
 export default {
   data() {
     return {
-      phone: "",
+      myphone: "",
       username: "",
       score: "",
       balance: "",
@@ -87,6 +87,8 @@ export default {
           this.balance = info.balance;
           //上级id
           this.parentId = info.parentId;
+          var reg = /^(\d{3})\d{4}(\d{4})$/;
+          this.myphone = this.phone.replace(reg, "$1****$2");
         });
     },
     goback() {

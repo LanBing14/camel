@@ -111,6 +111,7 @@ export default {
     goBack() {
       this.$router.push("/myAddress");
     },
+
     /* 验证手机号 */
     checkPhone(phone) {
       if (!/^1[34578]\d{9}$/.test(phone)) {
@@ -130,6 +131,7 @@ export default {
         });
         return false;
       }
+
       if (!/^1[34578]\d{9}$/.test(that.shouPhone)) {
         Toast({
           message: "手机号码不正确",

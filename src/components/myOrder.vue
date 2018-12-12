@@ -4,16 +4,12 @@
       <mt-button icon="back" size="small" slot="left"></mt-button>
     </mt-header>
     <mt-navbar v-model="selected">
-      <mt-tab-item id>全部</mt-tab-item>
+      <mt-tab-item id="0">全部</mt-tab-item>
       <mt-tab-item id="1">待付款</mt-tab-item>
       <mt-tab-item id="2">待收货</mt-tab-item>
     </mt-navbar>
-
-    <!-- tab-container -->
     <mt-tab-container v-model="selected">
-      <!--全部状态下-->
-      <mt-tab-container-item id>
-        <!--待付款列表信息-->
+      <mt-tab-container-item id="0">
         <div class="orderBox">
           <p class="orderNum">
             订单编号:
@@ -36,40 +32,14 @@
               <span>￥141234</span>
             </p>
           </div>
-          <div class="btns">
-            <div class="cancelBtn">套餐详情</div>
+          <div class="btns" v-if="cancelDing">
+            <div class="cancelBtn">取消订单</div>
             <div class="goPay">去支付</div>
             <!--状态一-->
-            <div class="flag">代发货</div>
-          </div>
-        </div>
-
-        <!--列表信息-->
-        <div class="orderBox">
-          <p class="orderNum">
-            订单编号:
-            <span>1342142354125</span>
-          </p>
-
-          <div class="goodsInfo">
-            <img src="../assets/imgs/swiper.png" alt>
-            <div class="name">
-              <p style="font-size: 16px;width:50%;" class="txt-cut title">噶而过而过干A</p>
-              <p class="mount">tqe231412发乎r</p>
-              <div class="money">
-                <p class="jine">￥123</p>
-                <p class="shul">x4124</p>
-              </div>
-            </div>
-          </div>
-          <div class="total">
-            <p>
-              共141234件商品，合计
-              <span>￥141234</span>
-            </p>
+            <div class="flag">待付款</div>
           </div>
           <div class="btns">
-            <div class="goPay">套餐详情</div>
+            <div class="goPay">订单详情</div>
             <div class="flag">待收货</div>
           </div>
         </div>
@@ -100,7 +70,7 @@
             </p>
           </div>
           <div class="btns">
-            <div class="cancelBtn">套餐详情</div>
+            <div class="cancelBtn">取消订单</div>
             <div class="goPay">去支付</div>
             <!--状态一-->
             <div class="flag">待付款</div>
@@ -134,7 +104,7 @@
             </p>
           </div>
           <div class="btns">
-            <div class="goPay">套餐详情</div>
+            <div class="goPay">订单详情</div>
             <div class="flag">待收货</div>
           </div>
         </div>
@@ -149,25 +119,34 @@ export default {
   name: "myOrder",
   data() {
     return {
-      openid: "",
-      id: "", //订单id
-      selected: "",
-      packageInfo: [],
-      allList: [],
-      obligationList: [], //tab 待付款列表信息循环
-      receivingList: [], //tab 待收货的列表信息循环
-      evaluateList: [], //tab 待评价列表信息循环
-      quanbu: [], //全部
-      goodsIdAll: "",
-      packageIdAll: "",
-      numberAll: "",
-      totalPriceAll: "",
-      aidAll: "",
-      orderSnAll: ""
+      selected: "0",
+      cancelDing: false
     };
   },
-
+  methods: {
+    test() {
+      console.log(111);
+    },
+    getList() {
+      this.$axios
+        .post("/userCenter/personCenter", {
+          phone: this.selected
+        })
+        .then(res => {
+          var info = res.data.data;
+          console.log(info);
+        });
+    }
+  },
+  created() {
+    // this.getList();
+  },
   mounted() {},
+  watch: {
+    selected() {
+      // this.getList();
+    }
+  },
   components: {}
 };
 </script>
@@ -186,7 +165,13 @@ export default {
 
   .mint-navbar .mint-tab-item.is-selected {
     color: #ff7f01;
-    border-bottom: none;
+    border-bottom: 1px solid #ff7f01;
+  }
+  .mint-navbar .mint-tab-item.is-selected {
+    margin-bottom: 0;
+  }
+  .mint-navbar .mint-tab-item {
+    margin: 0px 17px;
   }
   .orderBox {
     font-size: 14px;
@@ -274,7 +259,7 @@ export default {
         width: 3rem;
         line-height: 1.5rem;
         text-align: center;
-        color: #79797b;
+        color: #000;
         border: 1px solid #79797b;
         border-radius: 2rem;
         margin-right: 0.8rem;
