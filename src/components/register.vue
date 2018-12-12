@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     getYzm() {
-      this.tishi = "";
       this.isDis = true;
       this.CountDown();
     },
@@ -63,6 +62,30 @@ export default {
         }.bind(this),
         1000
       );
+    },
+    // 去绑定
+    getLogin() {
+      this.$axios.post("/HomeUser/Login", this.fromData).then(res => {
+        if (res.data.code == "0") {
+          localStorage.setItem("token", res.data.data.Ticket);
+          this.$router.push("/index");
+        } else if (res.data.code == "101") {
+          // 去注册 完善个人信息
+          this.$router.push({
+            path: "/res",
+            query: {
+              iphone: this.fromData.phone,
+              ZYFUser: res.data.data.ZYFUser_ID
+            },
+            meta: { id: 1 }
+          });
+        } else if (res.data.code == "1001") {
+          // 验证码错误
+          this.tishi = res.data.msg;
+        } else {
+          this.tishi = "登录失败，请重新尝试。";
+        }
+      });
     }
   }
 };

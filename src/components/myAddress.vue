@@ -40,21 +40,21 @@ import { Picker, Popup, Toast } from "mint-ui";
 export default {
   data() {
     return {
-      province: "上海市",
-      city: "上海市",
+      province: "",
+      city: "",
       itemShow: 0,
       isShow: false,
-      county: "闵行区",
-      receiver: "依稀",
-      phone: "15434565434",
+      county: "",
+      receiver: "",
+      phone: "",
       address: [],
       deleteId: "",
-      detail: "吴宝路428号台尚创意园A6楼201室"
+      detail: ""
     };
   },
   methods: {
     goback() {
-      this.$router.go(-1);
+      this.$router.push("/myInfo");
     },
     cancel() {
       this.isShow = false;

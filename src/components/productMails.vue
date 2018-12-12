@@ -108,7 +108,7 @@ export default {
       this.getList();
     },
     goback() {
-      this.$route.go(-1);
+      // this.$route.go(-1);
     },
     hiddleToggle() {
       this.isShow = false;
@@ -241,7 +241,7 @@ export default {
   }
   .userTou {
     position: absolute;
-    top: 0;
+    top: 0.15rem;
     right: 0.3rem;
     img {
       width: 1.2rem;

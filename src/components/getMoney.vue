@@ -14,7 +14,6 @@
       <p class="reti">
         金额
         <span>￥780</span>
-        ,全部提现
       </p>
       <div class="apply_for" @click="placeNow">提现</div>
     </div>
@@ -89,7 +88,7 @@ export default {
       this.hintShow = true;
     },
     goBack() {
-      this.$router.go(-1);
+      this.$router.push({ path: "/myInfo" });
     },
     cancel() {
       this.hintShow = false;

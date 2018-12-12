@@ -22,7 +22,6 @@ export default {
     return {};
   },
   methods: {
-    //点击跳转商品详情
     goBack() {
       this.$router.go(-1);
     },

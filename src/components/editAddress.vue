@@ -10,7 +10,13 @@
       </div>
       <div class="infos">
         手机号
-        <input type="text" class="infosItem" placeholder="请输入收货人手机号" v-model="shouPhone">
+        <input
+          type="text"
+          class="infosItem"
+          placeholder="请输入收货人手机号"
+          v-model="shouPhone"
+          @blur="checkPhone(shouPhone)"
+        >
       </div>
       <div class="linkage" @click="cityChange">
         <div class="three">
@@ -105,11 +111,42 @@ export default {
     goBack() {
       this.$router.push("/myAddress");
     },
+    /* 验证手机号 */
+    checkPhone(phone) {
+      if (!/^1[34578]\d{9}$/.test(phone)) {
+        Toast({
+          message: "手机号码不正确",
+          duration: 1500
+        });
+      }
+      return true;
+    },
     updateAddress() {
       var that = this;
       if (that.sName == "" || that.shouPhone == "" || that.detail == "") {
         Toast({
           message: "姓名、手机号、详情地址都不能为空",
+          duration: 1500
+        });
+        return false;
+      }
+      if (!/^1[34578]\d{9}$/.test(that.shouPhone)) {
+        Toast({
+          message: "手机号码不正确",
+          duration: 1500
+        });
+        return false;
+      }
+      if (
+        this.address.substring(0, 3) == "青海省" ||
+        this.address.substring(0, 2) == "西藏" ||
+        this.address.substring(0, 3) == "海南省" ||
+        this.address.substring(0, 2) == "新疆" ||
+        this.address.substring(0, 2) == "香港" ||
+        this.address.substring(0, 2) == "澳门"
+      ) {
+        Toast({
+          message: "新疆、青海、香港、澳门、西藏、宁夏等地不发货",
           duration: 1500
         });
         return false;
@@ -251,7 +288,6 @@ export default {
     border-radius: 0.4rem 0.4rem 0 0;
   }
   .setBox {
-    padding-bottom: 0.5rem;
     font-size: 16px;
     background: #ffffff;
     .infos {
@@ -311,7 +347,7 @@ export default {
     width: 100%;
     font-size: 16px;
     box-sizing: border-box;
-    padding: 0.1rem 0 0.5rem 0.7rem;
+    padding: 0.4rem 0 0.5rem 0.7rem;
     font-family: PingFang-SC-Medium;
     color: #666666;
     resize: none;

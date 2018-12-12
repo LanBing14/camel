@@ -5,7 +5,7 @@
     </mt-header>
 
     <!-- /*收货人信息*/ -->
-    <div class="Consignee" @click="xuanModel">
+    <div class="Consignee" @click="xuanModel" v-if="!remaind">
       <img src="../assets/imgs/map.png" class="sign">
       <div class="messages">
         <p class="name">
@@ -14,6 +14,11 @@
         </p>
         <p class="address">{{myprovince}}{{mycity}}{{mycounty}}{{mydetail}}</p>
       </div>
+      <img src="../assets/imgs/right.png" alt class="right">
+    </div>
+    <div class="Consignee" @click="xuanModel" v-if="remaind">
+      <img src="../assets/imgs/jingao.png" class="jingao">
+      <div class="messages publiColor">亲,您还没收货地址,请点击这里选择您的收货地址</div>
       <img src="../assets/imgs/right.png" alt class="right">
     </div>
     <!--提示-->
@@ -128,6 +133,7 @@ export default {
   data() {
     return {
       myprovince: "",
+      remaind: false,
       isKey: -1,
       mycity: "",
       myreceiver: "",
@@ -196,7 +202,7 @@ export default {
         this.myprovince == ""
       ) {
         Toast({
-          message: "请去新增地址",
+          message: "请去选择您的收货地址",
           duration: 1500
         });
         return false;
@@ -244,6 +250,10 @@ export default {
         .then(res => {
           if (res.data.status == 1) {
             this.myaddress = res.data.data;
+            if (this.myaddress.length == 0) {
+              this.remaind = true;
+              return false;
+            }
             var morenArr = [];
             this.myaddress.forEach(function(v) {
               if (v.isDefault == 1) {
@@ -398,8 +408,11 @@ export default {
     font-size: 16px;
     padding: 0.6rem 0.5rem;
     margin-bottom: 0.2rem;
+    .jingao {
+      width: 0.8rem;
+    }
     .sign {
-      width: 0.6rem;
+      width: 0.8rem;
     }
     .right {
       width: 0.8rem;
