@@ -33,7 +33,7 @@
             </p>
           </div>
           <div class="btns" v-if="item.statusValue == '未支付'">
-            <div class="goPay">去支付</div>
+            <div class="goPay" @click="goPay(item)">去支付</div>
             <div class="flag">{{item.statusValue}}</div>
           </div>
           <div class="btns" v-else>
@@ -68,7 +68,7 @@
             </p>
           </div>
           <div class="btns">
-            <div class="goPay">去支付</div>
+            <div class="goPay" @click="goPay(item)">去支付</div>
             <div class="flag">{{item.statusValue}}</div>
           </div>
         </div>
@@ -105,10 +105,13 @@
         </div>
       </mt-tab-container-item>
     </mt-tab-container>
+    <payWay :zhiObj="zhiObj" ref="child"></payWay>
   </div>
 </template>
 
 <script>
+import payWay from "./public/payWay";
+
 import { Navbar, TabItem, Toast, MessageBox } from "mint-ui";
 export default {
   name: "myOrder",
@@ -116,13 +119,18 @@ export default {
     return {
       selected: "",
       cancelDing: false,
+      zhiObj: {},
       orderList: [],
       selectId: ""
     };
   },
   methods: {
+    goPay(item) {
+      this.$refs.child.payMoneyModel = true;
+      this.zhiObj.orderSn = item.orderSn;
+      this.zhiObj.totalPrice = item.amount;
+    },
     detailBtn(id) {
-      console.log(id);
       this.$router.push({
         path: "/packDetails",
         query: {
@@ -130,6 +138,7 @@ export default {
         }
       });
     },
+
     getList() {
       this.$axios
         .post("/order/myOrderList", {
@@ -152,7 +161,9 @@ export default {
       this.getList();
     }
   },
-  components: {}
+  components: {
+    payWay
+  }
 };
 </script>
 
@@ -160,6 +171,7 @@ export default {
 #myOrder {
   background: #f1f1f1;
   padding-top: 2rem;
+
   .mint-navbar {
     background-color: #fff;
     a {

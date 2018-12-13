@@ -76,8 +76,6 @@ export default {
         })
         .then(res => {
           var info = res.data.data;
-          console.log(info);
-          var info = res.data.data;
           this.phone = info.phone;
           this.img = info.img;
           this.score = info.score;

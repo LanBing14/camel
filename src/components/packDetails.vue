@@ -19,7 +19,7 @@
         </p>
         <p class="address">{{infoObj.address}}</p>
       </div>
-      <img src="../assets/imgs/right.png" alt class="right">
+      <!-- <img src="../assets/imgs/right.png" alt class="right"> -->
     </div>
     <!-- 发货地址 -->
     <!-- <div class="sendInfo">
@@ -279,7 +279,7 @@ export default {
     align-items: center;
     background-color: #fff;
     font-size: 16px;
-    padding: 0.6rem 0.5rem;
+    padding: 0.6rem 0.6rem;
     margin-top: 0.1rem;
 
     .sign {
@@ -287,7 +287,7 @@ export default {
     }
     .messages {
       width: 82%;
-      padding-left: 0.8rem;
+      padding-left: 1rem;
       .name {
         .phone {
           margin-left: 1rem;

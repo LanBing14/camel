@@ -79,7 +79,7 @@
 
     <!-- 模态框 -->
     <!--蒙版-->
-    <div class="box" id="box" v-if="isShow || payMoneyModel" @click="hiddleToggle"></div>
+    <div class="box" id="box" v-if="isShow " @click="hiddle"></div>
     <div class="choice-style" v-if="isShow">
       <div class="modelContent">
         <div
@@ -106,29 +106,13 @@
         </div>
       </div>
     </div>
-
-    <div class="payWay" v-if="payMoneyModel">
-      <p class="zhifuWay">请选择支付方式</p>
-      <div class="itemWay clearfix" @click="getType(1)">
-        <img src="../assets/imgs/weixin.png" alt>
-        <span class="zhifu">微信支付</span>
-        <span class="choose fr">
-          <img src="../assets/imgs/gouxuan.png" alt v-show="isShowPic">
-        </span>
-      </div>
-      <div class="itemWay clearfix" @click="getType(2)">
-        <img src="../assets/imgs/zhifubao.png" alt>
-        <span class="zhifu">支付宝支付</span>
-        <span class="choose fr">
-          <img src="../assets/imgs/gouxuan.png" alt v-show="!isShowPic">
-        </span>
-      </div>
-      <p class="zhifuAtOnce">立即支付</p>
-    </div>
+    <payWay :zhiObj="zhiObj" ref="child"></payWay>
   </div>
 </template>
 <script>
 import { Picker, Popup, Toast } from "mint-ui";
+import payWay from "./public/payWay";
+
 export default {
   data() {
     return {
@@ -141,7 +125,6 @@ export default {
       mydetail: "",
       myphone: "",
       isXuan: false,
-      payMoneyModel: false,
       isShowPic: false,
       isShow: false,
       itemShow: false,
@@ -164,6 +147,7 @@ export default {
       number: "",
       dateTime: "",
       num: "",
+      zhiObj: {},
       orderId: "",
       orderSn: "",
       price: "",
@@ -207,11 +191,12 @@ export default {
         });
         return false;
       }
-      this.payMoneyModel = true;
+      //生成订单
       this.getPayist();
     },
     //生成订单
     getPayist() {
+      this.$refs.child.payMoneyModel = true;
       if (this.isXuan) {
         this.score = this.userScore;
       } else {
@@ -227,17 +212,16 @@ export default {
           //地址
           aid: this.myId,
           phone: "12345678901",
-          totalPrice: this.totalPrice,
+          totalPrice: this.price,
           remark: this.remark,
           score: this.score
         }
       }).then(res => {
-        if (res.data.data.status == 1) {
-          var info = res.data.data;
-          //订单id
-          this.orderId = info.orderId;
-          //订单编号
-          this.orderSn = info.orderSn;
+        if (res.status == 200) {
+          this.orderId = res.data.data.orderId;
+          this.orderSn = res.data.data.orderSn;
+          this.zhiObj.orderSn = this.orderSn;
+          this.zhiObj.totalPrice = this.price;
         }
       });
     },
@@ -328,9 +312,8 @@ export default {
     addBtn() {
       this.$router.push("/creatAddress");
     },
-    hiddleToggle() {
+    hiddle() {
       this.isShow = false;
-      this.payMoneyModel = false;
     }
   },
   created() {
@@ -341,7 +324,10 @@ export default {
     //获取订单信息
     this.getList();
   },
-  mounted() {}
+  mounted() {},
+  components: {
+    payWay
+  }
 };
 </script>
 <style lang="scss" scoped>

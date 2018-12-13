@@ -10,14 +10,14 @@
     <div class="swiper-container banner">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <img src="../assets/imgs/1.jpg" alt>
+          <img src="../assets/imgs/1.png" alt>
         </div>
         <div class="swiper-slide">
-          <img src="../assets/imgs/2.jpg" alt>
+          <img src="../assets/imgs/1.png" alt>
         </div>
       </div>
       <!-- 如果需要分页器 -->
-      <div class="swiper-pagination"></div>
+      <div class="swiper-pagination swiper-pagination-my" id="swiper-pagination-my"></div>
     </div>
 
     <!-- 中间图片
@@ -162,6 +162,10 @@ export default {
   // height: 100%;
   background: #f1f1f1;
   position: relative;
+  /deep/ .swiper-pagination-bullet-active {
+    background: #ff7f01;
+    opacity: 0.8;
+  }
   /*蒙版*/
   .box {
     opacity: 0.8;
