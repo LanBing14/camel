@@ -5,8 +5,8 @@
     </mt-header>
     <div class="swipeImg">
       <mt-swipe :auto="3000">
-        <mt-swipe-item>
-          <img :src="img" alt>
+        <mt-swipe-item v-for="(item,index) in pictureArray" :key="index">
+          <img :src="item" alt>
         </mt-swipe-item>
       </mt-swipe>
     </div>
@@ -26,20 +26,7 @@
         <span style="color:#ff7f01">￥{{sharePrice}}</span>
       </p>
     </div>
-    <!--全部评价-->
-    <!-- <div class="all_evaluate">
-      <div class="titleBox">全部评价({{commentCount}})</div>
-      <div class="userEvaluate">
-        <div class="evaluateBox">
-          <div class="useImg">
-            <img :src="img">
-          </div>
-          <p class="userName one-txt-cut">{{commentFirst.username}}</p>
-        </div>
-        <div class="content">{{commentFirst.content}}</div>
-      </div>
-      <div class="evaluateBtn">全部评价</div>
-    </div>-->
+
     <!--商品详情-->
     <div class="productDetails">
       <p class="detailTop">商品详情</p>
@@ -173,6 +160,7 @@ export default {
             this.sharePrice = info.sharePrice;
             this.scorePrice = info.scorePrice;
             this.packageArray = info.packageArray;
+            this.pictureArray = info.pictureArray;
             this.sellPrice = info.packageArray[0].sellPrice;
             this.marketPrice = info.packageArray[0].marketPrice;
             this.stock = info.packageArray[0].stock;

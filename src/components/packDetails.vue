@@ -111,13 +111,13 @@ export default {
   data() {
     return {
       isShow: false,
-      receiver: "依稀",
-      phone: "15434565434",
-      province: "江苏省",
-      city: "徐州市",
-      detail: "111111111111111111111111",
-      county: "盐城市",
-      copyContent: "34123412423412343",
+      receiver: "",
+      phone: "",
+      province: "",
+      city: "",
+      detail: "",
+      county: "",
+      copyContent: "",
       infoObj: {},
       orderGoods: {},
       goodsArray: {}
@@ -337,7 +337,7 @@ export default {
     div {
       border-top: 2px solid #f1f1f1;
       p {
-        padding: 0.2rem 0.4rem;
+        padding: 0.5rem 0.4rem;
         color: #c1c5c8;
         height: 1rem;
       }

@@ -8,7 +8,13 @@
       <div>
         <label>
           <span>￥</span>
-          <input type="number" class="money">
+          <input
+            type="text"
+            class="money"
+            name="number"
+            v-model="inputNumber"
+            @keyup="changeNumber"
+          >
         </label>
       </div>
       <p class="reti">
@@ -69,6 +75,7 @@ export default {
   data() {
     return {
       hintShow: false,
+      inputNumber: "",
       accounts: "",
       names: "",
       isShow: true,
@@ -86,6 +93,15 @@ export default {
   methods: {
     placeNow() {
       this.hintShow = true;
+    },
+    changeNumber() {
+      if (!/^\d+$/.test(this.inputNumber)) {
+        this.inputNumber = "";
+        this.$toast({
+          message: "请输入正整数",
+          duration: 1500
+        });
+      }
     },
     goBack() {
       this.$router.push({ path: "/myInfo" });

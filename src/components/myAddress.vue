@@ -130,7 +130,7 @@ export default {
   position: relative;
   /*蒙版*/
   .box {
-    opacity: 0.9;
+    opacity: 0.6;
     background: #000;
     z-index: 99;
     width: 100%;
