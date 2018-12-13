@@ -170,8 +170,8 @@ export default {
 .packDetails {
   height: 100%;
   padding-top: 2rem;
+  background: #f0f0f0;
   font-size: 16px;
-  background-color: #f1f1f1;
   .infoWay {
     height: 2.88rem;
     line-height: 2.88rem;

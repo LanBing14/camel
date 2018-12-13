@@ -93,7 +93,8 @@ export default {
 <style lang="scss" scoped>
 .login {
   height: 100%;
-  background: #f1f1f1;
+  background: #f0f0f0;
+
   .content {
     padding-top: 6.5rem;
     .loginModel {

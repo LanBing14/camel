@@ -39,7 +39,7 @@ export default {
 <style lang="scss" scoped>
 #pay_success {
   height: 100%;
-  background-color: #f1f1f1;
+  background: #f0f0f0;
 
   .mint-header {
     background: #fff;

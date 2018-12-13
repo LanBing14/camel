@@ -125,7 +125,7 @@ export default {
 <style lang="scss" scoped>
 .myAddress {
   height: 100%;
-  background-color: #f1f1f1;
+  background: #f0f0f0;
   padding-top: 2rem;
   position: relative;
   /*蒙版*/

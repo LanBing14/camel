@@ -83,7 +83,7 @@ export default {
 <style lang="scss" scoped>
 #invite_details {
   height: 100%;
-  background-color: #f1f1f1;
+  background: #f0f0f0;
   font-size: 16px;
   .red {
     color: #ff7f01 !important;

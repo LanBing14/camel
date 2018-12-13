@@ -92,7 +92,7 @@ export default {
 <style lang="scss" scoped>
 .coupon {
   height: 100%;
-  background-color: #f1f1f1;
+  background-color: #f0f0f0;
 
   .navBar {
     .mint-navbar .mint-tab-item {

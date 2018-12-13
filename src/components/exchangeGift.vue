@@ -66,7 +66,7 @@ export default {
 
 <style lang="scss" scoped>
 .exchangeGift {
-  background-color: #f1f1f1;
+  background-color: #f0f0f0;
   padding-top: 2rem; //商品详情
   .prductDetails {
     font-size: 16px;

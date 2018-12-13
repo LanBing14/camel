@@ -9,11 +9,8 @@
     <!-- 轮播图 -->
     <div class="swiper-container banner">
       <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="../assets/imgs/1.png" alt>
-        </div>
-        <div class="swiper-slide">
-          <img src="../assets/imgs/1.png" alt>
+        <div class="swiper-slide" v-for="(item,index) in bannerArr" :key="index">
+          <img :src="item.img" alt>
         </div>
       </div>
       <!-- 如果需要分页器 -->
@@ -23,7 +20,7 @@
     <!-- 中间图片
     -->
     <router-link to="/exchangeGift" class="middlePic">
-      <img src="../assets/imgs/jinfen.png" alt>
+      <img :src="bannerimg" alt>
     </router-link>
 
     <!-- 商品详情 -->
@@ -38,7 +35,12 @@
           infinite-scroll-distance="10"
           class="prductDetailsContent clearfix"
         >
-          <li class="clearfix" v-for="item in list" @click="clickItem(item.id)">
+          <li
+            class="clearfix"
+            v-for="(item,index) in list"
+            @click="clickItem(item.id)"
+            :key="index"
+          >
             <div class="topImg">
               <img :src="item.img" alt>
               <p class="couponZhuan">
@@ -61,7 +63,7 @@
           </li>
         </ul>
       </div>
-      <p v-if="loadingDom" class="loading">没有更多数据了</p>
+      <p class="loading">没有更多数据了</p>
     </div>
 
     <!-- 模态框 -->
@@ -93,11 +95,12 @@ export default {
     return {
       list: [],
       loading: false,
-      loadingDom: false,
       isShow: false,
       showWeiLing: false,
       showLing: false,
-      page: "1"
+      page: "1",
+      bannerArr: [],
+      bannerimg: ""
     };
   },
   methods: {
@@ -122,11 +125,31 @@ export default {
           var info = res.data.data;
           if (res.data.status == "1") {
             this.list = this.list.concat(info);
-            if (res.data.data.length == 0) {
-              this.loadingDom = true;
-            }
+            this.$nextTick(() => {
+              this.bannerList();
+            });
           }
         });
+    },
+
+    // 获取轮播图信息
+    bannerList() {
+      this.$axios.get("/index/bannerList").then(res => {
+        var swiper1 = new Swiper(".banner", {
+          pagination: {
+            el: ".swiper-pagination"
+          },
+          paginationClickable: true,
+          loop: true,
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false
+          },
+          speed: 500
+        });
+        this.bannerArr = res.data.data.bannerList;
+        this.bannerimg = res.data.data.centerBanner.img;
+      });
     },
     clickItem(index) {
       this.$router.push({ path: "/particular", query: { id: index } });
@@ -137,19 +160,6 @@ export default {
     this.getList();
   },
   mounted() {
-    var swiper1 = new Swiper(".banner", {
-      pagination: {
-        el: ".swiper-pagination"
-      },
-      paginationClickable: true,
-      loop: true,
-      autoplay: {
-        delay: 2500,
-        disableOnInteraction: false
-      },
-      speed: 500
-    });
-
     let scroll1 = new BScroll(".shareMoneyContent", {
       scrollY: true,
       click: true
@@ -160,7 +170,7 @@ export default {
 <style lang="scss" scoped>
 .productMails {
   // height: 100%;
-  background: #f1f1f1;
+  background: #f0f0f0;
   position: relative;
   /deep/ .swiper-pagination-bullet-active {
     background: #ff7f01;

@@ -39,7 +39,7 @@ export default {
   height: 100%;
   font-size: 14px;
   padding-top: 2rem;
-  background-color: #f1f1f1;
+  background-color: #f0f0f0;
   .paySuccess {
     text-align: center;
     padding-top: 1rem;

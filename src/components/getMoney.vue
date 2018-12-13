@@ -140,7 +140,7 @@ export default {
 <style lang="scss" scoped>
 .getMoney {
   height: 100%;
-  background: #f1f1f1;
+  background-color: #f0f0f0;
   font-size: 16px;
   padding-top: 1.8rem;
 

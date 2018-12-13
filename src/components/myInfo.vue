@@ -101,8 +101,8 @@ export default {
 <style lang="scss" scoped>
 .myInfo {
   padding-top: 2rem;
+  background: #f0f0f0;
   height: 100%;
-  background-color: #f1f1f1;
   font-size: 16px;
 
   .top {
@@ -164,6 +164,7 @@ export default {
         width: 2.5rem;
         text-align: center;
         border-radius: 0.8rem;
+        color: #ff7f01;
         height: 1.2rem;
         line-height: 1.2rem;
         margin-top: 0.4rem;

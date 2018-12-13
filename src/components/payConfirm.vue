@@ -333,7 +333,7 @@ export default {
 <style lang="scss" scoped>
 .payConfirm {
   height: 100%;
-  background: #f1f1f1;
+  background: #f0f0f0;
   padding-top: 2rem;
   .payWay {
     position: fixed;

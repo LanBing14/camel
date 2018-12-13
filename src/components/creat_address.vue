@@ -260,7 +260,7 @@ export default {
 <style lang="scss">
 .creatAddress {
   height: 100%;
-  background-color: #f1f1f1;
+  background-color: #f0f0f0;
   padding-top: 2rem;
   .mint-header {
     background-color: #fff;

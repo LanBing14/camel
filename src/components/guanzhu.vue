@@ -24,7 +24,8 @@ export default {
 .guanzhu {
   height: 100%;
   font-size: 16px;
-  background-color: #f1f1f1;
+  background-color: #f0f0f0;
+
   .center {
     width: 100%;
     background-color: #fff;

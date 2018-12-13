@@ -59,7 +59,8 @@ export default {
 <style lang="scss" scoped>
 .shareMake {
   height: 100%;
-  background-color: #f1f1f1;
+  background: #f0f0f0;
+
   padding-top: 1.8rem;
   .makeCoupon {
     margin-top: 0.2rem;
