@@ -1,6 +1,6 @@
 <template>
   <div id="product_details">
-    <mt-header title="商品详情" style="height:1.8rem" fixed>
+    <mt-header title="商品详情" fixed>
       <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
     </mt-header>
     <div class="swipeImg">
@@ -131,7 +131,7 @@ export default {
         { id: 1, amounts: 1 },
         { id: 2, amounts: 10 }
       ],
-      isShowShang: true,
+      isShowShang: false,
       isShowTao: false,
       title: "",
       sellPrice: "",

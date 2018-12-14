@@ -10,7 +10,12 @@
     </mt-navbar>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id>
-        <div class="orderBox" v-for="(item,index) in orderList" :key="index">
+        <div
+          class="orderBox"
+          v-for="(item,index) in orderList"
+          :key="index"
+          v-if="orderList.length >0"
+        >
           <p class="orderNum">
             订单编号:
             <span>{{item.orderSn}}</span>
@@ -33,21 +38,60 @@
             </p>
           </div>
           <div class="btns" v-if="item.statusValue == '未支付'">
+            <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
             <div class="goPay" @click="goPay(item)">去支付</div>
             <div class="flag">{{item.statusValue}}</div>
           </div>
           <div class="btns" v-else>
-            <div class="goPay" @click="detailBtn(item.id)">订单详情</div>
-            <div class="flag">{{item.statusValue}}</div>
+            <div class="goPay" @click="detailBtn(item.id)">套餐详情</div>
+            <div class="goPay">去支付</div>
+
+            <div class="flag">{{item.statusValue.statusValue}}</div>
+          </div>
+        </div>
+        <div class="orderBox">
+          <p class="orderNum">
+            套餐编号:
+            <span>15421525151511</span>
+          </p>
+          <div class="goodsInfo">
+            <img src="../assets/imgs/swiper.png" alt>
+            <div class="name">
+              <p style="font-size: 16px;" class="txt-cut title">鸡蛋</p>
+              <p class="mountding">12盒</p>
+              <div class="money">
+                <p class="jine">￥55</p>
+                <p class="shul">x1</p>
+              </div>
+            </div>
+          </div>
+          <div class="total">
+            <p>
+              共1件商品，合计
+              <span>￥55</span>
+            </p>
+          </div>
+          <div class="btns">
+            <div class="goPayOne">订单详情</div>
+            <div class="goPay">去支付</div>
+            <div class="flag">待付款</div>
+          </div>
+          <div class="btns">
+            <div class="goPay">订单详情</div>
+            <div class="flag">待收货</div>
           </div>
         </div>
       </mt-tab-container-item>
-
       <mt-tab-container-item id="0">
         <!--待付款列表信息-->
-        <div class="orderBox" v-for="(item,index) in orderList" :key="index">
+        <div
+          class="orderBox"
+          v-for="(item,index) in orderList"
+          :key="index"
+          v-if="orderList.length >0"
+        >
           <p class="orderNum">
-            订单编号:
+            套餐编号:
             <span>{{item.orderSn}}</span>
           </p>
           <div class="goodsInfo" v-for="(it,i) in item.orderGoods" :key="i">
@@ -68,17 +112,51 @@
             </p>
           </div>
           <div class="btns">
+            <div class="goPay">套餐详情</div>
             <div class="goPay" @click="goPay(item)">去支付</div>
-            <div class="flag">{{item.statusValue}}</div>
+            <div class="flag">{{item.statusValue.statusValue}}</div>
+          </div>
+        </div>
+        <div class="orderBox">
+          <p class="orderNum">
+            套餐编号:
+            <span>15421525151511</span>
+          </p>
+          <div class="goodsInfo">
+            <img src="../assets/imgs/swiper.png" alt>
+            <div class="name">
+              <p style="font-size: 16px;" class="txt-cut title">鸡蛋</p>
+              <p class="mountding">12盒</p>
+              <div class="money">
+                <p class="jine">￥55</p>
+                <p class="shul">x1</p>
+              </div>
+            </div>
+          </div>
+          <div class="total">
+            <p>
+              共1件商品，合计
+              <span>￥55</span>
+            </p>
+          </div>
+          <div class="btns">
+            <div class="goPayOne">订单详情</div>
+            <div class="goPay">去支付</div>
+            <div class="flag">待付款</div>
           </div>
         </div>
       </mt-tab-container-item>
 
       <!-- 待收货列表-->
       <mt-tab-container-item id="1">
-        <div class="orderBox" v-for="(item,index) in orderList" :key="index">
+        <div
+          class="orderBox"
+          v-for="(item,index) in orderList"
+          :key="index"
+          v-if="orderList.length >0"
+        >
           <p class="orderNum">
-            订单编号:
+            套餐编号:
             <span>{{item.orderSn}}</span>
           </p>
           <div class="goodsInfo" v-for="(it,i) in item.orderGoods" :key="i">
@@ -99,8 +177,36 @@
             </p>
           </div>
           <div class="btns">
-            <div class="goPay" @click="detailBtn(item.id)">订单详情</div>
-            <div class="flag">{{item.statusValue}}</div>
+            <div class="goPay" @click="detailBtn(item.id)">套餐详情</div>
+            <div class="flag">{{item.statusValue.statusValue}}</div>
+          </div>
+        </div>
+        <div class="orderBox">
+          <p class="orderNum">
+            套餐编号:
+            <span>15421525151511</span>
+          </p>
+          <div class="goodsInfo">
+            <img src="../assets/imgs/swiper.png" alt>
+            <div class="name">
+              <p style="font-size: 16px;" class="txt-cut title">鸡蛋</p>
+              <p class="mountding">12盒</p>
+              <div class="money">
+                <p class="jine">￥55</p>
+                <p class="shul">x1</p>
+              </div>
+            </div>
+          </div>
+          <div class="total">
+            <p>
+              共1件商品，合计
+              <span>￥55</span>
+            </p>
+          </div>
+
+          <div class="btns">
+            <div class="goPay">订单详情</div>
+            <div class="flag">待收货</div>
           </div>
         </div>
       </mt-tab-container-item>
@@ -151,7 +257,7 @@ export default {
     }
   },
   created() {
-    document.title = "我的订单";
+    document.title = "我的套餐";
     this.getList();
   },
   mounted() {},
@@ -223,18 +329,26 @@ export default {
           line-height: 1.5rem;
         }
         .mount {
+          width: 3rem;
+          text-align: center;
+          border-radius: 0.2rem;
+          margin-top: 0.6rem;
+          color: #c1c5c8;
+        }
+        .mountding {
+          width: 2rem;
+          text-align: center;
+          background-color: #f1f1f1;
+          border-radius: 0.2rem;
           margin-top: 0.6rem;
           color: #c1c5c8;
         }
         .money {
-          display: flex;
           align-items: center;
-          color: #c1c5c8;
-
           .jine {
             position: absolute;
             width: 30%;
-            right: 0.4rem;
+            right: 0.5rem;
             top: 0.2rem;
             z-index: 9;
             color: #000;
@@ -243,7 +357,7 @@ export default {
           .shul {
             position: absolute;
             width: 20%;
-            right: 0.4rem;
+            right: 0.5rem;
             top: 2rem;
             text-align: right;
             z-index: 7;
@@ -285,6 +399,14 @@ export default {
         text-align: center;
         color: #ff7f01;
         border: 1px solid #ff7f01;
+        border-radius: 2rem;
+        margin-right: 0.8rem;
+      }
+      .goPayOne {
+        width: 3rem;
+        text-align: center;
+        color: #000;
+        border: 1px solid #79797b;
         border-radius: 2rem;
         margin-right: 0.8rem;
       }

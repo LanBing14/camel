@@ -5,7 +5,7 @@
     </mt-header>
     <!-- 信息发货 -->
     <div class="infoWay">
-      <img src="../assets/imgs/daishouhuo.png" alt>
+      <img :src="infoObj.statusImg" alt>
       <span>{{infoObj.statusValue }}</span>
     </div>
 
@@ -22,7 +22,7 @@
       <!-- <img src="../assets/imgs/right.png" alt class="right"> -->
     </div>
     <!-- 发货地址 -->
-    <!-- <div class="sendInfo">
+    <div class="sendInfo">
       <div class="sendItem">
         <img src="../assets/imgs/car.png" alt>
       </div>
@@ -51,41 +51,105 @@
           @click="copy"
         >复制单号</button>
       </div>
-    </div>-->
+    </div>
     <!--商品信息-->
-    <div class="productInfo">
-      <img :src="orderGoods.img" alt class="goodPic">
-      <div class="line1">
-        <p class="name txt-cut">{{orderGoods.title}}</p>
-        <p class="money">￥{{goodsArray.packageSellPrice}}</p>
+    <div>
+      <div class="productInfo">
+        <img :src="orderGoods.img" alt class="goodPic">
+        <div class="line1">
+          <p class="name txt-cut">{{orderGoods.title}}</p>
+          <p class="money">￥{{goodsArray.packageSellPrice}}</p>
+        </div>
+        <div class="line2">
+          <p class="guige">{{goodsArray.number}}枚/{{goodsArray.packageDateTime}}个月</p>
+          <p class="num">x{{infoObj.number}}</p>
+        </div>
       </div>
-      <div class="line2">
-        <p class="guige">{{goodsArray.number}}枚/{{goodsArray.packageDateTime}}个月</p>
-        <p class="num">x{{infoObj.number}}</p>
+      <div class="sendWay">
+        <div class="sendWayTop">
+          <p>
+            配送方式:
+            <span>快递</span>
+            <span>￥{{infoObj.freight}}</span>
+          </p>
+          <p>
+            积分抵扣:
+            <span>{{infoObj.discount}}</span>
+          </p>
+          <p>
+            <span>买家留言:</span>
+            {{infoObj.remark}}
+          </p>
+        </div>
+        <div class="sendWayBot clearfix">
+          <p>
+            总计
+            <span>￥{{infoObj.amount}}</span>
+          </p>
+        </div>
       </div>
     </div>
-    <div class="sendWay">
-      <div class="sendWayTop">
-        <p>
-          配送方式:
-          <span>快递</span>
-          <span>￥{{infoObj.freight}}</span>
-        </p>
-        <p>
-          积分抵扣:
-          <span>{{infoObj.discount}}</span>
-        </p>
-        <p>
-          <span>买家留言:</span>
-          {{infoObj.remark}}
-        </p>
-      </div>
-      <div class="sendWayBot clearfix">
-        <p>
-          总计
-          <span>￥{{infoObj.amount}}</span>
-        </p>
-      </div>
+    <!-- 别的状态需要 -->
+    <div class="sendInfotitle">
+      <mt-navbar v-model="selected">
+        <mt-tab-item id="0">
+          <div>已发货</div>
+        </mt-tab-item>
+        <mt-tab-item id="1">
+          <div>待发货</div>
+        </mt-tab-item>
+      </mt-navbar>
+
+      <!--列表内容容器下拉-->
+      <mt-tab-container v-model="selected">
+        <!--已发货列-->
+        <mt-tab-container-item id="0">
+          <div class="already_huo">
+            <div class="monthBorder">
+              <div class="box_one" @click="clickBtn">
+                <p>1月份</p>
+                <span>已发货</span>
+                <img src="../assets/imgs/arrow-dow.png" v-show="!upClick">
+                <img src="../assets/imgs/arrow-up.png" v-show="upClick">
+              </div>
+              <div class="information_exhibition" v-show="upClick">
+                <p>2018/3/3/13:10</p>
+                <span>订单详情</span>
+              </div>
+            </div>
+            <div class="monthBorder">
+              <div class="box_one" @click="clickBtn">
+                <p>1月份</p>
+                <span>已发货</span>
+                <img src="../assets/imgs/arrow-dow.png" v-show="!upClick">
+                <img src="../assets/imgs/arrow-up.png" v-show="upClick">
+              </div>
+              <div class="information_exhibition" v-show="upClick">
+                <p>2018/3/3/13:10</p>
+                <span>订单详情</span>
+              </div>
+            </div>
+          </div>
+        </mt-tab-container-item>
+
+        <!--  待发货列-->
+        <mt-tab-container-item id="1">
+          <div class="stay_huo">
+            <div class="boxs_one">
+              <p>33月份</p>
+              <span>代发货</span>
+            </div>
+            <div class="boxs_one">
+              <p>33月份</p>
+              <span>代发货</span>
+            </div>
+            <div class="boxs_one">
+              <p>33月份</p>
+              <span>代发货</span>
+            </div>
+          </div>
+        </mt-tab-container-item>
+      </mt-tab-container>
     </div>
 
     <div class="orderTime">
@@ -103,7 +167,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import Clipboard from "clipboard";
 export default {
@@ -112,20 +175,25 @@ export default {
     return {
       isShow: false,
       receiver: "",
+      upClick: true,
       phone: "",
       province: "",
       city: "",
       detail: "",
       county: "",
-      copyContent: "",
+      copyContent: "11111111111111111111111111111",
       infoObj: {},
       orderGoods: {},
+      selected: "0",
       goodsArray: {}
     };
   },
   methods: {
     goback() {
       this.$router.go(-1);
+    },
+    clickBtn() {
+      this.upClick = !this.upClick;
     },
     copy() {
       var copybtn = document.getElementsByClassName("btn");
@@ -158,6 +226,11 @@ export default {
     document.title = "订单详情";
     this.getList();
   },
+  watch: {
+    selected(value) {
+      console.log(value);
+    }
+  },
   mounted() {
     var copybtn = document.getElementsByClassName("btn");
     var clipboard = new Clipboard(copybtn);
@@ -168,7 +241,6 @@ export default {
 
 <style lang="scss" scoped>
 .packDetails {
-  height: 100%;
   padding-top: 1.9rem;
   background: #f0f0f0;
   font-size: 16px;
@@ -341,6 +413,131 @@ export default {
         color: #c1c5c8;
         height: 1rem;
       }
+    }
+  }
+
+  .sendInfotitle {
+    margin-top: 0.5rem;
+    /deep/ .mint-navbar {
+      background: #f0f0f0;
+      padding: 0 3rem;
+    }
+    a {
+      color: #ff7f01;
+    }
+    .mint-navbar .mint-tab-item {
+      background-color: #ffffff;
+      border-radius: 0.8rem 0 0 0.8rem;
+    }
+    .mint-navbar .mint-tab-item:nth-child(2) {
+      background-color: #ffffff;
+      border-radius: 0 0.8rem 0.8rem 0;
+      border-left: 2px solid #ff7f01;
+    }
+    /deep/.mint-tab-item {
+      width: 5rem;
+      color: #000;
+    }
+    /deep/ .mint-navbar .mint-tab-item.is-selected {
+      border-bottom: none;
+      color: #fff;
+      margin-bottom: 0;
+      background-color: #ff7f01;
+    }
+    /deep/ .mint-tab-item-label {
+      font-size: 14px;
+    }
+  }
+  .already_huo {
+    background: #ffffff;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 0.5rem;
+    .monthBorder:last-child {
+      border-bottom: none;
+    }
+    .monthBorder {
+      position: relative;
+      border-bottom: 1px solid #c1c5c8;
+      .box_one {
+        padding: 0.5rem 1rem 0.56rem 1rem;
+        color: #666666;
+        width: 92%;
+        p {
+          display: inline-block;
+          font-weight: 500;
+        }
+        span {
+          text-align: right;
+          float: right;
+          margin-right: 2rem;
+        }
+        img {
+          position: absolute;
+          right: 1rem;
+          top: 0.7rem;
+          width: 0.9rem;
+          height: 0.5rem;
+        }
+      }
+      .order_btn {
+        color: #252424;
+        font-weight: 500;
+        padding: 0.75rem 1rem 0.4375rem 1rem;
+      }
+    }
+  }
+  .stay_huo {
+    margin-top: 0.5rem;
+    background: #ffffff;
+    width: 100%;
+    font-size: 16px;
+    .boxs_one:last-child {
+      border-bottom: none;
+    }
+    .boxs_one {
+      padding: 0.5rem 1rem 0.56rem 1rem;
+      color: #666666;
+      width: 92%;
+      border-bottom: 1px solid #c1c5c8;
+      p {
+        display: inline-block;
+        font-weight: 500;
+      }
+      span {
+        text-align: right;
+        float: right;
+        margin-right: 2rem;
+      }
+    }
+  }
+  .information_exhibition {
+    width: 92%;
+    background: #ffffff;
+    z-index: 9;
+    font-size: 16px;
+    border-top: 1px solid #c1c5c8;
+    top: 2.25rem;
+    padding: 0 0.5rem;
+    p {
+      display: inline-block;
+      color: #999999;
+      line-height: 2rem;
+      font-size: 15px;
+    }
+
+    span {
+      text-align: center;
+      width: 3rem;
+      line-height: 1.4rem;
+      height: 1.4rem;
+      color: #ff7f01;
+      float: right;
+      font-size: 14px;
+      border: 1px solid #ff7f01;
+      border-radius: 0.8rem;
+      margin-left: 0.5rem;
+      margin-top: 0.3rem;
     }
   }
 }

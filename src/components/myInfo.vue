@@ -90,7 +90,7 @@ export default {
         });
     },
     goback() {
-      this.$router.go(-1);
+      this.$router.push("/");
     }
   },
   created() {
@@ -135,7 +135,7 @@ export default {
       color: #ff7f01;
       font-size: 14px;
       img {
-        width: 0.5rem;
+        width: 0.6rem;
       }
     }
   }
@@ -150,8 +150,11 @@ export default {
       width: 100%;
       box-sizing: border-box;
       color: #000;
-      border: 2px solid #f0f0f0;
+      border-bottom: 2px solid #f0f0f0;
       background-color: #fff;
+      .shangjin {
+        width: 75%;
+      }
       div {
         img {
           width: 0.8rem;
@@ -166,13 +169,13 @@ export default {
       }
       .goTi {
         border: 1px solid #ff7f01;
-        width: 2.5rem;
+        width: 2.6rem;
         text-align: center;
         border-radius: 0.8rem;
         color: #ff7f01;
-        height: 1.2rem;
-        line-height: 1.2rem;
-        margin: 0.4rem 0.87rem 0 4.5rem;
+        height: 1.3rem;
+        line-height: 1.3rem;
+        margin-top: 0.4rem;
       }
     }
     .itemCont {
@@ -181,7 +184,7 @@ export default {
       font-size: 14px;
       display: block;
       color: #000;
-      border: 2px solid #f0f0f0;
+      border-bottom: 2px solid #f0f0f0;
       background-color: #fff;
       div {
         img {
