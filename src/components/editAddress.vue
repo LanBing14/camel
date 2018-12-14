@@ -72,7 +72,7 @@ export default {
       slots: [
         {
           flex: 1,
-          defaultIndex: 10,
+          defaultIndex: 0,
           values: address,
           className: "slot1",
           textAlign: "center"
@@ -279,7 +279,7 @@ export default {
 .creatAddress {
   height: 100%;
   background-color: #f0f0f0;
-  padding-top: 2rem;
+  padding-top: 1.9rem;
   .mint-header {
     background-color: #fff;
     font-size: 16px;

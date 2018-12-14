@@ -1,7 +1,7 @@
 <template>
   <div class="productMails">
     <div class="top">
-      <mt-header title="商城" style="height:1.8rem"></mt-header>
+      <mt-header title="商城" style="height:1.8rem" fixed></mt-header>
       <router-link class="userTou" to="/myInfo">
         <img src="../assets/imgs/user.png" alt>
       </router-link>
@@ -169,9 +169,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .productMails {
-  // height: 100%;
   background: #f0f0f0;
   position: relative;
+  padding-top: 1.8rem;
+  .mint-header.is-fixed {
+    z-index: 998;
+  }
   /deep/ .swiper-pagination-bullet-active {
     background: #ff7f01;
     opacity: 0.8;
@@ -217,7 +220,7 @@ export default {
       padding-top: 1rem;
       height: 2rem;
       font-size: 14px;
-      background-color: #fff;
+      background-color: #eee;
       border-radius: 0 0 0.4rem 0.4rem;
 
       span {
@@ -251,9 +254,10 @@ export default {
     }
   }
   .userTou {
-    position: absolute;
+    position: fixed;
     top: 0.15rem;
     right: 0.3rem;
+    z-index: 999;
     img {
       width: 1.2rem;
       height: 1.2rem;

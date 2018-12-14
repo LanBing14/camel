@@ -169,7 +169,7 @@ export default {
 <style lang="scss" scoped>
 .packDetails {
   height: 100%;
-  padding-top: 2rem;
+  padding-top: 1.9rem;
   background: #f0f0f0;
   font-size: 16px;
   .infoWay {

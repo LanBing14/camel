@@ -164,7 +164,7 @@ export default {
   .getNow {
     background-color: #fff;
     padding-bottom: 1rem;
-    margin-top: 0.2rem;
+    margin-top: 0.1rem;
     .reti {
       font-size: 12px;
       margin-left: 1rem;

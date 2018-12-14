@@ -126,7 +126,7 @@ export default {
 .myAddress {
   height: 100%;
   background: #f0f0f0;
-  padding-top: 2rem;
+  padding-top: 1.9rem;
   position: relative;
   /*蒙版*/
   .box {
@@ -142,26 +142,28 @@ export default {
     bottom: 0;
   }
   .modelConfirm {
-    width: 75%;
     position: fixed;
+    width: 70%;
     left: 50%;
     top: 50%;
-    text-align: center;
-    border-radius: 0.2rem;
-    padding: 1rem;
+    height: 6rem;
     z-index: 100;
     font-size: 16px;
+    border-radius: 0.2rem;
+    text-align: center;
+    padding: 1rem 1rem 1.5rem 1rem;
     background-color: #fff;
     transform: translate(-50%, -50%);
     p {
-      margin-bottom: 1.5rem;
+      height: 4.5rem;
+      line-height: 3rem;
+      padding-top: 0.5rem;
     }
     .bgn {
       span {
-        border: 1px solid #000;
-        width: 3.76rem;
-        line-height: 1.36rem;
-        height: 1.36rem;
+        border: 1px solid #1f1e1e;
+        width: 4rem;
+        line-height: 1.5rem;
         border-radius: 0.8rem;
       }
       span:last-child {

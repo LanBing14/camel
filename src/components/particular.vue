@@ -42,15 +42,13 @@
     <!--蒙版-->
     <div class="box" id="box" v-if="isShow " @click="hiddleToggle"></div>
     <!--选择规格-->
-    <div class="choice-style" v-if="isShow">
+    <div class="choice-style" v-if="isShowTao">
       <div class="choice-box">
         <div class="goods-details">
           <img alt class="good-picture" :src="img">
           <div class="money">
-            <p class="price">
-              ￥{{sellPrice}}
-              <span class="greyIcon">原价￥{{marketPrice}}</span>
-            </p>
+            <p class="price">￥{{sellPrice}}</p>
+            <p class="greyIcon">原价￥{{marketPrice}}</p>
             <p class="style">库存{{stock}}件</p>
           </div>
         </div>
@@ -61,7 +59,7 @@
               class="colorItem"
               v-for="(list,key) in packageArray"
               :key="key"
-              :class="{activeModel:iskey==key}"
+              :class="{activeKey:iskey==key}"
               @click="choice(key)"
             >{{list.number}}枚/{{list.dateTime}}个月</div>
           </div>
@@ -78,6 +76,40 @@
         <div class="yes" @click="goConfirmation">确认</div>
       </div>
     </div>
+
+    <div class="choice-style" v-if="isShowShang">
+      <div class="choice-box">
+        <div class="goods-details">
+          <img alt class="good-picture" :src="img">
+          <div class="money">
+            <p class="price">￥{{sellPrice}}</p>
+            <p class="greyIcon">原价￥{{marketPrice}}</p>
+            <p class="style">库存{{stock}}件</p>
+          </div>
+        </div>
+        <div class="choice">
+          <p class="colors">商品规格</p>
+          <div class="color-choice">
+            <div
+              class="colorItem"
+              @click="choiceGui(key)"
+              v-for="(item,key) in paceArray"
+              :key="key"
+              :class="{activeModel:activekey==key}"
+            >{{item.amounts}}盒</div>
+          </div>
+        </div>
+        <div class="numbers">
+          <p class="number">购买数量</p>
+          <div class="modified">
+            <div class="low" @click="sum"></div>
+            <input type="number" class="count" readonly="readonly" v-model="mount">
+            <div class="plus" @click="sums">+</div>
+          </div>
+        </div>
+        <div class="yes" @click="goConfirm">确认</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -91,8 +123,16 @@ export default {
       isShow: false,
       iskey: -1,
       commentCount: "",
+      activekey: -1,
       price: "",
       mount: 1,
+      paceArray: [
+        { id: 0, amounts: 12 },
+        { id: 1, amounts: 1 },
+        { id: 2, amounts: 10 }
+      ],
+      isShowShang: true,
+      isShowTao: false,
       title: "",
       sellPrice: "",
       img: "",
@@ -120,8 +160,19 @@ export default {
     },
     hiddleToggle() {
       this.isShow = false;
+      this.isShowShang = false;
+      this.isShowTao = false;
     },
-    //规格选中后的样式
+    //商品确定
+    goConfirm() {},
+    //规格
+    choiceGui(i) {
+      this.activekey = i;
+      //产品id
+      this.amountsId = this.paceArray[i].amounts;
+    },
+    //套餐选中后的样式
+
     choice(i) {
       this.iskey = i;
       this.sellPrice = this.packageArray[i].sellPrice;
@@ -134,6 +185,7 @@ export default {
       this.goodsId = this.packageArray[i].goodsId;
       this.marketPrice = this.packageArray[i].marketPrice;
     },
+    //套餐确定
     goConfirmation() {
       this.$router.push({
         path: "/payConfirm",
@@ -158,14 +210,21 @@ export default {
             this.img = info.img;
             this.content = info.content;
             this.sharePrice = info.sharePrice;
+            this.pictureArray = info.pictureArray;
             this.scorePrice = info.scorePrice;
             this.packageArray = info.packageArray;
-            this.pictureArray = info.pictureArray;
             this.sellPrice = info.packageArray[0].sellPrice;
             this.marketPrice = info.packageArray[0].marketPrice;
             this.stock = info.packageArray[0].stock;
             this.dateTime = info.packageArray[0].dateTime;
             this.choice(0);
+
+            // this.choiceGui(0);
+            // this.packageArray = info.paceArray;
+            // this.sellPrice = info.paceArray[0].sellPrice;
+            // this.marketPrice = info.paceArray[0].marketPrice;
+            // this.stock = info.paceArray[0].stock;
+            // this.dateTime = info.paceArray[0].dateTime;
           }
         });
     },
@@ -364,7 +423,6 @@ export default {
     }
     .contImg {
       text-align: center;
-
       width: 100%;
       height: 100%;
       img {
@@ -394,7 +452,7 @@ export default {
       background: #fff;
       width: 100%;
       bottom: 0;
-      height: 17rem;
+      height: 18rem;
       font-size: 16px;
       z-index: 999;
       overflow-y: auto;
@@ -409,20 +467,21 @@ export default {
         .money {
           padding-left: 0.8rem;
           .price {
-            line-height: 1.0683760684rem;
+            line-height: 1.2rem;
             text-align: left;
             color: #ff7f01;
-            .greyIcon {
-              margin-left: 0.5rem;
-              color: rgb(95, 92, 92);
-              text-decoration: line-through;
-            }
+          }
+          .greyIcon {
+            color: #999;
+            font-size: 14px;
+            text-decoration: line-through;
           }
           .style {
             font-family: PingFangSC-Regular;
-            color: #333;
+            font-size: 14px;
+            line-height: 2rem;
+            color: #000;
             text-align: left;
-            margin: 0.2136752137rem 0 0 0.5128205128rem;
           }
         }
         .close {
@@ -435,22 +494,24 @@ export default {
       }
       .choice {
         .colors {
-          margin: 1rem 0 0 0;
+          margin: 1.2rem 0 0 0;
           padding-left: 1rem;
         }
         .color-choice {
           display: flex;
           align-items: center;
           flex-wrap: wrap;
-          margin-top: 1rem;
+          margin-top: 0.5rem;
+          padding: 0.5rem;
           .colorItem {
             border: 1px solid #79797b;
             color: #000;
             width: 30%;
+            padding: 0 0.1rem;
             height: 1.5rem;
             line-height: 1.5rem;
             border-radius: 40px;
-            margin: 0.2rem 0.2rem;
+            margin: 0.2rem 0.5%;
             text-align: center;
           }
           .activeModel {
@@ -468,7 +529,7 @@ export default {
         display: flex;
         height: 2rem;
         align-items: center;
-        margin-top: 0.5rem;
+        margin-top: 1rem;
         .number {
           padding-left: 1rem;
           line-height: 1.5rem;

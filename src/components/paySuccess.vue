@@ -8,14 +8,13 @@
       <img src="../assets/imgs/zhifuchenggong.png" alt class="success">
       <p class="pay_ture">支付成功</p>
       <div class="mealDetail">
-        <p class="detail">套餐详情</p>
+        <p class="detail">订单详情</p>
         <img src="../assets/imgs/right.png" alt>
       </div>
     </div>
     <!--分享好友提醒按钮-->
     <div class="shareFriend">
       <span class="goBack" @click="goBack">回首页</span>
-      <span class="goshare" @click="goShare">分享好友赚</span>
     </div>
   </div>
 </template>
@@ -28,7 +27,9 @@ export default {
   },
   methods: {
     //点击跳转商品详情
-    goBack() {},
+    goBack() {
+      this.$router.push("/");
+    },
     goShare() {}
   },
   mounted() {},
@@ -77,7 +78,8 @@ export default {
         color: #c1c5c8;
       }
       img {
-        width: 1rem;
+        width: 0.5rem;
+        margin-top: 0.1rem;
         color: #ff7f01;
       }
     }
@@ -92,17 +94,17 @@ export default {
     color: #fff;
     justify-content: center;
     .goBack {
-      width: 30%;
-      line-height: 1.5rem;
-      border-radius: 0.8rem;
-      background-color: grey;
-    }
-    .goshare {
-      width: 30%;
-      margin-left: 5%;
-      line-height: 1.5rem;
+      width: 4.4rem;
+
+      line-height: 1.6rem;
       border-radius: 0.8rem;
       background-color: #ff7f01;
+    }
+    .goshare {
+      width: 4.4rem;
+      margin-left: 5%;
+      line-height: 1.6rem;
+      border-radius: 0.8rem;
     }
   }
 }

@@ -38,7 +38,7 @@ export default {
 .get_success {
   height: 100%;
   font-size: 14px;
-  padding-top: 2rem;
+  padding-top: 1.9rem;
   background-color: #f0f0f0;
   .paySuccess {
     text-align: center;

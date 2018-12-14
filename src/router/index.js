@@ -22,6 +22,8 @@ const getMoneySuccess = resolve =>
   require(["@/components/getMoneySuccess"], resolve);
 const invitedDetails = resolve =>
   require(["@/components/invited_details"], resolve);
+const shareDetails = resolve =>
+  require(["@/components/share_Details"], resolve);
 
 Vue.use(Router);
 
@@ -122,6 +124,12 @@ export default new Router({
       path: "/invitedDetails",
       name: "邀请明细",
       component: invitedDetails,
+      meta: { auth: true }
+    },
+    {
+      path: "/shareDetails",
+      name: "赏金明细",
+      component: shareDetails,
       meta: { auth: true }
     },
     {

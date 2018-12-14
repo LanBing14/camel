@@ -134,7 +134,6 @@ export default {
       province: "",
       city: "",
       county: "",
-      totalPrice: "",
       freight: "",
       detail: "",
       title: "",
@@ -212,7 +211,7 @@ export default {
           //地址
           aid: this.myId,
           phone: "12345678901",
-          totalPrice: this.price,
+          totalPrice: this.totalPrice,
           remark: this.remark,
           score: this.score
         }
@@ -221,7 +220,7 @@ export default {
           this.orderId = res.data.data.orderId;
           this.orderSn = res.data.data.orderSn;
           this.zhiObj.orderSn = this.orderSn;
-          this.zhiObj.totalPrice = this.price;
+          this.zhiObj.totalPrice = this.totalPrice;
         }
       });
     },
@@ -268,13 +267,7 @@ export default {
     xuanModel() {
       this.isShow = true;
     },
-    getType(index) {
-      if (index == 1) {
-        this.isShowPic = true;
-      } else if (index == 2) {
-        this.isShowPic = false;
-      }
-    },
+
     //订单信息
     getList() {
       this.$axios({

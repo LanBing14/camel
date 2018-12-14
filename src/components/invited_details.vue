@@ -20,9 +20,8 @@
               <span class="fr" style="fontSize:14px">2018-10-22 13:15</span>
             </div>
             <div class="phoneInfo">
-              <p class="phone">
-                用户123****432购买了您推荐的
-                (商品标题)
+              <p class="phone">用户123****432购买了您推荐的
+                <br>(商品标题)
               </p>
             </div>
             <p class="wayRemind" v-if="isDon">可提现</p>
@@ -58,7 +57,7 @@
 
 <script>
 export default {
-  name: "invite_details",
+  name: "inviteDetails",
   data() {
     return {
       isBian: false,
@@ -73,7 +72,7 @@ export default {
     }
   },
   created() {
-    document.title = "邀请明细";
+    document.title = "提现明细";
   },
   mounted() {},
   components: {}
@@ -82,19 +81,21 @@ export default {
 
 <style lang="scss" scoped>
 #invite_details {
-  height: 100%;
+  // height: 100%;
   background: #f0f0f0;
   font-size: 16px;
+  padding-top: 1.9rem;
+
   .red {
     color: #ff7f01 !important;
   }
   .inviteBg {
-    padding-top: 1.8rem;
     .invite {
       width: 100%;
       margin: 0 auto;
-      padding: 0.6rem;
-      margin-top: 0.2rem;
+      padding: 0.8rem 0.4rem;
+      border-bottom: 1px solid #f0f0f0;
+      border-top: 1px solid #f0f0f0;
       box-sizing: border-box;
       background-color: #fff;
       .inviteItem {
@@ -114,7 +115,7 @@ export default {
           }
         }
         .phoneInfo {
-          width: 60%;
+          width: 70%;
           margin-top: 0.4rem;
           line-height: 1rem;
           font-size: 14px;

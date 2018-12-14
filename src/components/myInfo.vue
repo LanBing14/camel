@@ -20,16 +20,16 @@
     </div>
 
     <div class="content">
-      <div class="itemCont clearfix">
-        <div class="fl">
+      <div class="extra clearfix">
+        <div class="shangjin">
           <img src="../assets/imgs/money.png" alt>
           <span>我的赏金</span>
           <span>￥{{balance}}</span>
         </div>
-        <div class="goTi fr" @click="goTiXian">去提现</div>
+        <div class="goTi" @click="goTiXian">去提现</div>
       </div>
 
-      <router-link class="itemCont clearfix" to="/invitedDetails">
+      <router-link class="itemCont clearfix" to="/shareDetails">
         <div class="fl">
           <img src="../assets/imgs/mingxi.png" alt>
           <span>赏金明细</span>
@@ -100,7 +100,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .myInfo {
-  padding-top: 2rem;
+  padding-top: 1.9rem;
   background: #f0f0f0;
   height: 100%;
   font-size: 16px;
@@ -110,16 +110,19 @@ export default {
     font-size: 16px;
     background-color: #fff;
     .topLeft {
-      padding: 0.6rem;
+      margin-top: 0.5rem;
+      margin-left: 0.5rem;
       div {
         width: 1.5rem;
 
         img {
           width: 1.5rem;
+          border-radius: 50%;
         }
       }
       .infoTitle {
-        margin-left: 0.5rem;
+        width: 60%;
+        margin-left: 0.2rem;
         p:nth-child(2) {
           font-size: 14px;
           color: #ccc;
@@ -136,15 +139,18 @@ export default {
       }
     }
   }
+
   .content {
-    margin-top: 0.5rem;
-    .itemCont {
+    .extra {
       line-height: 2.1rem;
+      margin-top: 0.4rem;
       padding-left: 0.6rem;
       font-size: 14px;
-      display: block;
+      display: flex;
+      width: 100%;
+      box-sizing: border-box;
       color: #000;
-      margin-bottom: 0.2rem;
+      border: 2px solid #f0f0f0;
       background-color: #fff;
       div {
         img {
@@ -159,7 +165,6 @@ export default {
         }
       }
       .goTi {
-        margin-right: 0.87rem;
         border: 1px solid #ff7f01;
         width: 2.5rem;
         text-align: center;
@@ -167,7 +172,28 @@ export default {
         color: #ff7f01;
         height: 1.2rem;
         line-height: 1.2rem;
-        margin-top: 0.4rem;
+        margin: 0.4rem 0.87rem 0 4.5rem;
+      }
+    }
+    .itemCont {
+      line-height: 2.1rem;
+      padding-left: 0.6rem;
+      font-size: 14px;
+      display: block;
+      color: #000;
+      border: 2px solid #f0f0f0;
+      background-color: #fff;
+      div {
+        img {
+          width: 0.8rem;
+        }
+        span:nth-child(2) {
+          margin-left: 0.2rem;
+        }
+        span:nth-child(3) {
+          margin-left: 0.2rem;
+          color: #ccc;
+        }
       }
     }
   }
