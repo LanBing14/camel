@@ -10,23 +10,29 @@
     </mt-navbar>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id>
-        <div
-          class="orderBox"
-          v-for="(item,index) in orderList"
-          :key="index"
-          v-if="orderList.length >0"
-        >
+        <div class="orderBox" v-for="(item,index) in orderList" :key="index">
           <p class="orderNum">
             订单编号:
             <span>{{item.orderSn}}</span>
           </p>
-          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" :key="i">
-            <img :src="it.goodsArray.img" alt>
+          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" v-if="item.isPackage == 1">
+            <img :src="it.packageInfo.goodsImg" alt>
             <div class="name">
-              <p style="font-size: 16px;" class="txt-cut title">{{it.goodsArray.title}}</p>
-              <p class="mount">{{it.number}}枚/{{it.packageDateTime}}个月</p>
+              <p style="font-size: 16px;" class="txt-cut title">{{it.packageInfo.goodsTitle}}</p>
+              <p class="mount">{{it.packageInfo.number}}枚/{{it.packageInfo.dateTime}}个月</p>
               <div class="money">
-                <p class="jine">￥{{it.packageSellPrice}}</p>
+                <p class="jine">￥{{it.packageInfo.sellPrice}}</p>
+                <p class="shul">x{{item.number}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" v-if="item.isPackage == 0">
+            <img :src="it.specArray.goodsImg" alt>
+            <div class="name">
+              <p style="font-size: 16px;" class="txt-cut title">{{it.specArray.goodsTitle}}</p>
+              <p class="mountding">{{it.specArray.value}}{{it.specArray.name}}</p>
+              <div class="money">
+                <p class="jine">￥{{it.specArray.sellPrice}}</p>
                 <p class="shul">x{{item.number}}</p>
               </div>
             </div>
@@ -37,68 +43,55 @@
               <span>￥{{item.amount}}</span>
             </p>
           </div>
-          <div class="btns" v-if="item.statusValue.statusValue == '未支付'">
-            <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
-            <div class="goPay" @click="goPay(item)">去支付</div>
-            <div class="flag">{{item.statusValue.statusValue}}</div>
-          </div>
-          <div class="btns" v-else>
-            <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
-            <div class="flag">{{item.statusValue.statusValue}}</div>
-          </div>
-        </div>
-        <div class="orderBox">
-          <p class="orderNum">
-            套餐编号:
-            <span>15421525151511</span>
-          </p>
-          <div class="goodsInfo">
-            <img src="../assets/imgs/swiper.png" alt>
-            <div class="name">
-              <p style="font-size: 16px;" class="txt-cut title">鸡蛋</p>
-              <p class="mountding">12盒</p>
-              <div class="money">
-                <p class="jine">￥55</p>
-                <p class="shul">x1</p>
-              </div>
+          <div v-if="item.isPackage == 1">
+            <div class="btns" v-if="item.statusValue == '未支付'">
+              <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
+              <div class="goPay" @click="goPay(item)">去支付</div>
+              <div class="flag">{{item.statusValue}}</div>
+            </div>
+            <div class="btns" v-if="item.statusValue != '未支付'">
+              <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
+              <div class="flag">{{item.statusValue}}</div>
             </div>
           </div>
-          <div class="total">
-            <p>
-              共1件商品，合计
-              <span>￥55</span>
-            </p>
-          </div>
-          <div class="btns">
-            <div class="goPayOne">订单详情</div>
-            <div class="goPay">去支付</div>
-            <div class="flag">待付款</div>
-          </div>
-          <div class="btns">
-            <div class="goPayOne">订单详情</div>
-            <div class="flag">待收货</div>
+          <div v-if="item.isPackage == 0">
+            <div class="btns" v-if="item.statusValue == '未支付'">
+              <div class="goPayOne" @click="goDing(item.id)">订单详情</div>
+              <div class="goPay">去支付</div>
+              <div class="flag">{{item.statusValue}}</div>
+            </div>
+            <div class="btns" v-if="item.statusValue != '未支付'">
+              <div class="goPayOne" @click="goDing(item.id)">订单详情</div>
+              <div class="flag">{{item.statusValue}}</div>
+            </div>
           </div>
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="0">
         <!--待付款列表信息-->
-        <div
-          class="orderBox"
-          v-for="(item,index) in orderList"
-          :key="index"
-          v-if="orderList.length >0"
-        >
+        <div class="orderBox" v-for="(item,index) in orderList" :key="index">
           <p class="orderNum">
             套餐编号:
             <span>{{item.orderSn}}</span>
           </p>
-          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" :key="i">
-            <img :src="it.goodsArray.img" alt>
+          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" v-if="item.isPackage == 1">
+            <img :src="it.packageInfo.goodsImg" alt>
             <div class="name">
-              <p class="txt-cut title" style="font-size: 16px;width:50%;">{{it.goodsArray.title}}</p>
-              <p class="mount">{{it.number}}枚/{{it.packageDateTime}}个月</p>
-              <div class="money clearfix">
-                <p class="jine">￥{{it.packageSellPrice}}</p>
+              <p style="font-size: 16px;" class="txt-cut title">{{it.packageInfo.Title}}</p>
+              <p class="mount">{{it.packageInfo.number}}枚/{{it.packageInfo.dateTime}}个月</p>
+              <div class="money">
+                <p class="jine">￥{{it.packageInfo.sellPrice}}</p>
+                <p class="shul">x{{item.number}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" v-if="item.isPackage == 0">
+            <img :src="it.specArray.goodsImg" alt>
+            <div class="name">
+              <p style="font-size: 16px;" class="txt-cut title">{{it.specArray.goodsTitle}}</p>
+              <p class="mountding">{{it.specArray.value}}{{it.specArray.name}}</p>
+              <div class="money">
+                <p class="jine">￥{{it.specArray.sellPrice}}</p>
                 <p class="shul">x{{item.number}}</p>
               </div>
             </div>
@@ -109,61 +102,48 @@
               <span>￥{{item.amount}}</span>
             </p>
           </div>
-          <div class="btns">
-            <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
-            <div class="goPay" @click="goPay(item)">去支付</div>
-            <div class="flag">{{item.statusValue.statusValue}}</div>
-          </div>
-        </div>
-        <div class="orderBox">
-          <p class="orderNum">
-            套餐编号:
-            <span>15421525151511</span>
-          </p>
-          <div class="goodsInfo">
-            <img src="../assets/imgs/swiper.png" alt>
-            <div class="name">
-              <p style="font-size: 16px;" class="txt-cut title">鸡蛋</p>
-              <p class="mountding">12盒</p>
-              <div class="money">
-                <p class="jine">￥55</p>
-                <p class="shul">x1</p>
-              </div>
+          <div v-for="(ites,index) in item.orderGoods" v-if="item.isPackage == 1">
+            <div class="btns">
+              <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
+              <div class="goPay" @click="goPay(item)">去支付</div>
+              <div class="flag">{{item.statusValue}}</div>
             </div>
           </div>
-          <div class="total">
-            <p>
-              共1件商品，合计
-              <span>￥55</span>
-            </p>
-          </div>
-          <div class="btns">
-            <div class="goPayOne">订单详情</div>
-            <div class="goPay">去支付</div>
-            <div class="flag">待付款</div>
+          <div v-if="item.isPackage == 0">
+            <div class="btns">
+              <div class="goPayOne">订单详情</div>
+              <div class="goPay">去支付</div>
+              <div class="flag">{{item.statusValue}}</div>
+            </div>
           </div>
         </div>
       </mt-tab-container-item>
 
       <!-- 待收货列表-->
       <mt-tab-container-item id="1">
-        <div
-          class="orderBox"
-          v-for="(item,index) in orderList"
-          :key="index"
-          v-if="orderList.length >0"
-        >
+        <div class="orderBox" v-for="(item,index) in orderList" :key="index">
           <p class="orderNum">
             套餐编号:
             <span>{{item.orderSn}}</span>
           </p>
-          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" :key="i">
-            <img :src="it.goodsArray.img" alt>
+          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" v-if="item.isPackage == 1">
+            <img :src="it.packageInfo.goodsImg" alt>
             <div class="name">
-              <p class="txt-cut title" style="font-size: 16px;width:50%;">{{it.goodsArray.title}}</p>
-              <p class="mount">{{it.number}}枚/{{it.packageDateTime}}个月</p>
-              <div class="money clearfix">
-                <p class="jine">￥{{it.packageSellPrice}}</p>
+              <p style="font-size: 16px;" class="txt-cut title">{{it.packageInfo.Title}}</p>
+              <p class="mount">{{it.packageInfo.number}}枚/{{it.packageInfo.dateTime}}个月</p>
+              <div class="money">
+                <p class="jine">￥{{it.packageInfo.sellPrice}}</p>
+                <p class="shul">x{{item.number}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="goodsInfo" v-for="(it,i) in item.orderGoods" v-if="item.isPackage == 0">
+            <img :src="it.specArray.goodsImg" alt>
+            <div class="name">
+              <p style="font-size: 16px;" class="txt-cut title">{{it.specArray.goodsTitle}}</p>
+              <p class="mountding">{{it.specArray.value}}{{it.specArray.name}}</p>
+              <div class="money">
+                <p class="jine">￥{{it.specArray.sellPrice}}</p>
                 <p class="shul">x{{item.number}}</p>
               </div>
             </div>
@@ -174,37 +154,17 @@
               <span>￥{{item.amount}}</span>
             </p>
           </div>
-          <div class="btns">
-            <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
-            <div class="flag">{{item.statusValue.statusValue}}</div>
-          </div>
-        </div>
-        <div class="orderBox">
-          <p class="orderNum">
-            套餐编号:
-            <span>15421525151511</span>
-          </p>
-          <div class="goodsInfo">
-            <img src="../assets/imgs/swiper.png" alt>
-            <div class="name">
-              <p style="font-size: 16px;" class="txt-cut title">鸡蛋</p>
-              <p class="mountding">12盒</p>
-              <div class="money">
-                <p class="jine">￥55</p>
-                <p class="shul">x1</p>
-              </div>
+          <div v-if="item.isPackage == 1">
+            <div class="btns">
+              <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
+              <div class="flag">{{item.statusValue}}</div>
             </div>
           </div>
-          <div class="total">
-            <p>
-              共1件商品，合计
-              <span>￥55</span>
-            </p>
-          </div>
-
-          <div class="btns">
-            <div class="goPayOne">订单详情</div>
-            <div class="flag">待收货</div>
+          <div v-if="item.isPackage == 0">
+            <div class="btns">
+              <div class="goPayOne" @click="goDing(item.id)">订单详情</div>
+              <div class="flag">{{item.statusValue}}</div>
+            </div>
           </div>
         </div>
       </mt-tab-container-item>
@@ -242,7 +202,14 @@ export default {
         }
       });
     },
-
+    goDing(id) {
+      this.$router.push({
+        path: "/orderDetailDan",
+        query: {
+          id: id
+        }
+      });
+    },
     getList() {
       this.$axios
         .post("/order/myOrderList", {
@@ -251,6 +218,7 @@ export default {
         })
         .then(res => {
           this.orderList = res.data.data;
+
           console.log(this.orderList);
         });
     }

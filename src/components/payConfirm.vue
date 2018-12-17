@@ -153,6 +153,7 @@ export default {
       freight: "",
       userScorePrice: "",
       userAddress: [],
+      productId: "0",
       number: "",
       dateTime: "",
       num: "",
@@ -220,6 +221,7 @@ export default {
           goodsId: this.$route.query.goodsId,
           number: this.$route.query.number,
           packageId: this.$route.query.packageId,
+          productId: this.productId,
           //地址
           aid: this.myId,
           phone: "12345678901",
@@ -329,6 +331,7 @@ export default {
     this.goodsId = this.$route.query.goodsId;
     this.number = this.$route.query.number;
     this.value = this.$route.query.value;
+    this.productId = this.$route.query.productid || 0;
     // 获取地址信息
     this.getAddress();
     //获取订单信息

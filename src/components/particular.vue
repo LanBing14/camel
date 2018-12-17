@@ -180,7 +180,8 @@ export default {
           packageId: 0,
           goodsId: this.goodsId,
           number: this.mount,
-          value: this.value
+          value: this.value,
+          productid: this.productid
         }
       });
     },
@@ -191,6 +192,7 @@ export default {
       this.goodsId = this.specArray[i].goodsId;
       this.spaceStock = this.specArray[i].stock;
       this.value = this.specArray[i].value;
+      this.productid = this.specArray[i].id;
     },
     //套餐选中后的样式
     choice(i) {

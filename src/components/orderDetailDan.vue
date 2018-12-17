@@ -1,6 +1,6 @@
 <template>
   <div class="packDetails">
-    <mt-header fixed title="套餐详情">
+    <mt-header fixed title="订单详情">
       <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
     </mt-header>
     <!-- 信息发货 -->
@@ -8,7 +8,6 @@
       <img :src="infoObj.statusImg" alt>
       <span>{{infoObj.statusValue }}</span>
     </div>
-
     <!-- /*收货人信息*/ -->
     <div class="Consignee">
       <img src="../assets/imgs/map.png" class="sign">
@@ -21,16 +20,15 @@
       </div>
       <!-- <img src="../assets/imgs/right.png" alt class="right"> -->
     </div>
-    <!--商品信息-->
     <div>
       <div class="productInfo">
-        <img :src="packageInfo.goodsImg" alt class="goodPic">
+        <img :src="specArray.goodsImg" alt class="goodPic">
         <div class="line1">
-          <p class="name txt-cut">{{packageInfo.goodsTitle}}</p>
-          <p class="money">￥{{packageInfo.sellPrice}}</p>
+          <p class="name txt-cut">{{specArray.goodsTitle}}</p>
+          <p class="money">￥{{specArray.sellPrice}}</p>
         </div>
         <div class="line2">
-          <p class="guige">{{packageInfo.number}}枚/{{packageInfo.dateTime}}个月</p>
+          <p class="guigeG">{{specArray.value}}{{specArray.name}}</p>
           <p class="num">x{{infoObj.number}}</p>
         </div>
       </div>
@@ -58,52 +56,6 @@
         </div>
       </div>
     </div>
-    <!--待收货 别的状态需要 -->
-    <div class="sendInfotitle" v-if="infoObj.statusValue == '部分发货' || infoObj.statusValue == '待收货'">
-      <mt-navbar v-model="selected">
-        <mt-tab-item id="0">
-          <div>已发货</div>
-        </mt-tab-item>
-        <mt-tab-item id="1">
-          <div>待发货</div>
-        </mt-tab-item>
-      </mt-navbar>
-
-      <!--列表内容容器下拉-->
-      <mt-tab-container v-model="selected">
-        <!--已发货列-->
-        <mt-tab-container-item id="0">
-          <div class="already_huo">
-            <div class="monthBorder" v-for="(item,index) in isSend" :key="index">
-              <div class="box_one" @click="clickBtn(item)">
-                <p>{{item.date}}</p>
-                <span>{{item.status_text}}</span>
-                <img src="../assets/imgs/arrow-dow.png" v-show="item.otherParam">
-                <img src="../assets/imgs/arrow-up.png" v-show="!item.otherParam">
-              </div>
-              <div class="information_exhibition" v-if="item.otherParam ">
-                <p>{{item.date}}</p>
-                <span @click="goOrder">订单详情</span>
-              </div>
-            </div>
-          </div>
-        </mt-tab-container-item>
-
-        <!--  待发货列-->
-        <mt-tab-container-item id="1">
-          <div class="stay_huo">
-            <div class="boxs_one" v-for="(item,index) in noSend" :key="index">
-              <p>{{item.date}}</p>
-              <span>{{item.status_text}}</span>
-            </div>
-          </div>
-        </mt-tab-container-item>
-      </mt-tab-container>
-    </div>
-    <!-- 代付款状态 -->
-    <div class="waitPay" v-if="infoObj.statusValue == '未支付'">
-      <p>去支付</p>
-    </div>
     <div class="orderTime">
       <p>订单详情</p>
       <div class="clearfix">
@@ -111,7 +63,7 @@
           <span class="fl">下单时间</span>
           <span class="fr">{{infoObj.addTime}}</span>
         </p>
-        <p v-if="infoObj.payTime !=''">
+        <p v-if="infoObj.payTime != ''">
           <span class="fl">付款时间</span>
           <span class="fr">{{infoObj.payTime}}</span>
         </p>
@@ -134,32 +86,37 @@ export default {
       upClick: true,
       phone: "",
       province: "",
+      packageGoodsList: {},
       city: "",
+      packageInfo: {},
       detail: "",
       county: "",
+      copyContent: "11111111111111111111111111111",
       infoObj: {},
-      packageInfo: {},
-      goodsImg: "",
+      orderGoods: {},
       selected: "0",
-      otherParam: false,
-      goodsArray: {},
-      isSend: []
+      specArray: {}
     };
   },
   methods: {
-    goOrder() {
-      this.$router.push({
-        path: "/orderDetails",
-        query: {
-          id: this.$route.query.id
-        }
-      });
-    },
     goback() {
       this.$router.go(-1);
     },
-    clickBtn(item) {
-      item.otherParam = !item.otherParam;
+    clickBtn() {
+      this.upClick = !this.upClick;
+    },
+    copy() {
+      var copybtn = document.getElementsByClassName("btn");
+      var clipboard = new Clipboard(copybtn);
+      let _this = this;
+      clipboard.on("success", function() {
+        this.$toast("复制成功");
+        _this.destroy();
+        _this.clipboard = new Clipboard(copyBtn);
+      });
+      clipboard.on("error", function() {
+        Toast("复制失败，请手动复制");
+      });
     },
     getList() {
       this.$axios
@@ -169,15 +126,13 @@ export default {
         })
         .then(res => {
           this.infoObj = res.data.data;
-          this.packageInfo = res.data.data.orderGoods[0].packageInfo;
-          this.isSend = res.data.data.isSend;
-          this.noSend = res.data.data.noSend;
-          console.log(this.infoObj);
+          this.specArray = res.data.data.orderGoods[0].specArray;
         });
     }
   },
   created() {
     document.title = "订单详情";
+    this.state = this.$route.query.state;
     this.getList();
   },
   watch: {
@@ -185,7 +140,10 @@ export default {
       console.log(value);
     }
   },
-  mounted() {},
+  mounted() {
+    var copybtn = document.getElementsByClassName("btn");
+    var clipboard = new Clipboard(copybtn);
+  },
   components: {}
 };
 </script>
@@ -207,20 +165,6 @@ export default {
     }
     span {
       margin-left: 0.2rem;
-    }
-  }
-  .waitPay {
-    margin: 0.8rem 0;
-    width: 100%;
-    p {
-      width: 6rem;
-      margin: 0 auto;
-      line-height: 1.8rem;
-      border-radius: 0.8rem;
-      color: #fff;
-      height: 1.8rem;
-      text-align: center;
-      background-color: #ff7f01;
     }
   }
 
@@ -300,7 +244,16 @@ export default {
       color: #c1c5c8;
       .guige {
         width: 58%;
-        margin-right: 0.5rem;
+        margin-right: 0.8rem;
+      }
+      .guigeG {
+        width: 2rem;
+        text-align: center;
+        line-height: 1rem;
+        border-radius: 0.2rem;
+        background-color: #f1f1f1;
+        color: #000;
+        margin-right: 5rem;
       }
       .num {
         text-align: right;
@@ -374,9 +327,9 @@ export default {
     div {
       border-top: 2px solid #f1f1f1;
       p {
-        padding: 0.2rem 0.4rem;
+        padding: 0.5rem 0.4rem;
         color: #c1c5c8;
-        height: 1rem;
+        height: 0.3rem;
       }
     }
   }
@@ -385,14 +338,13 @@ export default {
     margin-top: 0.5rem;
     /deep/ .mint-navbar {
       background: #f0f0f0;
-      padding: 0 4rem;
+      padding: 0 3rem;
     }
     a {
       color: #ff7f01;
     }
     .mint-navbar .mint-tab-item {
       background-color: #ffffff;
-      padding: 13px 0;
       border-radius: 0.8rem 0 0 0.8rem;
     }
     .mint-navbar .mint-tab-item:nth-child(2) {
@@ -401,6 +353,7 @@ export default {
       border-left: 2px solid #ff7f01;
     }
     /deep/.mint-tab-item {
+      width: 5rem;
       color: #000;
     }
     /deep/ .mint-navbar .mint-tab-item.is-selected {
@@ -483,7 +436,7 @@ export default {
     font-size: 16px;
     border-top: 1px solid #c1c5c8;
     top: 2.25rem;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
     p {
       display: inline-block;
       color: #999999;
@@ -501,7 +454,7 @@ export default {
       font-size: 14px;
       border: 1px solid #ff7f01;
       border-radius: 0.8rem;
-      margin-right: 0.5rem;
+      margin-left: 0.5rem;
       margin-top: 0.3rem;
     }
   }

@@ -9,18 +9,6 @@
       <span>{{infoObj.statusValue }}</span>
     </div>
 
-    <!-- /*收货人信息*/ -->
-    <div class="Consignee">
-      <img src="../assets/imgs/map.png" class="sign">
-      <div class="messages">
-        <p class="name">
-          {{infoObj.name}}
-          <span class="phone">{{infoObj.phone}}</span>
-        </p>
-        <p class="address">{{infoObj.address}}</p>
-      </div>
-      <!-- <img src="../assets/imgs/right.png" alt class="right"> -->
-    </div>
     <!-- 发货地址 -->
     <div class="sendInfo">
       <div class="sendItem">
@@ -29,7 +17,7 @@
       <div class="sendItem">
         <p>
           <span>物流名称:</span>
-          <span>中国邮政</span>
+          <span>{{kdName}}</span>
         </p>
         <p style="width: 8rem;">
           <span class="fl">物流单号:</span>
@@ -55,13 +43,13 @@
     <!--商品信息-->
     <div>
       <div class="productInfo">
-        <img :src="orderGoods.img" alt class="goodPic">
+        <img :src="packageInfo.goodsImg" alt class="goodPic">
         <div class="line1">
-          <p class="name txt-cut">{{orderGoods.title}}</p>
-          <p class="money">￥{{goodsArray.packageSellPrice}}</p>
+          <p class="name txt-cut">{{packageInfo.goodsTitle}}</p>
+          <p class="money">￥{{packageInfo.sellPrice}}</p>
         </div>
         <div class="line2">
-          <p class="guige">{{goodsArray.number}}枚/{{goodsArray.packageDateTime}}个月</p>
+          <p class="guige">{{packageInfo.number}}枚/{{packageInfo.dateTime}}个月</p>
           <p class="num">x{{infoObj.number}}</p>
         </div>
       </div>
@@ -89,69 +77,6 @@
         </div>
       </div>
     </div>
-    <!-- 别的状态需要 -->
-    <div class="sendInfotitle" v-if="infoObj.statusValue == '待收货'">
-      <mt-navbar v-model="selected">
-        <mt-tab-item id="0">
-          <div>已发货</div>
-        </mt-tab-item>
-        <mt-tab-item id="1">
-          <div>待发货</div>
-        </mt-tab-item>
-      </mt-navbar>
-
-      <!--列表内容容器下拉-->
-      <mt-tab-container v-model="selected">
-        <!--已发货列-->
-        <mt-tab-container-item id="0">
-          <div class="already_huo">
-            <div class="monthBorder">
-              <div class="box_one" @click="clickBtn">
-                <p>1月份</p>
-                <span>已发货</span>
-                <img src="../assets/imgs/arrow-dow.png" v-show="!upClick">
-                <img src="../assets/imgs/arrow-up.png" v-show="upClick">
-              </div>
-              <div class="information_exhibition" v-show="upClick">
-                <p>2018/3/3/13:10</p>
-                <span>订单详情</span>
-              </div>
-            </div>
-            <div class="monthBorder">
-              <div class="box_one" @click="clickBtn">
-                <p>1月份</p>
-                <span>已发货</span>
-                <img src="../assets/imgs/arrow-dow.png" v-show="!upClick">
-                <img src="../assets/imgs/arrow-up.png" v-show="upClick">
-              </div>
-              <div class="information_exhibition" v-show="upClick">
-                <p>2018/3/3/13:10</p>
-                <span>订单详情</span>
-              </div>
-            </div>
-          </div>
-        </mt-tab-container-item>
-
-        <!--  待发货列-->
-        <mt-tab-container-item id="1">
-          <div class="stay_huo">
-            <div class="boxs_one">
-              <p>33月份</p>
-              <span>代发货</span>
-            </div>
-            <div class="boxs_one">
-              <p>33月份</p>
-              <span>代发货</span>
-            </div>
-            <div class="boxs_one">
-              <p>33月份</p>
-              <span>代发货</span>
-            </div>
-          </div>
-        </mt-tab-container-item>
-      </mt-tab-container>
-    </div>
-
     <div class="orderTime">
       <p>订单详情</p>
       <div class="clearfix">
@@ -159,9 +84,13 @@
           <span class="fl">下单时间</span>
           <span class="fr">{{infoObj.addTime}}</span>
         </p>
-        <p v-if="infoObj.statusValue == '待收货'">
+        <p v-if="infoObj.payTime != ''">
           <span class="fl">付款时间</span>
           <span class="fr">{{infoObj.payTime}}</span>
+        </p>
+        <p v-if="infoObj.sendTime != ''">
+          <span class="fl">发货时间</span>
+          <span class="fr">{{infoObj.sendTime}}</span>
         </p>
       </div>
     </div>
@@ -177,15 +106,18 @@ export default {
       receiver: "",
       upClick: true,
       phone: "",
+      kdName: "",
       province: "",
+      packageGoodsList: {},
       city: "",
+      packageInfo: {},
       detail: "",
       county: "",
       copyContent: "11111111111111111111111111111",
       infoObj: {},
       orderGoods: {},
       selected: "0",
-      goodsArray: {}
+      specArray: {}
     };
   },
   methods: {
@@ -200,7 +132,7 @@ export default {
       var clipboard = new Clipboard(copybtn);
       let _this = this;
       clipboard.on("success", function() {
-        Toast("复制成功");
+        this.$toast("复制成功");
         _this.destroy();
         _this.clipboard = new Clipboard(copyBtn);
       });
@@ -216,14 +148,17 @@ export default {
         })
         .then(res => {
           this.infoObj = res.data.data;
-          this.orderGoods = res.data.data.orderGoods[0].goodsArray;
-          this.goodsArray = res.data.data.orderGoods[0];
-          console.log(this.infoObj);
+          this.packageInfo = res.data.data.orderGoods[0].packageInfo;
+          this.specArray = res.data.data.orderGoods[0].specArray;
+          this.copyContent = res.data.data.packageGoodsList[0].kdNo;
+          this.kdName = res.data.data.packageGoodsList[0].kdName;
+          console.log(this.infoObj, this.goodsArray);
         });
     }
   },
   created() {
     document.title = "订单详情";
+    this.state = this.$route.query.state;
     this.getList();
   },
   watch: {
@@ -335,7 +270,16 @@ export default {
       color: #c1c5c8;
       .guige {
         width: 58%;
-        margin-right: 0.5rem;
+        margin-right: 0.8rem;
+      }
+      .guigeG {
+        width: 2rem;
+        text-align: center;
+        line-height: 1rem;
+        border-radius: 0.2rem;
+        background-color: #f1f1f1;
+        color: #000;
+        margin-right: 5rem;
       }
       .num {
         text-align: right;
@@ -411,7 +355,7 @@ export default {
       p {
         padding: 0.5rem 0.4rem;
         color: #c1c5c8;
-        height: 1rem;
+        height: 0.3rem;
       }
     }
   }
