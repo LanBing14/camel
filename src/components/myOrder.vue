@@ -37,15 +37,13 @@
               <span>￥{{item.amount}}</span>
             </p>
           </div>
-          <div class="btns" v-if="item.statusValue == '未支付'">
+          <div class="btns" v-if="item.statusValue.statusValue == '未支付'">
             <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
             <div class="goPay" @click="goPay(item)">去支付</div>
-            <div class="flag">{{item.statusValue}}</div>
+            <div class="flag">{{item.statusValue.statusValue}}</div>
           </div>
           <div class="btns" v-else>
-            <div class="goPay" @click="detailBtn(item.id)">套餐详情</div>
-            <div class="goPay">去支付</div>
-
+            <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
             <div class="flag">{{item.statusValue.statusValue}}</div>
           </div>
         </div>
@@ -77,7 +75,7 @@
             <div class="flag">待付款</div>
           </div>
           <div class="btns">
-            <div class="goPay">订单详情</div>
+            <div class="goPayOne">订单详情</div>
             <div class="flag">待收货</div>
           </div>
         </div>
@@ -112,7 +110,7 @@
             </p>
           </div>
           <div class="btns">
-            <div class="goPay">套餐详情</div>
+            <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
             <div class="goPay" @click="goPay(item)">去支付</div>
             <div class="flag">{{item.statusValue.statusValue}}</div>
           </div>
@@ -177,7 +175,7 @@
             </p>
           </div>
           <div class="btns">
-            <div class="goPay" @click="detailBtn(item.id)">套餐详情</div>
+            <div class="goPayOne" @click="detailBtn(item.id)">套餐详情</div>
             <div class="flag">{{item.statusValue.statusValue}}</div>
           </div>
         </div>
@@ -205,7 +203,7 @@
           </div>
 
           <div class="btns">
-            <div class="goPay">订单详情</div>
+            <div class="goPayOne">订单详情</div>
             <div class="flag">待收货</div>
           </div>
         </div>
@@ -253,6 +251,7 @@ export default {
         })
         .then(res => {
           this.orderList = res.data.data;
+          console.log(this.orderList);
         });
     }
   },
@@ -329,7 +328,7 @@ export default {
           line-height: 1.5rem;
         }
         .mount {
-          width: 3rem;
+          width: 3.5rem;
           text-align: center;
           border-radius: 0.2rem;
           margin-top: 0.6rem;
@@ -397,16 +396,17 @@ export default {
       .goPay {
         width: 3rem;
         text-align: center;
-        color: #ff7f01;
+        color: #ffffff;
         border: 1px solid #ff7f01;
         border-radius: 2rem;
         margin-right: 0.8rem;
+        background-color: #ff7f01;
       }
       .goPayOne {
         width: 3rem;
         text-align: center;
-        color: #000;
-        border: 1px solid #79797b;
+        color: #ff7f01;
+        border: 1px solid #ff7f01;
         border-radius: 2rem;
         margin-right: 0.8rem;
       }

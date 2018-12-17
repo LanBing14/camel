@@ -31,7 +31,7 @@
     </div>
 
     <!--商品信息-->
-    <div class="productInfo">
+    <div class="productInfo" v-if="packageId > 0">
       <img src="../assets/imgs/swiper.png" alt class="goodPic">
       <div class="line1">
         <p class="name txt-cut">{{title}}</p>
@@ -42,7 +42,17 @@
         <p class="num">x{{number}}</p>
       </div>
     </div>
-
+    <div class="productInfo" v-if="packageId == 0">
+      <img src="../assets/imgs/swiper.png" alt class="goodPic">
+      <div class="line1">
+        <p class="name txt-cut">{{title}}</p>
+        <p class="money">￥{{sellPrice}}</p>
+      </div>
+      <div class="line2">
+        <p class="guige">{{value}}盒</p>
+        <p class="num">x{{number}}</p>
+      </div>
+    </div>
     <!--商品其他-->
     <div class="others">
       <div class="total">
@@ -148,10 +158,12 @@ export default {
       num: "",
       zhiObj: {},
       orderId: "",
+      goodsId: "",
       orderSn: "",
       price: "",
       myaddress: [],
       morenArr: [],
+      packageId: "",
       myId: 0
     };
   },
@@ -297,8 +309,10 @@ export default {
           this.freight = info.freight;
           //用户地址
           this.userAddress = info.userAddress;
-          this.num = info.packageInfo[0].number;
-          this.dateTime = info.packageInfo[0].dateTime;
+          // this.num = info.packageInfo[0].number;
+          if (info.packageInfo.length > 0) {
+            this.dateTime = info.packageInfo[0].dateTime;
+          }
         }
       });
     },
@@ -311,7 +325,10 @@ export default {
   },
   created() {
     document.title = "订单确定";
+    this.packageId = this.$route.query.packageId;
+    this.goodsId = this.$route.query.goodsId;
     this.number = this.$route.query.number;
+    this.value = this.$route.query.value;
     // 获取地址信息
     this.getAddress();
     //获取订单信息

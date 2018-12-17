@@ -1,6 +1,6 @@
 <template>
   <div class="packDetails">
-    <mt-header fixed title="套餐详情">
+    <mt-header fixed title="订单详情">
       <mt-button icon="back" size="small" slot="left" @click="goback"></mt-button>
     </mt-header>
     <!-- 信息发货 -->
@@ -20,6 +20,37 @@
         <p class="address">{{infoObj.address}}</p>
       </div>
       <!-- <img src="../assets/imgs/right.png" alt class="right"> -->
+    </div>
+    <!-- 发货地址 -->
+    <div class="sendInfo">
+      <div class="sendItem">
+        <img src="../assets/imgs/car.png" alt>
+      </div>
+      <div class="sendItem">
+        <p>
+          <span>物流名称:</span>
+          <span>中国邮政</span>
+        </p>
+        <p style="width: 8rem;">
+          <span class="fl">物流单号:</span>
+          <input
+            type="text"
+            v-model="copyContent"
+            id="copy_text"
+            style="width: 5rem;margin-left:.2rem"
+          >
+        </p>
+      </div>
+      <div class="sendItem">
+        <button
+          class="btn"
+          style="float: right;border: none;"
+          ref="copy"
+          data-clipboard-action="copy"
+          data-clipboard-target="#copy_text"
+          @click="copy"
+        >复制单号</button>
+      </div>
     </div>
     <!--商品信息-->
     <div>
@@ -58,8 +89,8 @@
         </div>
       </div>
     </div>
-    <!--待收货 别的状态需要 -->
-    <div class="sendInfotitle" v-if="infoObj.statusValue == '部分发货' || infoObj.statusValue == '待收货'">
+    <!-- 别的状态需要 -->
+    <div class="sendInfotitle" v-if="infoObj.statusValue == '待收货'">
       <mt-navbar v-model="selected">
         <mt-tab-item id="0">
           <div>已发货</div>
@@ -78,20 +109,20 @@
               <div class="box_one" @click="clickBtn">
                 <p>1月份</p>
                 <span>已发货</span>
-                <img src="../assets/imgs/arrow-dow.png" v-show="upClick">
-                <img src="../assets/imgs/arrow-up.png" v-show="!upClick">
+                <img src="../assets/imgs/arrow-dow.png" v-show="!upClick">
+                <img src="../assets/imgs/arrow-up.png" v-show="upClick">
               </div>
               <div class="information_exhibition" v-show="upClick">
                 <p>2018/3/3/13:10</p>
-                <span @click="goOrder">订单详情</span>
+                <span>订单详情</span>
               </div>
             </div>
             <div class="monthBorder">
               <div class="box_one" @click="clickBtn">
                 <p>1月份</p>
                 <span>已发货</span>
-                <img src="../assets/imgs/arrow-dow.png" v-show="upClick">
-                <img src="../assets/imgs/arrow-up.png" v-show="!upClick">
+                <img src="../assets/imgs/arrow-dow.png" v-show="!upClick">
+                <img src="../assets/imgs/arrow-up.png" v-show="upClick">
               </div>
               <div class="information_exhibition" v-show="upClick">
                 <p>2018/3/3/13:10</p>
@@ -120,22 +151,15 @@
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
-    <!-- 代付款状态 -->
-    <div class="waitPay" v-if="infoObj.statusValue == '未支付'">
-      <p>去支付</p>
-    </div>
+
     <div class="orderTime">
       <p>订单详情</p>
       <div class="clearfix">
         <p>
-          <span class="fl">订单总计</span>
-          <span class="fr">￥{{infoObj.amount}}</span>
-        </p>
-        <p>
           <span class="fl">下单时间</span>
           <span class="fr">{{infoObj.addTime}}</span>
         </p>
-        <p v-if="infoObj.statusValue == '待收货'|| infoObj.statusValue == '部分发货'">
+        <p v-if="infoObj.statusValue == '待收货'">
           <span class="fl">付款时间</span>
           <span class="fr">{{infoObj.payTime}}</span>
         </p>
@@ -165,9 +189,6 @@ export default {
     };
   },
   methods: {
-    goOrder() {
-      this.$router.push("/orderDetails");
-    },
     goback() {
       this.$router.go(-1);
     },
@@ -235,20 +256,6 @@ export default {
     }
     span {
       margin-left: 0.2rem;
-    }
-  }
-  .waitPay {
-    margin: 0.8rem 0;
-    width: 100%;
-    p {
-      width: 6rem;
-      margin: 0 auto;
-      line-height: 1.8rem;
-      border-radius: 0.8rem;
-      color: #fff;
-      height: 1.8rem;
-      text-align: center;
-      background-color: #ff7f01;
     }
   }
 
@@ -396,13 +403,13 @@ export default {
     font-size: 14px;
     margin-top: 0.3rem;
     p {
-      line-height: 1rem;
+      line-height: 1.3rem;
       padding-left: 0.4rem;
     }
     div {
       border-top: 2px solid #f1f1f1;
       p {
-        padding: 0.2rem 0.4rem;
+        padding: 0.5rem 0.4rem;
         color: #c1c5c8;
         height: 1rem;
       }

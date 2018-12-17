@@ -59,7 +59,7 @@
               class="colorItem"
               v-for="(list,key) in packageArray"
               :key="key"
-              :class="{activeKey:iskey==key}"
+              :class="{activeModel:iskey==key}"
               @click="choice(key)"
             >{{list.number}}枚/{{list.dateTime}}个月</div>
           </div>
@@ -82,9 +82,8 @@
         <div class="goods-details">
           <img alt class="good-picture" :src="img">
           <div class="money">
-            <p class="price">￥{{sellPrice}}</p>
-            <p class="greyIcon">原价￥{{marketPrice}}</p>
-            <p class="style">库存{{stock}}件</p>
+            <p class="price">￥{{spacePrice}}</p>
+            <p class="style">库存{{spaceStock}}件</p>
           </div>
         </div>
         <div class="choice">
@@ -93,10 +92,10 @@
             <div
               class="colorItem"
               @click="choiceGui(key)"
-              v-for="(item,key) in paceArray"
+              v-for="(item,key) in specArray"
               :key="key"
               :class="{activeModel:activekey==key}"
-            >{{item.amounts}}盒</div>
+            >{{item.value}}{{item.name}}</div>
           </div>
         </div>
         <div class="numbers">
@@ -126,11 +125,7 @@ export default {
       activekey: -1,
       price: "",
       mount: 1,
-      paceArray: [
-        { id: 0, amounts: 12 },
-        { id: 1, amounts: 1 },
-        { id: 2, amounts: 10 }
-      ],
+      specArray: [],
       isShowShang: false,
       isShowTao: false,
       title: "",
@@ -148,12 +143,26 @@ export default {
       marketPrice: "",
       commentFirst: {},
       packageId: "",
-      goodsId: ""
+      goodsId: "",
+      spacePrice: "",
+      spaceMarket: "",
+      spaceStock: "",
+      goodId: "",
+      value: ""
     };
   },
   methods: {
     chooseModel() {
       this.isShow = true;
+      if (this.packageArray.length > 0) {
+        this.isShowTao = true;
+        this.choice(0);
+        return false;
+      } else if (this.specArray.length > 0) {
+        this.isShowShang = true;
+        this.choiceGui(0);
+        return false;
+      }
     },
     goback() {
       this.$router.go(-1);
@@ -164,15 +173,26 @@ export default {
       this.isShowTao = false;
     },
     //商品确定
-    goConfirm() {},
+    goConfirm() {
+      this.$router.push({
+        path: "/payConfirm",
+        query: {
+          packageId: 0,
+          goodsId: this.goodsId,
+          number: this.mount,
+          value: this.value
+        }
+      });
+    },
     //规格
     choiceGui(i) {
       this.activekey = i;
-      //产品id
-      this.amountsId = this.paceArray[i].amounts;
+      this.spacePrice = this.specArray[i].sellPrice;
+      this.goodsId = this.specArray[i].goodsId;
+      this.spaceStock = this.specArray[i].stock;
+      this.value = this.specArray[i].value;
     },
     //套餐选中后的样式
-
     choice(i) {
       this.iskey = i;
       this.sellPrice = this.packageArray[i].sellPrice;
@@ -185,6 +205,7 @@ export default {
       this.goodsId = this.packageArray[i].goodsId;
       this.marketPrice = this.packageArray[i].marketPrice;
     },
+
     //套餐确定
     goConfirmation() {
       this.$router.push({
@@ -213,18 +234,16 @@ export default {
             this.pictureArray = info.pictureArray;
             this.scorePrice = info.scorePrice;
             this.packageArray = info.packageArray;
-            this.sellPrice = info.packageArray[0].sellPrice;
-            this.marketPrice = info.packageArray[0].marketPrice;
-            this.stock = info.packageArray[0].stock;
-            this.dateTime = info.packageArray[0].dateTime;
-            this.choice(0);
-
-            // this.choiceGui(0);
-            // this.packageArray = info.paceArray;
-            // this.sellPrice = info.paceArray[0].sellPrice;
-            // this.marketPrice = info.paceArray[0].marketPrice;
-            // this.stock = info.paceArray[0].stock;
-            // this.dateTime = info.paceArray[0].dateTime;
+            this.specArray = info.specArray;
+            if (this.packageArray.length > 0) {
+              this.sellPrice = info.packageArray[0].sellPrice;
+              this.marketPrice = info.packageArray[0].marketPrice;
+              this.stock = info.packageArray[0].stock;
+              this.dateTime = info.packageArray[0].dateTime;
+            } else if (this.specArray.length > 0) {
+              this.spacePrice = info.specArray[0].sellPrice;
+              this.spaceStock = info.specArray[0].stock;
+            }
           }
         });
     },
@@ -326,6 +345,7 @@ export default {
     background-color: #fff;
   }
   /*全部评价*/
+
   .all_evaluate {
     font-size: 16px;
     padding-bottom: 1rem;
@@ -452,7 +472,7 @@ export default {
       background: #fff;
       width: 100%;
       bottom: 0;
-      height: 18rem;
+      min-height: 18rem;
       font-size: 16px;
       z-index: 999;
       overflow-y: auto;

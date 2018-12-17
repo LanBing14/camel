@@ -24,6 +24,7 @@ const invitedDetails = resolve =>
   require(["@/components/invited_details"], resolve);
 const shareDetails = resolve =>
   require(["@/components/share_Details"], resolve);
+const orderDetails = resolve => require(["@/components/orderDetails"], resolve);
 
 Vue.use(Router);
 
@@ -45,6 +46,12 @@ export default new Router({
       path: "/",
       name: "商城",
       component: productMails,
+      meta: { auth: true }
+    },
+    {
+      path: "/orderDetails",
+      name: "订单详情",
+      component: orderDetails,
       meta: { auth: true }
     },
     {
@@ -134,7 +141,7 @@ export default new Router({
     },
     {
       path: "/packDetails",
-      name: "订单详情",
+      name: "套餐详情",
       component: packDetails,
       meta: { auth: true }
     },
