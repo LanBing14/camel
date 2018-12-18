@@ -190,9 +190,14 @@ export default {
   },
   methods: {
     goPay(item) {
+      console.log(item.isPackage);
       this.$refs.child.payMoneyModel = true;
       this.zhiObj.orderSn = item.orderSn;
-      this.zhiObj.remark = item.remark;
+      if (item.isPackage == 1) {
+        this.zhiObj.remark = item.orderGoods[0].packageInfo.goodsTitle;
+      } else if (item.isPackage == 0) {
+        this.zhiObj.remark = item.orderGoods[0].specArray.goodsTitle;
+      }
       this.zhiObj.totalPrice = item.amount;
       console.log(this.zhiObj);
     },

@@ -56,7 +56,6 @@ export default {
     goPayAt() {
       console.log(this.zhiObj);
       if (this.zhiObj.remark == "") {
-        this.$toast("请写上您的留言备注");
         return false;
       }
       if (this.type == 0) {

@@ -28,12 +28,12 @@
       </div>
     </div>
     <div class="prductDetails">
-      <div class="shareMoneyContent clearfix">
+      <div class="shareMoneyContent">
         <ul
           v-infinite-scroll="loadMore"
           infinite-scroll-disabled="loading"
           infinite-scroll-distance="10"
-          class="prductDetailsContent clearfix"
+          class="clearfix"
         >
           <li
             class="clearfix"
@@ -67,9 +67,9 @@
         <mt-spinner type="fading-circle" color="#ff7f01" :size="50"></mt-spinner>
       </div>
     </div>
-
+    <!--  -->
     <!-- 模态框 -->
-    <div class="box" v-if="isShow" @click="hiddleToggle"></div>
+    <div class="box" @click="hiddleToggle" v-if="isShow"></div>
     <div class="boxModel" v-if="showLing">
       <div class="boxtitle">
         <p style="fontSize:16px">领取礼品提醒</p>
@@ -111,10 +111,6 @@ export default {
   methods: {
     loadMore() {
       this.loading = true;
-      // this.$indicator.open({
-      //   text: "加载中...",
-      //   spinnerType: "fading-circle"
-      // });
       this.isZhuan = true;
       this.page = this.page + 1;
       var that = this;
@@ -138,7 +134,6 @@ export default {
         .then(res => {
           if (res.data.status == "1") {
             var info = res.data.data;
-            // this.$indicator.close();
             this.isZhuan = false;
             if (info.length >= 10) {
               this.list = this.list.concat(info);
@@ -174,11 +169,7 @@ export default {
   .mint-header.is-fixed {
     z-index: 998;
   }
-  /deep/.mint-spinner-fading-circle.circle-color-8
-    .mint-spinner-fading-circle-circle {
-    left: 50% !important;
-    transform: translateX(-50%);
-  }
+
   .circleMy {
     width: 100%;
     margin: 0 auto;
@@ -229,7 +220,7 @@ export default {
       padding-top: 1rem;
       height: 2rem;
       font-size: 14px;
-      background-color: #eee;
+      background-color: #f7efe8;
       border-radius: 0 0 0.4rem 0.4rem;
 
       span {
@@ -239,7 +230,8 @@ export default {
         display: inline-block;
         text-align: center;
         border-radius: 0.8rem;
-        border: 1px solid #000;
+        color: #1f1e1e;
+        border: 1px solid #1f1e1e;
       }
       span:nth-child(2n) {
         margin-left: 1rem;

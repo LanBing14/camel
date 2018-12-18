@@ -233,7 +233,7 @@ export default {
           this.orderId = res.data.data.orderId;
           this.orderSn = res.data.data.orderSn;
           this.zhiObj.orderSn = this.orderSn;
-          this.zhiObj.remark = this.remark;
+          this.zhiObj.remark = this.title;
           this.zhiObj.totalPrice = this.totalPrice;
         }
       });
