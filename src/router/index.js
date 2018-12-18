@@ -46,6 +46,10 @@ export default new Router({
     },
     {
       path: "/",
+      redirect:"/productMails"
+    },
+    {
+      path: "/productMails",
       name: "商城",
       component: productMails,
       meta: { auth: true }

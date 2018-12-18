@@ -28,12 +28,12 @@
       </div>
     </div>
     <div class="prductDetails">
-      <div class="shareMoneyContent clearfix" ref="shareMoneyContent">
+      <div class="shareMoneyContent clearfix">
         <ul
           v-infinite-scroll="loadMore"
           infinite-scroll-disabled="loading"
           infinite-scroll-distance="10"
-          class="prductDetailsContent"
+          class="prductDetailsContent clearfix"
         >
           <li
             class="clearfix"
@@ -63,7 +63,9 @@
           </li>
         </ul>
       </div>
-      <p class="loading">没有更多数据了</p>
+      <div class="circleMy" v-if="isZhuan">
+        <mt-spinner type="fading-circle" color="#ff7f01" :size="50"></mt-spinner>
+      </div>
     </div>
 
     <!-- 模态框 -->
@@ -88,12 +90,12 @@
 </template>
 
 <script>
-import BScroll from "better-scroll";
 export default {
   data() {
     return {
       list: [],
-      loading: false,
+      loading: true,
+      isZhuan: false,
       isShow: false,
       showWeiLing: false,
       showLing: false,
@@ -104,13 +106,21 @@ export default {
   },
   created() {
     document.title = "商城";
-    this.getList();
-    this.bannerList();
+    this.$axios.all[(this.getList(), this.bannerList())];
   },
   methods: {
     loadMore() {
+      this.loading = true;
+      // this.$indicator.open({
+      //   text: "加载中...",
+      //   spinnerType: "fading-circle"
+      // });
+      this.isZhuan = true;
       this.page = this.page + 1;
-      this.getList();
+      var that = this;
+      setTimeout(function() {
+        that.getList();
+      }, 1000);
     },
 
     hiddleToggle() {
@@ -126,12 +136,20 @@ export default {
           page: this.page
         })
         .then(res => {
-          var info = res.data.data;
           if (res.data.status == "1") {
-            this.list = this.list.concat(info);
+            var info = res.data.data;
+            // this.$indicator.close();
+            this.isZhuan = false;
+            if (info.length >= 10) {
+              this.list = this.list.concat(info);
+              this.loading = false;
+            } else {
+              this.list = this.list.concat(info);
+            }
           }
         });
     },
+
     // 获取轮播图信息
     bannerList() {
       this.$axios.get("/index/bannerList").then(res => {
@@ -139,6 +157,7 @@ export default {
         this.bannerimg = res.data.data.centerBanner.img;
       });
     },
+
     clickItem(index) {
       this.$router.push({ path: "/particular", query: { id: index } });
     }
@@ -152,9 +171,18 @@ export default {
   background: #f0f0f0;
   position: relative;
   padding-top: 1.8rem;
-  padding-bottom: 1rem;
   .mint-header.is-fixed {
     z-index: 998;
+  }
+  /deep/.mint-spinner-fading-circle.circle-color-8
+    .mint-spinner-fading-circle-circle {
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+  .circleMy {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0.2rem 6.5rem;
   }
   /deep/ .mint-swipe-indicator.is-active {
     background: #ff7f01;
@@ -203,6 +231,7 @@ export default {
       font-size: 14px;
       background-color: #eee;
       border-radius: 0 0 0.4rem 0.4rem;
+
       span {
         width: 3rem;
         height: 1.2rem;
@@ -222,10 +251,9 @@ export default {
   .publiColor {
     color: #ff7f01;
   }
-  .loading {
-    text-align: center;
-    line-height: 2rem;
-  }
+  // .loading {
+  //   text-align: center;
+  // }
   //头部
   .top {
     .mint-header {
@@ -262,6 +290,7 @@ export default {
     font-size: 16px;
     margin-top: 0.5rem;
     background-color: #fff;
+
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     .commonMall {
@@ -338,11 +367,10 @@ export default {
     }
   }
   .prductDetails {
-    padding: 0.2rem 0.1rem 0.2rem 0.1rem;
+    // padding-bottom: 2rem;
     font-size: 16px;
     width: 100%;
-    // min-height: 20rem;
-    // overflow: hidden;
+
     ul {
       li {
         width: 45%;
@@ -415,7 +443,7 @@ export default {
       }
       li:nth-child(2n) {
         float: left;
-        margin-left: 0.3rem;
+        margin-left: 0.4rem;
       }
     }
   }
