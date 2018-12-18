@@ -40,11 +40,27 @@ export default {
     hiddleToggle() {
       this.payMoneyModel = false;
     },
+    // 微信接口
+    getWei() {
+      this.$axios
+        .post("/order/wxh5Request", {
+          phone: "12345678901",
+          orderSn: this.zhiObj.orderSn,
+          remark: this.zhiObj.remark
+        })
+        .then(res => {
+          console.log(res.data.data);
+          location.href = res.data.data;
+        });
+    },
     goPayAt() {
       console.log(this.zhiObj);
+      if (this.zhiObj.remark == "") {
+        this.$toast("请写上您的留言备注");
+        return false;
+      }
       if (this.type == 0) {
-        // 走微信
-        console.log(this.type);
+        this.getWei();
       } else if (this.type == 1) {
         // 走支付包
         console.log(this.type);

@@ -152,12 +152,12 @@ export default {
           this.specArray = res.data.data.orderGoods[0].specArray;
           this.copyContent = res.data.data.packageGoodsList[0].kdNo;
           this.kdName = res.data.data.packageGoodsList[0].kdName;
-          console.log(this.infoObj, this.goodsArray);
+          console.log(this.infoObj);
         });
     }
   },
   created() {
-    document.title = "订单详情";
+    // document.title = "订单详情";
     this.state = this.$route.query.state;
     this.getList();
   },

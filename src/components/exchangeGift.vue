@@ -55,6 +55,9 @@ export default {
       }
     }
   },
+  created() {
+    // document.tltle = "礼品兑换";
+  },
   mounted() {
     let scroll1 = new BScroll(".prductDetails", {
       scrollX: true,
@@ -67,7 +70,7 @@ export default {
 <style lang="scss" scoped>
 .exchangeGift {
   background-color: #f0f0f0;
-  padding-top: 2rem; //商品详情
+  padding-top: 1.9rem; //商品详情
   .prductDetails {
     font-size: 16px;
     width: 100%;

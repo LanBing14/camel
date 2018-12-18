@@ -267,7 +267,7 @@ export default {
     }
   },
   created() {
-    document.title = "商品详情";
+    // document.title = "商品详情";
     this.getList();
   },
   mounted() {},
@@ -278,7 +278,7 @@ export default {
 <style lang="scss" scoped>
 #product_details {
   background: #f0f0f0;
-  padding-top: 1.8rem;
+  padding-top: 1.9rem;
 
   .swipeImg {
     width: 100%;

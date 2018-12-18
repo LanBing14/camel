@@ -32,6 +32,9 @@ export default {
     },
     goShare() {}
   },
+  created() {
+    // document.title = "支付成功";
+  },
   mounted() {},
   components: {}
 };

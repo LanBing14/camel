@@ -3,7 +3,6 @@
     <mt-header title="我分享的人" fixed>
       <mt-button icon="back" size="small" slot="left" @click="goBack"></mt-button>
     </mt-header>
-
     <div class="makeCoupon">
       <div class="makeItem clearfix">
         <div class="fl imgBox">
@@ -59,13 +58,16 @@ export default {
     goBack() {
       this.$router.go(-1);
     }
+  },
+  created() {
+    // document.title = "我分享的人";
   }
 };
 </script>
 <style lang="scss" scoped>
 .shareMake {
   background: #f0f0f0;
-  padding-top: 1.8rem;
+  padding-top: 1.9rem;
   .makeCoupon {
     margin-top: 0.1rem;
     font-size: 14px;

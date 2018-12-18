@@ -150,6 +150,9 @@ export default {
         1000
       );
     }
+  },
+  created() {
+    // document.title = "提现";
   }
 };
 </script>
@@ -158,8 +161,7 @@ export default {
   height: 100%;
   background-color: #f0f0f0;
   font-size: 16px;
-  padding-top: 1.8rem;
-
+  padding-top: 1.9rem;
   text-align: center;
   .getNow {
     background-color: #fff;

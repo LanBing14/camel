@@ -17,6 +17,9 @@ export default {
   },
   methods: {},
   mounted() {},
+  created() {
+    document.title = "分享推广二维码";
+  },
   components: {}
 };
 </script>
@@ -25,6 +28,7 @@ export default {
   height: 100%;
   font-size: 16px;
   background-color: #f0f0f0;
+  padding-top: 1.9rem;
 
   .center {
     width: 100%;

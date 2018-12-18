@@ -75,15 +75,15 @@
         <mt-tab-container-item id="0">
           <div class="already_huo">
             <div class="monthBorder" v-for="(item,index) in isSend" :key="index">
-              <div class="box_one" @click="clickBtn(item)">
+              <div class="box_one" @click="clickBtn(index)">
                 <p>{{item.date}}</p>
                 <span>{{item.status_text}}</span>
                 <img src="../assets/imgs/arrow-dow.png" v-show="item.otherParam">
                 <img src="../assets/imgs/arrow-up.png" v-show="!item.otherParam">
               </div>
-              <div class="information_exhibition" v-if="item.otherParam ">
+              <div class="information_exhibition" v-if="item.otherParam">
                 <p>{{item.date}}</p>
-                <span @click="goOrder">订单详情</span>
+                <span @click="goOrder(item.id)">订单详情</span>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
     </div>
     <!-- 代付款状态 -->
     <div class="waitPay" v-if="infoObj.statusValue == '未支付'">
-      <p>去支付</p>
+      <p @click="goPay">去支付</p>
     </div>
     <div class="orderTime">
       <p>订单详情</p>
@@ -121,10 +121,13 @@
         </p>
       </div>
     </div>
+    <payWay :zhiObj="zhiObj" ref="child"></payWay>
   </div>
 </template>
 <script>
 import Clipboard from "clipboard";
+import payWay from "./public/payWay";
+
 export default {
   name: "packDetails",
   data() {
@@ -133,6 +136,7 @@ export default {
       receiver: "",
       upClick: true,
       phone: "",
+      orderSn: "",
       province: "",
       city: "",
       detail: "",
@@ -140,13 +144,18 @@ export default {
       infoObj: {},
       packageInfo: {},
       goodsImg: "",
+      zhiObj: {},
       selected: "0",
       otherParam: false,
       goodsArray: {},
-      isSend: []
+      isSend: [],
+      remark: ""
     };
   },
   methods: {
+    goPay() {
+      this.$refs.child.payMoneyModel = true;
+    },
     goOrder() {
       this.$router.push({
         path: "/orderDetails",
@@ -158,8 +167,8 @@ export default {
     goback() {
       this.$router.go(-1);
     },
-    clickBtn(item) {
-      item.otherParam = !item.otherParam;
+    clickBtn(index) {
+      this.isSend[index].otherParam = !this.isSend[index].otherParam;
     },
     getList() {
       this.$axios
@@ -172,21 +181,29 @@ export default {
           this.packageInfo = res.data.data.orderGoods[0].packageInfo;
           this.isSend = res.data.data.isSend;
           this.noSend = res.data.data.noSend;
-          console.log(this.infoObj);
+          this.orderSn = res.data.data.orderSn;
+          this.remark = res.data.data.remark;
+          this.zhiObj.orderSn = res.data.data.orderSn;
+          this.zhiObj.remark = res.data.data.remark;
+          if (res.data.data.length > 0) {
+            this.clickBtn(0);
+          }
         });
     }
   },
+  components: {
+    payWay
+  },
   created() {
-    document.title = "订单详情";
+    // document.title = "套餐详情";
     this.getList();
   },
   watch: {
-    selected(value) {
-      console.log(value);
-    }
+    // selected(value) {
+    //   console.log(value);
+    // }
   },
-  mounted() {},
-  components: {}
+  mounted() {}
 };
 </script>
 

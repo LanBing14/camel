@@ -29,6 +29,9 @@ export default {
       this.$router.push("/invitedDetails");
     }
   },
+  created() {
+    // document.title = "提现成功";
+  },
   mounted() {},
   components: {}
 };

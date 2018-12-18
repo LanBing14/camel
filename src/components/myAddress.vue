@@ -116,8 +116,7 @@ export default {
     }
   },
   created() {
-    document.title = "我的收货地址";
-
+    // document.title = "我的收货地址";
     this.getList();
   }
 };

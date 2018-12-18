@@ -131,7 +131,7 @@ export default {
     }
   },
   created() {
-    document.title = "订单详情";
+    // document.title = "订单详情";
     this.state = this.$route.query.state;
     this.getList();
   },

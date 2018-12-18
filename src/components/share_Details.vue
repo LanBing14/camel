@@ -81,7 +81,7 @@ export default {
     }
   },
   created() {
-    document.title = "赏金明细";
+    // document.title = "赏金明细";
   },
   mounted() {},
   components: {}
@@ -92,7 +92,7 @@ export default {
 .shareDetails {
   background: #f0f0f0;
   font-size: 14px;
-  padding-top: 1.8rem;
+  padding-top: 1.9rem;
   .makeCoupon {
     margin-top: 0.1rem;
     font-size: 14px;

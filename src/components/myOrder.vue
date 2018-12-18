@@ -57,7 +57,7 @@
           <div v-if="item.isPackage == 0">
             <div class="btns" v-if="item.statusValue == '未支付'">
               <div class="goPayOne" @click="goDing(item.id)">订单详情</div>
-              <div class="goPay">去支付</div>
+              <div class="goPay" @click="goPay(item)">去支付</div>
               <div class="flag">{{item.statusValue}}</div>
             </div>
             <div class="btns" v-if="item.statusValue != '未支付'">
@@ -111,8 +111,8 @@
           </div>
           <div v-if="item.isPackage == 0">
             <div class="btns">
-              <div class="goPayOne">订单详情</div>
-              <div class="goPay">去支付</div>
+              <div class="goPayOne" @click="goDing(item.id)">订单详情</div>
+              <div class="goPay" @click="goPay(item)">去支付</div>
               <div class="flag">{{item.statusValue}}</div>
             </div>
           </div>
@@ -192,7 +192,9 @@ export default {
     goPay(item) {
       this.$refs.child.payMoneyModel = true;
       this.zhiObj.orderSn = item.orderSn;
+      this.zhiObj.remark = item.remark;
       this.zhiObj.totalPrice = item.amount;
+      console.log(this.zhiObj);
     },
     detailBtn(id) {
       this.$router.push({
@@ -219,12 +221,12 @@ export default {
         .then(res => {
           this.orderList = res.data.data;
 
-          console.log(this.orderList);
+          // console.log(this.orderList);
         });
     }
   },
   created() {
-    document.title = "我的套餐";
+    // document.title = "我的订单";
     this.getList();
   },
   mounted() {},
@@ -243,7 +245,7 @@ export default {
 <style lang="scss" scoped>
 #myOrder {
   background: #f0f0f0;
-  padding-top: 2rem;
+  padding-top: 1.9rem;
 
   .mint-navbar {
     background-color: #fff;

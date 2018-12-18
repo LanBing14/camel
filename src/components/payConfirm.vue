@@ -3,7 +3,6 @@
     <mt-header title="订单确认" style="height:1.8rem" fixed>
       <mt-button icon="back" size="small" slot="left" @click="goBack"></mt-button>
     </mt-header>
-
     <!-- /*收货人信息*/ -->
     <div class="Consignee" @click="xuanModel" v-if="!remaind">
       <img src="../assets/imgs/map.png" class="sign">
@@ -234,6 +233,7 @@ export default {
           this.orderId = res.data.data.orderId;
           this.orderSn = res.data.data.orderSn;
           this.zhiObj.orderSn = this.orderSn;
+          this.zhiObj.remark = this.remark;
           this.zhiObj.totalPrice = this.totalPrice;
         }
       });
@@ -326,7 +326,7 @@ export default {
     }
   },
   created() {
-    document.title = "订单确定";
+    // document.title = "订单确认";
     this.packageId = this.$route.query.packageId;
     this.goodsId = this.$route.query.goodsId;
     this.number = this.$route.query.number;
@@ -347,7 +347,8 @@ export default {
 .payConfirm {
   height: 100%;
   background: #f0f0f0;
-  padding-top: 2rem;
+  padding-top: 1.9rem;
+  padding-bottom: 1.5rem;
   .payWay {
     position: fixed;
     bottom: 0;
@@ -628,8 +629,8 @@ export default {
           width: 1rem;
           height: 1rem;
           position: absolute;
-          top: -2px;
-          right: -2px;
+          top: -1px;
+          right: -1px;
         }
       }
       .infos {

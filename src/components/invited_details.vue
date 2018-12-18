@@ -72,7 +72,7 @@ export default {
     }
   },
   created() {
-    document.title = "提现明细";
+    // document.title = "提现明细";
   },
   mounted() {},
   components: {}

@@ -7,14 +7,12 @@
       </router-link>
     </div>
     <!-- 轮播图 -->
-    <div class="swiper-container banner">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item,index) in bannerArr" :key="index">
+    <div class="swipeImg">
+      <mt-swipe :auto="3000">
+        <mt-swipe-item v-for="(item,index) in bannerArr" :key="index">
           <img :src="item.img" alt>
-        </div>
-      </div>
-      <!-- 如果需要分页器 -->
-      <div class="swiper-pagination swiper-pagination-my" id="swiper-pagination-my"></div>
+        </mt-swipe-item>
+      </mt-swipe>
     </div>
 
     <!-- 中间图片
@@ -24,16 +22,18 @@
     </router-link>
 
     <!-- 商品详情 -->
-    <div class="prductDetails">
+    <div class="infoPic">
       <div class="shareMoneyTop publiColor">
         <img src="../assets/imgs/hotpic.png" alt>
       </div>
-      <div class="shareMoneyContent">
+    </div>
+    <div class="prductDetails">
+      <div class="shareMoneyContent clearfix" ref="shareMoneyContent">
         <ul
           v-infinite-scroll="loadMore"
           infinite-scroll-disabled="loading"
           infinite-scroll-distance="10"
-          class="prductDetailsContent clearfix"
+          class="prductDetailsContent"
         >
           <li
             class="clearfix"
@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import Swiper from "swiper";
 import BScroll from "better-scroll";
 export default {
   data() {
@@ -98,14 +97,19 @@ export default {
       isShow: false,
       showWeiLing: false,
       showLing: false,
-      page: "1",
+      page: 1,
       bannerArr: [],
       bannerimg: ""
     };
   },
+  created() {
+    document.title = "商城";
+    this.getList();
+    this.bannerList();
+  },
   methods: {
     loadMore() {
-      this.page++;
+      this.page = this.page + 1;
       this.getList();
     },
 
@@ -125,28 +129,12 @@ export default {
           var info = res.data.data;
           if (res.data.status == "1") {
             this.list = this.list.concat(info);
-            this.$nextTick(() => {
-              this.bannerList();
-            });
           }
         });
     },
-
     // 获取轮播图信息
     bannerList() {
       this.$axios.get("/index/bannerList").then(res => {
-        var swiper1 = new Swiper(".banner", {
-          pagination: {
-            el: ".swiper-pagination"
-          },
-          paginationClickable: true,
-          loop: true,
-          autoplay: {
-            delay: 2500,
-            disableOnInteraction: false
-          },
-          speed: 500
-        });
         this.bannerArr = res.data.data.bannerList;
         this.bannerimg = res.data.data.centerBanner.img;
       });
@@ -155,16 +143,8 @@ export default {
       this.$router.push({ path: "/particular", query: { id: index } });
     }
   },
-  created() {
-    document.title = "商城";
-    this.getList();
-  },
-  mounted() {
-    let scroll1 = new BScroll(".shareMoneyContent", {
-      scrollY: true,
-      click: true
-    });
-  }
+
+  mounted() {}
 };
 </script>
 <style lang="scss" scoped>
@@ -172,10 +152,11 @@ export default {
   background: #f0f0f0;
   position: relative;
   padding-top: 1.8rem;
+  padding-bottom: 1rem;
   .mint-header.is-fixed {
     z-index: 998;
   }
-  /deep/ .swiper-pagination-bullet-active {
+  /deep/ .mint-swipe-indicator.is-active {
     background: #ff7f01;
     opacity: 0.8;
   }
@@ -222,7 +203,6 @@ export default {
       font-size: 14px;
       background-color: #eee;
       border-radius: 0 0 0.4rem 0.4rem;
-
       span {
         width: 3rem;
         height: 1.2rem;
@@ -244,6 +224,7 @@ export default {
   }
   .loading {
     text-align: center;
+    line-height: 2rem;
   }
   //头部
   .top {
@@ -264,16 +245,15 @@ export default {
     }
   }
   // 轮播图
-  .swiper-container {
+  .swipeImg {
     width: 100%;
     height: 8rem;
-    .swiper-slide {
-      img {
-        width: 100%;
-        height: 100%;
-      }
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
+
   // 商城特卖
   .shoppingMall {
     height: 8.3rem;
@@ -282,7 +262,6 @@ export default {
     font-size: 16px;
     margin-top: 0.5rem;
     background-color: #fff;
-
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     .commonMall {
@@ -347,11 +326,7 @@ export default {
     }
   }
   //商品详情
-  .prductDetails {
-    padding: 0.2rem;
-    font-size: 16px;
-    box-sizing: border-box;
-    width: 100%;
+  .infoPic {
     .shareMoneyTop {
       height: 1.4rem;
       font-size: 16px;
@@ -361,7 +336,14 @@ export default {
         width: 5rem;
       }
     }
-    .prductDetailsContent {
+  }
+  .prductDetails {
+    padding: 0.2rem 0.1rem 0.2rem 0.1rem;
+    font-size: 16px;
+    width: 100%;
+    // min-height: 20rem;
+    // overflow: hidden;
+    ul {
       li {
         width: 45%;
         float: left;
@@ -387,7 +369,7 @@ export default {
             width: 3.14rem;
             border: 1px solid #ff7f01;
             border-left: none;
-            font-size: 12px;
+            font-size: 10px;
             border-radius: 0 0.8rem 0.8rem 0;
             background-color: #fff;
             color: #ff7f01;
@@ -404,6 +386,7 @@ export default {
             width: 2.74rem;
             border: 1px solid #ff7f01;
             border-right: none;
+            font-size: 10px !important;
             border-radius: 0.8rem 0 0 0.8rem;
             padding-left: 0.4rem;
             background-color: #fff;
@@ -432,7 +415,7 @@ export default {
       }
       li:nth-child(2n) {
         float: left;
-        margin-left: 0.4rem;
+        margin-left: 0.3rem;
       }
     }
   }
