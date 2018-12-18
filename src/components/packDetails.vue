@@ -178,13 +178,15 @@ export default {
         })
         .then(res => {
           this.infoObj = res.data.data;
+          console.log(this.infoObj);
           this.packageInfo = res.data.data.orderGoods[0].packageInfo;
           this.isSend = res.data.data.isSend;
           this.noSend = res.data.data.noSend;
           this.orderSn = res.data.data.orderSn;
           this.remark = res.data.data.remark;
           this.zhiObj.orderSn = res.data.data.orderSn;
-          this.zhiObj.remark = res.data.data.remark;
+          this.zhiObj.remark =
+            res.data.data.orderGoods[0].packageInfo.goodsTitle;
           if (res.data.data.length > 0) {
             this.clickBtn(0);
           }
