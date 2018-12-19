@@ -107,17 +107,15 @@ export default {
   font-size: 16px;
 
   .top {
-    height: 2.58rem;
+    height: 3rem;
     font-size: 16px;
     background-color: #fff;
     .topLeft {
-      margin-top: 0.5rem;
-      margin-left: 0.5rem;
+      padding: 0.6rem;
       div {
-        width: 1.5rem;
-
+        width: 1.76rem;
         img {
-          width: 1.5rem;
+          width: 1.76rem;
           border-radius: 50%;
         }
       }
@@ -134,9 +132,9 @@ export default {
       line-height: 2.6rem;
       margin-right: 0.5rem;
       color: #ff7f01;
-      font-size: 14px;
       img {
-        width: 0.6rem;
+        width: 12px;
+        height: 13px;
       }
     }
   }
@@ -146,7 +144,6 @@ export default {
       line-height: 2.1rem;
       margin-top: 0.4rem;
       padding-left: 0.6rem;
-      font-size: 14px;
       display: flex;
       width: 100%;
       box-sizing: border-box;
@@ -159,6 +156,7 @@ export default {
       div {
         img {
           width: 0.8rem;
+          height: 1rem;
         }
         span:nth-child(2) {
           margin-left: 0.2rem;
@@ -182,7 +180,6 @@ export default {
     .itemCont {
       line-height: 2.1rem;
       padding-left: 0.6rem;
-      font-size: 14px;
       display: block;
       color: #000;
       border-bottom: 2px solid #f0f0f0;

@@ -123,7 +123,7 @@ export default {
       .leftBox {
         margin-top: 0.2rem;
         line-height: 3.2rem;
-        font-size: 14px;
+        font-size: 15px;
         span {
           font-size: 15px;
         }

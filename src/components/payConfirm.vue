@@ -576,7 +576,7 @@ export default {
       margin-left: 4rem;
       display: flex;
       align-items: left;
-      font-size: 14px;
+      font-size: 15px;
       justify-content: left;
       color: #c1c5c8;
       .guige {
@@ -584,10 +584,10 @@ export default {
         margin-right: 0.5rem;
       }
       .num {
+        font-size: 15px;
         text-align: right;
         width: 30%;
         right: 0rem;
-        position: relative;
       }
     }
   }
@@ -637,7 +637,7 @@ export default {
         width: 95%;
         color: #666666;
         line-height: 1.8rem;
-        font-size: 14px;
+        font-size: 15px;
         margin-left: -2rem;
       }
     }
@@ -664,12 +664,6 @@ export default {
       width: 30%;
       background: #ff7f01;
       color: #fff;
-
-      line-height: 2.5rem;
-      text-align: center;
-    }
-    .pay2 {
-      width: 30%;
       line-height: 2.5rem;
       text-align: center;
     }

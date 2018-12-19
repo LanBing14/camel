@@ -295,10 +295,10 @@ export default {
     }
   }
   .prductDetails {
-    // padding-bottom: 2rem;
     font-size: 16px;
+    box-sizing: border-box;
     width: 100%;
-
+    padding: 0.2rem;
     ul {
       li {
         width: 45%;
@@ -368,8 +368,7 @@ export default {
         }
       }
       li:nth-child(2n) {
-        float: left;
-        margin-left: 0.4rem;
+        float: right;
       }
     }
   }

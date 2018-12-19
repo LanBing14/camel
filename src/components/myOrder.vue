@@ -301,9 +301,10 @@ export default {
         position: relative;
         .title {
           line-height: 1.5rem;
+          padding-left: 0.1rem;
         }
         .mount {
-          width: 3.5rem;
+          width: 3.2rem;
           text-align: center;
           border-radius: 0.2rem;
           margin-top: 0.6rem;
