@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "pay_success",
+  name: "get_success",
   data() {
     return {};
   },

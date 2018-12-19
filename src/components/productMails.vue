@@ -52,8 +52,8 @@
               <p class="one-txt-cut">{{item.title}}</p>
               <p class="oldPrice">原价￥{{item.sellPrice}}</p>
               <p class="Price clearfix">
-                <span class="fl">积分价</span>
-                <span class="fl publiColor">￥{{item.scorePrice}}</span>
+                积分价
+                <span class="publiColor">￥{{item.scorePrice}}</span>
               </p>
               <p class="couponKou" style="font-size:12px">
                 积分抵
@@ -243,9 +243,7 @@ export default {
   .publiColor {
     color: #ff7f01;
   }
-  // .loading {
-  //   text-align: center;
-  // }
+
   //头部
   .top {
     .mint-header {
@@ -271,68 +269,6 @@ export default {
     img {
       width: 100%;
       height: 100%;
-    }
-  }
-
-  // 商城特卖
-  .shoppingMall {
-    height: 8.3rem;
-    padding: 0.9rem 0.1rem 0.4rem 0.1rem;
-    box-sizing: border-box;
-    font-size: 16px;
-    margin-top: 0.5rem;
-    background-color: #fff;
-
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    .commonMall {
-      width: 48%;
-      padding: 0.1rem 0.1rem 0.1rem 0rem;
-      .title {
-        margin-bottom: 0.5rem;
-        color: #ff7f01;
-        text-align: center;
-      }
-      .hotMall {
-        text-align: center;
-        .leftMallItem:nth-child(2n) {
-          margin-left: 0.3rem;
-        }
-        .leftMallItem {
-          width: 46%;
-          .img {
-            width: 3.24rem;
-            height: 3.24rem;
-            margin: 0 auto;
-            img {
-              width: 100%;
-              height: 100%;
-            }
-          }
-
-          .PresentPrice {
-            font-size: 14px;
-            margin-top: 0.2rem;
-            color: #ff7f01;
-            line-height: 0.8rem;
-          }
-          .oldPrice {
-            font-size: 12px;
-            color: #ccc;
-            text-decoration: line-through;
-          }
-          .LenPrice {
-            font-size: 12px;
-            color: #ccc;
-          }
-        }
-      }
-    }
-    .ShoppingCity {
-      border-right: 1px solid #ccc;
-    }
-    .taoBaoCity {
-      padding-left: 0.3rem;
     }
   }
 
@@ -417,19 +353,17 @@ export default {
           }
 
           .oldPrice {
-            color: #ccc;
+            color: #a7a7a7;
+            font-size: 14px;
             margin-top: 0.2rem;
           }
           .oldPrice,
           .Price {
-            font-size: 14px;
             line-height: 1rem;
-            span:nth-child(2) {
-              font-size: 16px;
-            }
           }
           .Price {
             margin-top: 0.5rem;
+            font-size: 14px;
           }
         }
       }

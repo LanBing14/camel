@@ -14,14 +14,14 @@
             ￥
             <span>21</span>
           </p>
-          <p class="iconTxt">分享给用户</p>
+          <p class="iconTxtitle">分享给用户</p>
           <p class="iconTxt">12345678088</p>
         </div>
         <div class="fr leftBox">
-          <p class="publiColor public">合计</p>
+          <p class="public">合计</p>
           <p>
-            赚¥
-            <span>890</span>
+            赚
+            <span class="publiColor public">¥890</span>
           </p>
         </div>
       </div>
@@ -35,14 +35,14 @@
             ￥
             <span>21</span>
           </p>
-          <p class="iconTxt">分享给用户</p>
+          <p class="iconTxtitle">分享给用户</p>
           <p class="iconTxt">12345678088</p>
         </div>
         <div class="fr leftBox">
           <p class="public">合计</p>
           <p>
-            赚¥
-            <span>890</span>
+            赚
+            <span class="publiColor public">¥890</span>
           </p>
         </div>
       </div>
@@ -70,29 +70,36 @@ export default {
   padding-top: 1.9rem;
   .makeCoupon {
     margin-top: 0.1rem;
-    font-size: 14px;
+    font-size: 16px;
     .makeItem {
       padding: 0.5rem 0.3rem;
       background-color: #fff;
       border-bottom: 2px solid #f0f0f0;
       .imgBox {
-        padding: 0.2rem;
+        padding: 0.4rem 0.2rem;
+        border-radius: 50%;
         img {
           width: 2rem;
         }
       }
       .centerBox {
-        width: 55%;
+        width: 60%;
+        padding-left: 0.5rem;
+        .iconTxtitle {
+          font-size: 14px;
+          margin-top: 0.2rem;
+          color: #999;
+        }
         .iconTxt {
-          font-size: 12px;
+          font-size: 14px;
           color: #999;
         }
       }
       .leftBox {
         margin-top: 0.2rem;
         .public {
-          font-size: 12px;
-          line-height: 1rem;
+          font-size: 14px;
+          line-height: 1.3rem;
         }
       }
     }

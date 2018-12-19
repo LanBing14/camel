@@ -91,11 +91,10 @@ export default {
 <style lang="scss" scoped>
 .shareDetails {
   background: #f0f0f0;
-  font-size: 14px;
   padding-top: 1.9rem;
   .makeCoupon {
     margin-top: 0.1rem;
-    font-size: 14px;
+    font-size: 16px;
     .makeItem {
       padding: 0.5rem 0.3rem;
       background-color: #fff;
@@ -117,13 +116,17 @@ export default {
           color: #999;
         }
         .iconNum {
+          font-size: 14px;
           color: #999;
         }
       }
       .leftBox {
         margin-top: 0.2rem;
-        line-height: 3rem;
-        font-size: 16px;
+        line-height: 3.2rem;
+        font-size: 14px;
+        span {
+          font-size: 15px;
+        }
       }
     }
   }

@@ -77,7 +77,7 @@
           <div class="goodsInfo" v-for="(it,i) in item.orderGoods" v-if="item.isPackage == 1">
             <img :src="it.packageInfo.goodsImg" alt>
             <div class="name">
-              <p style="font-size: 16px;" class="txt-cut title">{{it.packageInfo.Title}}</p>
+              <p style="font-size: 16px;" class="txt-cut title">{{it.packageInfo.goodsTitle}}</p>
               <p class="mount">{{it.packageInfo.number}}枚/{{it.packageInfo.dateTime}}个月</p>
               <div class="money">
                 <p class="jine">￥{{it.packageInfo.sellPrice}}</p>
@@ -129,7 +129,7 @@
           <div class="goodsInfo" v-for="(it,i) in item.orderGoods" v-if="item.isPackage == 1">
             <img :src="it.packageInfo.goodsImg" alt>
             <div class="name">
-              <p style="font-size: 16px;" class="txt-cut title">{{it.packageInfo.Title}}</p>
+              <p style="font-size: 16px;" class="txt-cut title">{{it.packageInfo.goodsTitle}}</p>
               <p class="mount">{{it.packageInfo.number}}枚/{{it.packageInfo.dateTime}}个月</p>
               <div class="money">
                 <p class="jine">￥{{it.packageInfo.sellPrice}}</p>
@@ -324,7 +324,6 @@ export default {
             width: 30%;
             right: 0.5rem;
             top: 0.2rem;
-            z-index: 9;
             color: #000;
             text-align: right;
           }
@@ -334,7 +333,6 @@ export default {
             right: 0.5rem;
             top: 2rem;
             text-align: right;
-            z-index: 7;
           }
         }
       }
