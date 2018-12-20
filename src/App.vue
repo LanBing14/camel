@@ -20,7 +20,6 @@ export default {
   color: #333;
   max-width: 750px;
   margin: 0 auto;
-  /* font-size: PingFang-SC-Medium; */
 }
 .mint-header {
   background: #fff;

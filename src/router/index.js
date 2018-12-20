@@ -15,9 +15,6 @@ const packDetails = resolve => require(["@/components/packDetails"], resolve);
 const exchangeGift = resolve => require(["@/components/exchangeGift"], resolve);
 const myInfo = resolve => require(["@/components/myInfo"], resolve);
 const myAddress = resolve => require(["@/components/myAddress"], resolve);
-const editAddress = resolve => require(["@/components/editAddress"], resolve);
-const creatAddress = resolve =>
-  require(["@/components/creat_address"], resolve);
 const getMoneySuccess = resolve =>
   require(["@/components/getMoneySuccess"], resolve);
 const invitedDetails = resolve =>
@@ -27,6 +24,8 @@ const shareDetails = resolve =>
 const orderDetails = resolve => require(["@/components/orderDetails"], resolve);
 const orderDetailDan = resolve =>
   require(["@/components/orderDetailDan"], resolve);
+const addAddress = resolve => require(["@/components/addAddress"], resolve);
+const editAddress = resolve => require(["@/components/editAddress"], resolve);
 
 Vue.use(Router);
 
@@ -46,7 +45,7 @@ export default new Router({
     },
     {
       path: "/",
-      redirect:"/productMails"
+      redirect: "/productMails"
     },
     {
       path: "/productMails",
@@ -67,22 +66,9 @@ export default new Router({
       meta: { auth: true }
     },
     {
-      path: "/creatAddress",
-      name: "地址",
-      component: creatAddress,
-      meta: { auth: true }
-    },
-    {
       path: "/myAddress",
       name: "我的收货地址",
       component: myAddress,
-      meta: { auth: true }
-    },
-    ,
-    {
-      path: "/editAddress",
-      name: "编辑收货地址",
-      component: editAddress,
       meta: { auth: true }
     },
     {
@@ -167,6 +153,18 @@ export default new Router({
       path: "/myInfo",
       name: "我的",
       component: myInfo,
+      meta: { auth: true }
+    },
+    {
+      path: "/addAddress",
+      name: "添加地址",
+      component: addAddress,
+      meta: { auth: true }
+    },
+    {
+      path: "/editAddress",
+      name: "编辑地址",
+      component: editAddress,
       meta: { auth: true }
     }
   ]

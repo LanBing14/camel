@@ -61,6 +61,7 @@ export default {
   data() {
     return {
       popupVisible: false,
+      city: "",
       sName: "",
       shouPhone: "",
       showChoice: false,
@@ -104,12 +105,31 @@ export default {
       companyName: ""
     };
   },
-  props: ["addNum"],
+  props: ["AddressId"],
   methods: {
+    getddress() {
+      this.$axios
+        .post("/userCenter/getTheAddress", {
+          phone: "12345678901",
+          id: this.AddressId
+        })
+        .then(res => {
+          this.city = res.data.data.city;
+          this.sName = res.data.data.receiver;
+          this.province = res.data.data.province;
+          this.county = res.data.data.county;
+          this.isDefault = res.data.data.isDefault;
+          this.shouPhone = res.data.data.phone;
+          this.detail = res.data.data.detail;
+          this.address = this.province + "-" + this.city + "-" + this.county;
+          if (this.isDefault == 1) {
+            this.show = true;
+          }
+        });
+    },
     goBack() {
       this.$router.go(-1);
     },
-
     /*设置默认地址*/
     goDefault() {
       this.showChoice = !this.showChoice;
@@ -180,14 +200,27 @@ export default {
           county: county,
           detail: detail,
           isDefault: isDefault, //1默认 0普通,
-          id: 0 //新增穿0
+          id: this.AddressId
         })
         .then(res => {
-          Toast({
-            message: "添加成功",
-            duration: 1500
-          });
-          this.$router.go(-1);
+          if (this.AddressId == 0) {
+            Toast({
+              message: "添加成功",
+              duration: 1500
+            });
+            this.$router.go(-1);
+          } else {
+            Toast({
+              message: "修改成功",
+              duration: 1500
+            });
+            this.$router.push({
+              path: "/myAddress",
+              query: {
+                number: res.data.data.id
+              }
+            });
+          }
         });
     },
     cityChange(e) {
@@ -239,6 +272,9 @@ export default {
   },
   created() {
     // document.title = "新增收货地址";
+    if (this.AddressId != 0) {
+      this.getddress();
+    }
   },
   mounted() {
     var that = this;
@@ -256,7 +292,6 @@ export default {
 </script>
 <style lang="scss">
 .creatAddress {
-  //   height: 100%;
   background-color: #f0f0f0;
   padding-top: 1rem;
   .mint-header {
@@ -342,6 +377,21 @@ export default {
   textarea::-webkit-input-placeholder {
     font-size: 16px;
     color: #e0dfdf;
+  }
+  .baocun {
+    width: 100%;
+    margin-top: 3.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 18px;
+    p {
+      width: 8rem;
+      margin: 0 auto;
+      border-radius: 0.6rem;
+      text-align: center;
+      background-color: #ff7f01;
+      color: #fff;
+    }
   }
   .MorenAddress {
     font-size: 16px;

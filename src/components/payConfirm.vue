@@ -319,7 +319,7 @@ export default {
       });
     },
     addBtn() {
-      this.$router.push("/creatAddress");
+      this.$router.push("/addAddress");
     },
     hiddle() {
       this.isShow = false;

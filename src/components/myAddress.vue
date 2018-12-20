@@ -68,7 +68,7 @@ export default {
       this.deleteId = id;
     },
     addBtn() {
-      this.$router.push("/creatAddress");
+      this.$router.push("/addAddress");
     },
     editBtn(item) {
       this.$router.push({

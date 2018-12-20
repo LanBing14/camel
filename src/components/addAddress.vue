@@ -1,6 +1,6 @@
 <template>
   <div class="creatAddress">
-    <mt-header fixed title="编辑收货地址" style="height:1.8rem">
+    <mt-header fixed title="新增收货地址" style="height:1.8rem">
       <mt-button icon="back" slot="left" @click="goBack"></mt-button>
     </mt-header>
     <addressmore :AddressId="AddressId"></addressmore>
@@ -8,10 +8,11 @@
 </template>
 <script>
 import addressmore from "./public/address";
+
 export default {
   data() {
     return {
-      AddressId: ""
+      AddressId: "0"
     };
   },
   methods: {
@@ -21,7 +22,6 @@ export default {
   },
   created() {
     // document.title = "新增收货地址";
-    this.AddressId = this.$route.query.id;
   },
   mounted() {},
   components: {
