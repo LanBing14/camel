@@ -118,7 +118,6 @@ export default {
         that.getList();
       }, 1000);
     },
-
     hiddleToggle() {
       this.isShow = false;
       this.showLing = false;
@@ -144,7 +143,6 @@ export default {
           }
         });
     },
-
     // 获取轮播图信息
     bannerList() {
       this.$axios.get("/index/bannerList").then(res => {
@@ -152,12 +150,10 @@ export default {
         this.bannerimg = res.data.data.centerBanner.img;
       });
     },
-
     clickItem(index) {
       this.$router.push({ path: "/particular", query: { id: index } });
     }
   },
-
   mounted() {}
 };
 </script>
@@ -169,7 +165,6 @@ export default {
   .mint-header.is-fixed {
     z-index: 998;
   }
-
   .circleMy {
     width: 100%;
     margin: 0 auto;
@@ -222,7 +217,6 @@ export default {
       font-size: 14px;
       background-color: #f7efe8;
       border-radius: 0 0 0.4rem 0.4rem;
-
       span {
         width: 3rem;
         height: 1.2rem;
@@ -243,7 +237,6 @@ export default {
   .publiColor {
     color: #ff7f01;
   }
-
   //头部
   .top {
     .mint-header {
@@ -271,7 +264,6 @@ export default {
       height: 100%;
     }
   }
-
   .middlePic {
     width: 100%;
     height: 5.46rem;
@@ -322,7 +314,7 @@ export default {
             height: 100%;
           }
           .couponZhuan {
-            width: 3.14rem;
+            width: 55%;
             border: 1px solid #ff7f01;
             border-left: none;
             font-size: 10px;
@@ -334,12 +326,11 @@ export default {
             top: 1rem;
           }
         }
-
         .Content {
           position: relative;
           margin-top: 0.5rem;
           .couponKou {
-            width: 2.74rem;
+            width: 48%;
             border: 1px solid #ff7f01;
             border-right: none;
             font-size: 10px !important;
@@ -351,7 +342,6 @@ export default {
             right: -0.2rem;
             bottom: 1.4rem;
           }
-
           .oldPrice {
             color: #a7a7a7;
             font-size: 14px;

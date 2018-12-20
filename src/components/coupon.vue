@@ -1,6 +1,8 @@
 <template>
   <div class="coupon">
-    <mt-header title="优惠券" style="height:1.8rem"></mt-header>
+    <mt-header title="优惠券" style="height:1.8rem" fixed>
+      <mt-button icon="back" size="small" slot="left" @click="goBack"></mt-button>
+    </mt-header>
     <div class="navBar">
       <mt-navbar v-model="selected ">
         <mt-tab-item id="1">超值优惠券</mt-tab-item>
@@ -86,6 +88,9 @@ export default {
       selected: "1",
       selectedTwo: "5"
     };
+  },
+  methods: {
+    goBack() {}
   }
 };
 </script>
@@ -93,20 +98,22 @@ export default {
 .coupon {
   height: 100%;
   background-color: #f0f0f0;
-
+  padding-top: 1.8rem;
   .navBar {
+    margin-top: 0.2rem;
     .mint-navbar .mint-tab-item {
       border-right: none;
+      color: #000;
     }
     .mint-navbar .mint-tab-item.is-selected {
       margin-bottom: -1px;
-      background-color: #26a2ff;
+      background-color: #ff7f01;
+      border-bottom: 3px solid #ff7f01;
       color: #fff;
     }
   }
   .contain {
-    margin-top: 0.5rem;
-
+    margin-top: 0.3rem;
     .mint-navbar.mintNav {
       width: 3.5rem;
       display: block;
@@ -118,11 +125,11 @@ export default {
     .left {
       font-size: 14px;
       margin-left: 0.2rem;
-
+      position: relative;
       .leftItem {
         width: 12rem;
         height: 3.5rem;
-        border: 1px solid #000;
+        border: 1px solid #ccc;
         margin-bottom: 0.4rem;
         padding: 0.5rem 0 0.2rem 0.3rem;
         .leftImg {
@@ -137,14 +144,16 @@ export default {
           }
           .coupMoney {
             .couponQuan {
-              background-color: red;
+              background-color: #ff7f01;
               color: #fff;
               width: 35%;
+              position: absolute;
               text-align: center;
+              right: 0;
+              bottom: 0.2rem;
+              font-size: 12px;
               height: 1.4rem;
               line-height: 1.4rem;
-              margin-left: 2.2rem;
-              display: inline-block;
               border-radius: 0.8rem 0 0 0.8rem;
             }
           }

@@ -334,6 +334,7 @@ export default {
     input::-webkit-input-placeholder {
       color: #e0dfdf;
     }
+
     .linkage {
       display: flex;
       align-items: center;
@@ -354,6 +355,7 @@ export default {
           font-size: 16px;
         }
         img {
+          margin-left: 0.7rem;
           width: 0.7rem;
         }
       }
@@ -369,6 +371,7 @@ export default {
     color: #666666;
     resize: none;
     border: none;
+    border: solid 0px;
   }
   textarea:-ms-input-placeholder {
     font-size: 16px;
@@ -377,6 +380,9 @@ export default {
   textarea::-webkit-input-placeholder {
     font-size: 16px;
     color: #e0dfdf;
+  }
+  textarea:focus {
+    outline: none;
   }
   .baocun {
     width: 100%;

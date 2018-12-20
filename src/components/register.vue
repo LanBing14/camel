@@ -10,7 +10,7 @@
         </div>
         <div class="code clearfix">
           <div class="fl">
-            <input type="text" placeholder="输入验证码">
+            <input type="text" placeholder="输入验证码" v-model="phonecode">
           </div>
           <button
             class="getCode fr"
@@ -30,12 +30,7 @@
 export default {
   data() {
     return {
-      fromData: {
-        phone: "", // 手机号
-        vercode: "", // 验证码
-        phonecode: "86",
-        vercode_token: ""
-      },
+      phonecode: "",
       tishi: "",
       isDis: false,
       isbtn: "获取验证码"
@@ -67,21 +62,8 @@ export default {
     getLogin() {
       this.$axios.post("/HomeUser/Login", this.fromData).then(res => {
         if (res.data.code == "0") {
-          localStorage.setItem("token", res.data.data.Ticket);
+          localStorage.setItem("phone", res.data.data.Ticket);
           this.$router.push("/index");
-        } else if (res.data.code == "101") {
-          // 去注册 完善个人信息
-          this.$router.push({
-            path: "/res",
-            query: {
-              iphone: this.fromData.phone,
-              ZYFUser: res.data.data.ZYFUser_ID
-            },
-            meta: { id: 1 }
-          });
-        } else if (res.data.code == "1001") {
-          // 验证码错误
-          this.tishi = res.data.msg;
         } else {
           this.tishi = "登录失败，请重新尝试。";
         }

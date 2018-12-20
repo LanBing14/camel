@@ -15,6 +15,8 @@ const packDetails = resolve => require(["@/components/packDetails"], resolve);
 const exchangeGift = resolve => require(["@/components/exchangeGift"], resolve);
 const myInfo = resolve => require(["@/components/myInfo"], resolve);
 const myAddress = resolve => require(["@/components/myAddress"], resolve);
+const addAddress = resolve => require(["@/components/addAddress"], resolve);
+const editAddress = resolve => require(["@/components/editAddress"], resolve);
 const getMoneySuccess = resolve =>
   require(["@/components/getMoneySuccess"], resolve);
 const invitedDetails = resolve =>
@@ -24,8 +26,6 @@ const shareDetails = resolve =>
 const orderDetails = resolve => require(["@/components/orderDetails"], resolve);
 const orderDetailDan = resolve =>
   require(["@/components/orderDetailDan"], resolve);
-const addAddress = resolve => require(["@/components/addAddress"], resolve);
-const editAddress = resolve => require(["@/components/editAddress"], resolve);
 
 Vue.use(Router);
 

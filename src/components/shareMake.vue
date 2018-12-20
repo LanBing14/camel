@@ -4,45 +4,19 @@
       <mt-button icon="back" size="small" slot="left" @click="goBack"></mt-button>
     </mt-header>
     <div class="makeCoupon">
-      <div class="makeItem clearfix">
+      <div class="makeItem clearfix" v-for="(item,index) in infoArr" :key="index">
         <div class="fl imgBox">
-          <img src="../assets/imgs/users.png" alt>
+          <img :src="item.img" alt>
         </div>
         <div class="fl centerBox">
-          <p class="one-txt-cut">标题标题标题标题标题标题</p>
-          <p>
-            ￥
-            <span>21</span>
-          </p>
-          <p class="iconTxtitle">分享给用户</p>
-          <p class="iconTxt">12345678088</p>
+          <p class="one-txt-cut">分享给用户</p>
+          <p class="iconTxt">{{item.phone}}</p>
         </div>
         <div class="fr leftBox">
           <p class="public">合计</p>
           <p>
             赚
-            <span class="publiColor public">¥890</span>
-          </p>
-        </div>
-      </div>
-      <div class="makeItem clearfix">
-        <div class="fl imgBox">
-          <img src="../assets/imgs/users.png" alt>
-        </div>
-        <div class="fl centerBox">
-          <p class="one-txt-cut">标题标题标题标题标题标题</p>
-          <p>
-            ￥
-            <span>21</span>
-          </p>
-          <p class="iconTxtitle">分享给用户</p>
-          <p class="iconTxt">12345678088</p>
-        </div>
-        <div class="fr leftBox">
-          <p class="public">合计</p>
-          <p>
-            赚
-            <span class="publiColor public">¥890</span>
+            <span class="publiColor public">¥{{item.shareUserSum}}</span>
           </p>
         </div>
       </div>
@@ -52,15 +26,29 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      infoArr: []
+    };
   },
   methods: {
     goBack() {
       this.$router.go(-1);
+    },
+    getList() {
+      this.$axios
+        .post("/userCenter/shareUserList", {
+          phone: "12345678901"
+        })
+        .then(res => {
+          if (res.status == 200) {
+            this.infoArr = res.data.data;
+          }
+        });
     }
   },
   created() {
     // document.title = "我分享的人";
+    this.getList();
   }
 };
 </script>
@@ -70,35 +58,32 @@ export default {
   padding-top: 1.9rem;
   .makeCoupon {
     margin-top: 0.1rem;
-    font-size: 16px;
+    font-size: 15px;
     .makeItem {
       padding: 0.5rem 0.3rem;
       background-color: #fff;
       border-bottom: 2px solid #f0f0f0;
       .imgBox {
+        width: 2.5rem;
         padding: 0.4rem 0.2rem;
         border-radius: 50%;
         img {
-          width: 2rem;
+          width: 100%;
         }
       }
       .centerBox {
-        width: 60%;
+        width: 55%;
         padding-left: 0.5rem;
-        .iconTxtitle {
-          font-size: 14px;
-          margin-top: 0.2rem;
-          color: #999;
-        }
+        margin-top: 0.3rem;
         .iconTxt {
-          font-size: 14px;
-          color: #999;
+          line-height: 1.5rem;
         }
       }
       .leftBox {
         margin-top: 0.2rem;
         .public {
           font-size: 14px;
+          text-align: center;
           line-height: 1.3rem;
         }
       }
