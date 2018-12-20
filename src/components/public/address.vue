@@ -345,10 +345,10 @@ export default {
         display: flex;
         margin-left: 0.5rem;
         align-items: center;
-        padding-left: 0.3rem;
+        padding-left: 0.2rem;
         border-bottom: 1px solid #e0dfdf;
         .inputStyle {
-          width: 68%;
+          width: 65%;
           line-height: 2rem;
           padding-left: 0.4rem;
           color: #0f0f0f;

@@ -6,23 +6,25 @@
     <!-- 商品详情 -->
     <div class="prductDetails">
       <div>
-        <ul
-          v-infinite-scroll="loadMore"
-          infinite-scroll-disabled="loading"
-          infinite-scroll-distance="10"
-          class="prductDetailsContent clearfix"
-        >
-          <li class="clearfix" v-for="item in list">
+        <ul class="prductDetailsContent clearfix">
+          <li class="clearfix" v-for="(item,index) in list" :key="index">
             <div class="leftImg">
-              <img src="../assets/imgs/img.png" alt>
+              <img :src="item.img" alt>
             </div>
             <div class="rightContent">
-              <p class="txt-cut">标题标题标题标题标题标题标题标题标题</p>
+              <p class="txt-cut">{{item.title}}</p>
               <p class="oldPriceLing">vip可领</p>
               <p class="Price clearfix">
-                <span class="fl oldPrice" style="text-decoration:line-through">原价 ￥110</span>
-                <span class="fr divbtn" v-if="!isFree" @click="goGet">免费领取</span>
-                <span class="fr divbtn oldPrice" v-if="isFree">已领取</span>
+                <span
+                  class="fl oldPrice"
+                  style="text-decoration:line-through"
+                >原价 ￥{{item.sellPrice}}</span>
+                <span
+                  class="fr divbtn"
+                  v-if="item.status_text == '免费领取'"
+                  @click="goGet(item.id)"
+                >免费领取</span>
+                <span class="fr divbtn oldPrice bg" v-else @click="hasGet">已领取</span>
               </p>
             </div>
           </li>
@@ -32,31 +34,58 @@
   </div>
 </template>
 <script>
-import BScroll from "better-scroll";
-
 export default {
   data() {
     return {
-      list: 5,
-      loading: false,
-      loadingDom: false,
-      isFree: false
+      isFree: false,
+      list: []
     };
   },
   methods: {
-    goGet() {},
+    goGet(index) {
+      this.getListLing(index);
+    },
+    getList() {
+      this.$axios
+        .post("/index/freeGoods", {
+          phone: "12345678901"
+        })
+        .then(res => {
+          if (res.status == 200) {
+            this.list = res.data.data;
+            console.log(this.list);
+          }
+        });
+    },
+    hasGet() {
+      this.$toast({
+        message: "您已领取成功,不能重复领取哦",
+        duration: 1500
+      });
+    },
+    getListLing(index) {
+      this.$axios
+        .post("/index/receiveGoods", {
+          phone: "12345678901",
+          goodsId: index
+        })
+        .then(res => {
+          if (res.status == 200) {
+            this.$toast({
+              message: "领取成功",
+              duration: 1500
+            });
+            this.getList();
+          }
+        });
+    },
     goback() {
       this.$router.go(-1);
-    },
-    loadMore() {
-      this.list = 5;
-      for (var i = 0; i <= 5; i++) {
-        this.list += 5;
-      }
     }
   },
   created() {
     // document.tltle = "礼品兑换";
+    this.getList();
   },
   mounted() {}
 };
@@ -79,6 +108,10 @@ export default {
         padding: 0.3rem 0.2rem;
         background-color: #fff;
         border: 1px solid #eee;
+        position: relative;
+        .bg {
+          color: #999 !important;
+        }
         p {
           font-size: 16px;
         }
@@ -94,24 +127,28 @@ export default {
           width: 70%;
           margin-left: 4rem;
           line-height: 1rem;
+          padding-top: 0.3rem;
           font-size: 16px;
           .oldPriceLing {
             color: #999;
-            line-height: 0.8rem;
+            line-height: 0.9rem;
             font-size: 14px;
           }
 
           .Price {
             font-size: 15px;
             color: #a7a7a7;
-            padding-top: 0.5rem;
-            margin-top: 0.2rem;
+            padding-top: 1rem;
             .oldPrice {
               color: #999;
               line-height: 1.3rem;
               line-height: 0.8rem;
             }
+
             .divbtn {
+              position: absolute;
+              bottom: 0.5rem;
+              right: 0.5rem;
               height: 1.2rem;
               line-height: 1.2rem;
               width: 3.2rem;

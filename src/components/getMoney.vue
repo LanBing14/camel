@@ -309,7 +309,7 @@ export default {
         margin-right: 2%;
       }
       .true {
-        width: 48%;
+        width: 50%;
         line-height: 1.8rem;
         border-radius: 1.8rem;
         border: 1px solid #ff7f01;
