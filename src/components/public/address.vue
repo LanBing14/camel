@@ -123,7 +123,7 @@ export default {
           this.detail = res.data.data.detail;
           this.address = this.province + "-" + this.city + "-" + this.county;
           if (this.isDefault == 1) {
-            this.show = true;
+            this.showChoice = true;
           }
         });
     },
