@@ -69,6 +69,9 @@ export default {
         }
       });
     }
+  },
+  created() {
+    localStorage.setItem("phone", "12345678901");
   }
 };
 </script>

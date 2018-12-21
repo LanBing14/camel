@@ -11,17 +11,17 @@ import Mint from "mint-ui";
 import "mint-ui/lib/style.css";
 Vue.prototype.$axios = axios;
 
-// router.beforeEach((to,from,next) => {
-//   if (to.matched.some(m => m.meta.auth)) {
-//     if(localStorage.getItem('phone')){
-//       next();
-//     }else {
-//       next('/register');
-//     }
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(m => m.meta.auth)) {
+    if (localStorage.getItem("phone")) {
+      next();
+    } else {
+      next("/register");
+    }
+  } else {
+    next();
+  }
+});
 
 import qs from "qs";
 Vue.use(qs);

@@ -84,7 +84,7 @@ export default {
     getList() {
       this.$axios
         .post("/userCenter/userAddressList", {
-          phone: "12345678901"
+          phone: localStorage.getItem("phone")
         })
         .then(res => {
           if (res.data.status == 1) {
@@ -100,7 +100,7 @@ export default {
     deleList(id) {
       this.$axios
         .post("/userCenter/delAddress", {
-          phone: "12345678901",
+          phone: localStorage.getItem("phone"),
           id: this.deleteId
         })
         .then(res => {

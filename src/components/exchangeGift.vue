@@ -85,7 +85,7 @@ export default {
     getListLing(item) {
       this.$axios
         .post("/index/receiveGoods", {
-          phone: "12345678901",
+          phone: localStorage.getItem("phone"),
           goodsId: item.id
         })
         .then(res => {

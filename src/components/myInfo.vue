@@ -72,7 +72,7 @@ export default {
     getList() {
       this.$axios
         .post("/userCenter/personCenter", {
-          phone: "12345678901"
+          phone: localStorage.getItem("phone")
         })
         .then(res => {
           var info = res.data.data;

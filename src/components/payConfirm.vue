@@ -224,7 +224,7 @@ export default {
           productId: this.productId,
           //地址
           aid: this.myId,
-          phone: "12345678901",
+          phone: localStorage.getItem("phone"),
           totalPrice: this.totalPrice,
           remark: this.remark,
           score: this.score
@@ -243,7 +243,7 @@ export default {
     getAddress() {
       this.$axios
         .post("/userCenter/userAddressList", {
-          phone: "12345678901"
+          phone: localStorage.getItem("phone")
         })
         .then(res => {
           if (res.data.status == 1) {
@@ -293,7 +293,7 @@ export default {
           number: this.$route.query.number,
           packageId: this.$route.query.packageId,
           aid: this.myId,
-          phone: "12345678901"
+          phone: localStorage.getItem("phone")
         }
       }).then(res => {
         if (res.data.data.status == 1) {

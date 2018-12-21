@@ -220,7 +220,7 @@ export default {
     getList() {
       this.$axios
         .post("/order/myOrderList", {
-          phone: "12345678901",
+          phone: localStorage.getItem("phone"),
           status: this.selected
         })
         .then(res => {

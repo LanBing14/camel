@@ -110,7 +110,7 @@ export default {
     getddress() {
       this.$axios
         .post("/userCenter/getTheAddress", {
-          phone: "12345678901",
+          phone: localStorage.getItem("phone"),
           id: this.AddressId
         })
         .then(res => {
@@ -192,7 +192,7 @@ export default {
     ) {
       this.$axios
         .post("/userCenter/editAddress", {
-          phone: "12345678901",
+          phone: localStorage.getItem("phone"),
           name: receiver,
           editPhone: shouPhone,
           province: province,

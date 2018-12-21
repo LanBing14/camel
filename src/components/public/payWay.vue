@@ -44,7 +44,7 @@ export default {
     getWei() {
       this.$axios
         .post("/order/wxh5Request", {
-          phone: "12345678901",
+          phone: localStorage.getItem("phone"),
           orderSn: this.zhiObj.orderSn,
           remark: this.zhiObj.remark
         })

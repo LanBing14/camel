@@ -17,7 +17,7 @@ axios.defaults.baseURL = root;
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
-    // var xtoken = sessionStorage.getItem("token")
+    // var xtoken = sessionStorage.getItem("phone")
     // config.headers['XToken'] = xtoken?xtoken:''
     //console.log(store.state.cesh)
     return config;

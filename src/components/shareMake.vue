@@ -37,7 +37,7 @@ export default {
     getList() {
       this.$axios
         .post("/userCenter/shareUserList", {
-          phone: "12345678901"
+          phone: localStorage.getItem("phone")
         })
         .then(res => {
           if (res.status == 200) {

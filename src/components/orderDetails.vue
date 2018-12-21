@@ -143,7 +143,7 @@ export default {
     getList() {
       this.$axios
         .post("/order/theOrderInfo", {
-          phone: "12345678901",
+          phone: localStorage.getItem("phone"),
           id: this.$route.query.id
         })
         .then(res => {
