@@ -44,7 +44,6 @@ export default {
           phone: "12345678901"
         })
         .then(res => {
-          console.log(res);
           if (res.status == 200) {
             this.infoArr = res.data.data;
             console.log(this.infoArr);

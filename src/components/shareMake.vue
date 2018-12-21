@@ -82,7 +82,7 @@ export default {
       .leftBox {
         margin-top: 0.2rem;
         .public {
-          font-size: 14px;
+          font-size: 15px;
           text-align: center;
           line-height: 1.3rem;
         }

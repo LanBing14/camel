@@ -13,7 +13,7 @@
             </div>
             <div class="rightContent">
               <p class="txt-cut">{{item.title}}</p>
-              <p class="oldPriceLing">vip可领</p>
+              <p class="oldPriceLing">{{item.vip_text}}可领</p>
               <p class="Price clearfix">
                 <span
                   class="fl oldPrice"
@@ -22,13 +22,24 @@
                 <span
                   class="fr divbtn"
                   v-if="item.status_text == '免费领取'"
-                  @click="goGet(item.id)"
+                  @click="goConfirm(item)"
                 >免费领取</span>
                 <span class="fr divbtn oldPrice bg" v-else @click="hasGet">已领取</span>
               </p>
             </div>
           </li>
         </ul>
+      </div>
+    </div>
+    <div class="box" v-if="isShow"></div>
+    <div class="boxModel" v-if="isShow" @click="hiddleToggle">
+      <div class="boxtitle">
+        <p style="fontSize:16px">领取礼品提醒</p>
+        <p>您的当前为vip，需要升级为创客，可免费领取此商品</p>
+      </div>
+      <div class="btn">
+        <span @click="BtnClose">我已了解</span>
+        <span>立即升级</span>
       </div>
     </div>
   </div>
@@ -38,12 +49,20 @@ export default {
   data() {
     return {
       isFree: false,
+      isShow: false,
       list: []
     };
   },
   methods: {
-    goGet(index) {
-      this.getListLing(index);
+    hiddleToggle() {
+      this.isShow = false;
+    },
+    BtnClose() {
+      this.isShow = false;
+    },
+    //商品确定
+    goConfirm(item) {
+      this.getListLing(item);
     },
     getList() {
       this.$axios
@@ -63,17 +82,27 @@ export default {
         duration: 1500
       });
     },
-    getListLing(index) {
+    getListLing(item) {
       this.$axios
         .post("/index/receiveGoods", {
           phone: "12345678901",
-          goodsId: index
+          goodsId: item.id
         })
         .then(res => {
           if (res.status == 200) {
             this.$toast({
               message: "领取成功",
               duration: 1500
+            });
+            this.$router.push({
+              path: "/payConfirm",
+              query: {
+                packageId: 0,
+                goodsId: item.id,
+                number: 1,
+                value: item.value,
+                name: item.name
+              }
             });
             this.getList();
           }
@@ -95,6 +124,63 @@ export default {
 .exchangeGift {
   background-color: #f0f0f0;
   padding-top: 1.9rem; //商品详情
+  .box {
+    opacity: 0.8;
+    background: #000;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .boxModel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url("../assets/imgs/bg.png") no-repeat;
+    background-size: contain;
+    width: 78%;
+    z-index: 999;
+    height: 10rem;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 0.4rem;
+    .boxtitle {
+      position: absolute;
+      bottom: 30%;
+      p:first-child {
+        margin-bottom: 0.2rem;
+      }
+    }
+    .btn {
+      position: absolute;
+      width: 100%;
+      bottom: 0%;
+      left: 0;
+      height: 2rem;
+      font-size: 14px;
+      border-radius: 0 0 0.4rem 0.4rem;
+      span {
+        width: 3rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        display: inline-block;
+        text-align: center;
+        border-radius: 0.8rem;
+        color: #1f1e1e;
+        border: 1px solid #1f1e1e;
+      }
+      span:nth-child(2n) {
+        margin-left: 1rem;
+        border: 1px solid #ff7f01;
+        color: #ff7f01;
+      }
+    }
+  }
   .prductDetails {
     font-size: 16px;
     width: 100%;

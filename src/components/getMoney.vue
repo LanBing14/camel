@@ -26,7 +26,12 @@
     <div class="box" id="box" v-show="hintShow" @click="cancel"></div>
     <div class="hintBox" v-show="hintShow">
       <div class="attention">
-        <select class="attens" v-model="slects" @change="switcher(slects)">
+        <select
+          class="attensZhi"
+          v-model="slects"
+          @change="switcher(slects)"
+          style="marginRight:.3rem"
+        >
           <option value style="display: none">选择入账方式</option>
           <option value="1">微信</option>
           <option value="0">支付宝</option>
@@ -35,11 +40,23 @@
 
         <div v-show="wxShow">
           <input type="text" v-model="accounts" placeholder="输入微信号" class="atten">
-          <input type="text" v-model="names" placeholder="输入您的真实姓名" class="atten">
+          <input
+            type="text"
+            v-model="names"
+            placeholder="输入您的真实姓名"
+            class="atten"
+            style="marginRight:.3rem"
+          >
         </div>
         <div v-show="AlipayShow">
           <input type="text" v-model="accounts" placeholder="输入支付号" class="atten">
-          <input type="text" v-model="names" placeholder="输入您的真实姓名" class="atten">
+          <input
+            type="text"
+            v-model="names"
+            placeholder="输入您的真实姓名"
+            class="atten"
+            style="marginRight:.3rem"
+          >
         </div>
         <div v-show="bankShow">
           <select class="attens">
@@ -50,9 +67,8 @@
           <input type="text" placeholder="输入您的开户名称" class="atten">
           <input type="text" placeholder="输入银行开户卡号" class="atten">
           <input type="text" placeholder="输入您的真实姓名" class="atten">
-          <input type="text" placeholder="输入您的手机号" class="atten">
+          <input type="text" placeholder="输入您的手机号码" class="atten" style="marginRight:.3rem">
         </div>
-
         <div class="phoneCode" v-if="weiBang">
           <input type="text" placeholder="输入验证码" class="codeInput">
           <button
@@ -203,6 +219,15 @@ export default {
     top: 0;
     /*display:none*/
   }
+  select {
+    appearance: none;
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari 和 Chrome */
+    color: #ff7f01;
+    option {
+      border-radius: 0.5rem;
+    }
+  }
   .hintBox {
     position: fixed;
     top: 50%;
@@ -221,9 +246,23 @@ export default {
     .attention {
       width: 100%;
       line-height: 1.5rem;
-      padding: 1rem 0 0rem 0;
+      padding: 1rem 0 0 0;
       text-align: center;
       justify-content: center;
+      .attensZhi {
+        background: #eee;
+        color: #0b0b0b;
+        width: 80%;
+        opacity: 0.5;
+        text-align: center;
+        line-height: 1rem;
+        border-radius: 25px;
+        padding: 5px 8px;
+        margin: 0.4rem auto;
+        // -webkit-appearance: none;
+        overflow: hidden;
+        outline: none;
+      }
       .atten {
         width: 80%;
         margin: 0.3rem auto;
@@ -231,24 +270,26 @@ export default {
         line-height: 1.5rem;
         overflow: hidden;
         outline: none;
-        border-radius: 5px;
+        box-sizing: border-box;
+        padding-left: 0.3rem;
+        border-radius: 25px;
       }
       .attens {
         background: #eee;
         color: #0b0b0b;
         width: 80%;
         opacity: 0.5;
+        line-height: 1rem;
         text-align: center;
-        padding: 5px;
-        margin: 0.5rem auto;
-        height: 34px;
+        border-radius: 25px;
+        padding: 5px 8px;
+        margin: 0.4rem auto;
         -webkit-appearance: none;
         overflow: hidden;
         outline: none;
       }
       .remind {
         width: 80%;
-        margin: 0 10% 0.5rem 10%;
         line-height: 0.8rem;
         font-size: 14px;
         text-align: left;
@@ -258,17 +299,18 @@ export default {
         align-items: center;
         justify-content: center;
         .codeInput {
-          width: 46%;
+          width: 48%;
           margin-right: 0.3rem;
           border: 1px solid #c1c5c8;
           line-height: 1.5rem;
+          padding-left: 0.2rem;
           overflow: hidden;
           outline: none;
-          border-radius: 5px;
+          border-radius: 25px;
         }
         .getCode {
-          width: 32%;
-          border-radius: 2rem;
+          width: 30%;
+          border-radius: 25px;
           height: 1.8rem;
           background: #ff7f01;
           color: #ffffff;

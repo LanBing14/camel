@@ -148,7 +148,8 @@ export default {
       spaceMarket: "",
       spaceStock: "",
       goodId: "",
-      value: ""
+      value: "",
+      name: ""
     };
   },
   methods: {
@@ -180,6 +181,7 @@ export default {
           packageId: 0,
           goodsId: this.goodsId,
           number: this.mount,
+          name: this.name,
           value: this.value,
           productid: this.productid
         }
@@ -191,6 +193,7 @@ export default {
       this.spacePrice = this.specArray[i].sellPrice;
       this.goodsId = this.specArray[i].goodsId;
       this.spaceStock = this.specArray[i].stock;
+      this.name = this.specArray[i].name;
       this.value = this.specArray[i].value;
       this.productid = this.specArray[i].id;
     },

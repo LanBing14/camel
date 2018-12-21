@@ -48,7 +48,7 @@
         <p class="money">￥{{sellPrice}}</p>
       </div>
       <div class="line2">
-        <p class="guige">{{value}}盒</p>
+        <p class="guige">{{value}}{{name}}</p>
         <p class="num">x{{number}}</p>
       </div>
     </div>
@@ -164,7 +164,8 @@ export default {
       myaddress: [],
       morenArr: [],
       packageId: "",
-      myId: 0
+      myId: 0,
+      name: ""
     };
   },
   methods: {
@@ -331,6 +332,7 @@ export default {
     this.goodsId = this.$route.query.goodsId;
     this.number = this.$route.query.number;
     this.value = this.$route.query.value;
+    this.name = this.$route.query.name;
     this.productId = this.$route.query.productid || 0;
     // 获取地址信息
     this.getAddress();

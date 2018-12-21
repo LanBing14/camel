@@ -76,14 +76,8 @@
         <p>恭喜您成为骆驼管家VIP用户，可免费领取升级大礼包一份~！</p>
       </div>
       <div class="btn">
-        <span>暂不领取</span>
-        <span>立即领取</span>
-      </div>
-    </div>
-    <div class="boxModel" v-if="showWeiLing">
-      <div class="btn">
-        <span>暂不领取</span>
-        <span>立即领取</span>
+        <span @click="BtnClose">暂不领取</span>
+        <span @click="getLing">立即领取</span>
       </div>
     </div>
   </div>
@@ -109,6 +103,14 @@ export default {
     this.$axios.all[(this.getList(), this.bannerList())];
   },
   methods: {
+    getLing() {
+      this.$router.push("/exchangeGift");
+    },
+    BtnClose() {
+      this.isShow = false;
+      this.showLing = false;
+      this.showWeiLing = false;
+    },
     loadMore() {
       this.loading = true;
       this.isZhuan = true;
@@ -192,9 +194,9 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: url("../assets/imgs/bg.jpg") no-repeat;
+    background: url("../assets/imgs/bg.png") no-repeat;
     background-size: contain;
-    width: 80%;
+    width: 78%;
     z-index: 999;
     height: 10rem;
     font-size: 14px;
@@ -210,12 +212,11 @@ export default {
     .btn {
       position: absolute;
       width: 100%;
-      bottom: -3%;
+      bottom: 0%;
       left: 0;
       padding-top: 1rem;
       height: 2rem;
       font-size: 14px;
-      background-color: #f7efe8;
       border-radius: 0 0 0.4rem 0.4rem;
       span {
         width: 3rem;
