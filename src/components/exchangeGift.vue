@@ -21,10 +21,10 @@
                 >原价 ￥{{item.sellPrice}}</span>
                 <span
                   class="fr divbtn"
-                  v-if="item.status_text == '免费领取'"
                   @click="goConfirm(item)"
-                >免费领取</span>
-                <span class="fr divbtn oldPrice bg" v-else @click="hasGet">已领取</span>
+                  v-if="item.status_text == '免费领取'"
+                >{{item.status_text}}</span>
+                <span class="fr divbtn oldPrice" v-else @click="modelTrue">{{item.status_text }}</span>
               </p>
             </div>
           </li>
@@ -50,12 +50,19 @@ export default {
     return {
       isFree: false,
       isShow: false,
+      isActive: false,
       list: []
     };
   },
   methods: {
     hiddleToggle() {
       this.isShow = false;
+    },
+    modelTrue() {
+      this.$toast({
+        message: "您已领取过了,不可重复领取哦",
+        duration: 1500
+      });
     },
     BtnClose() {
       this.isShow = false;
@@ -75,12 +82,6 @@ export default {
             console.log(this.list);
           }
         });
-    },
-    hasGet() {
-      this.$toast({
-        message: "您已领取成功,不能重复领取哦",
-        duration: 1500
-      });
     },
     getListLing(item) {
       this.$axios
@@ -225,11 +226,6 @@ export default {
             font-size: 15px;
             color: #a7a7a7;
             padding-top: 1rem;
-            .oldPrice {
-              color: #999;
-              line-height: 1.3rem;
-              line-height: 0.8rem;
-            }
 
             .divbtn {
               position: absolute;
@@ -245,6 +241,9 @@ export default {
               margin-right: 0.5rem;
               background-color: #fff;
               border: 1px solid #eeeeee;
+            }
+            .oldPrice {
+              color: #999;
             }
           }
         }

@@ -15,6 +15,7 @@ export default {
   color: #ff7f01;
   font-size: 14px;
 }
+
 #app {
   height: 100%;
   color: #333;

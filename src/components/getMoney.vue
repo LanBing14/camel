@@ -19,7 +19,7 @@
       </div>
       <p class="reti">
         金额
-        <span>￥780</span>
+        <span>￥{{balance}}</span>
       </p>
       <div class="apply_for" @click="placeNow">提现</div>
     </div>
@@ -49,7 +49,7 @@
           >
         </div>
         <div v-show="AlipayShow">
-          <input type="text" v-model="accounts" placeholder="输入支付号" class="atten">
+          <input type="text" v-model="accounts" placeholder="输入支付宝" class="atten">
           <input
             type="text"
             v-model="names"
@@ -64,13 +64,23 @@
             <option value="1">农业银行</option>
             <option value="0">建设银行</option>
           </select>
-          <input type="text" placeholder="输入您的开户名称" class="atten">
-          <input type="text" placeholder="输入银行开户卡号" class="atten">
-          <input type="text" placeholder="输入您的真实姓名" class="atten">
-          <input type="text" placeholder="输入您的手机号码" class="atten" style="marginRight:.3rem">
+          <input type="text" placeholder="输入您的开户名称" class="atten" v-model="bankName">
+          <input type="text" placeholder="输入银行开户卡号" class="atten" v-model="accounts">
+          <input type="text" placeholder="输入您的真实姓名" class="atten" v-model="names">
+          <input
+            type="text"
+            placeholder="输入您的手机号码"
+            class="atten"
+            style="marginRight:.3rem"
+            v-model="phone"
+          >
         </div>
+        <p class="remind" v-if="weiBang">
+          为确保您账户安全
+          请获取您的账户{{myPhone}}验证码
+        </p>
         <div class="phoneCode" v-if="weiBang">
-          <input type="text" placeholder="输入验证码" class="codeInput">
+          <input type="text" placeholder="输入验证码" class="codeInput" v-model="code">
           <button
             class="getCode"
             :disabled="isDis"
@@ -92,15 +102,20 @@ export default {
     return {
       hintShow: false,
       inputNumber: "",
+      code: "",
       accounts: "",
       names: "",
       isShow: true,
       isDis: false,
       dis: false,
+      bankName: "",
       slects: "",
+      balance: "",
+      phone: "",
       isTrue: true,
       bankShow: false,
       weiBang: false,
+      myPhone: localStorage.getItem("phone"),
       AlipayShow: false,
       wxShow: false,
       isbtn: "获取验证码"
@@ -169,12 +184,13 @@ export default {
   },
   created() {
     // document.title = "提现";
+    this.balance = this.$route.query.balance;
   }
 };
 </script>
 <style lang="scss" scoped>
 .getMoney {
-  height: 100%;
+  // height: 100%;
   background-color: #f0f0f0;
   font-size: 16px;
   padding-top: 1.9rem;
@@ -249,6 +265,14 @@ export default {
       padding: 1rem 0 0 0;
       text-align: center;
       justify-content: center;
+      .remind {
+        width: 80%;
+        margin: 0 10% 0.5rem 10%;
+
+        font-size: 0.8rem;
+        line-height: 1.2rem;
+        text-align: left;
+      }
       .attensZhi {
         background: #eee;
         color: #0b0b0b;
@@ -340,7 +364,7 @@ export default {
       width: 100%;
       margin-top: 0.5rem;
       display: flex;
-      font-size: 16px;
+      font-size: 15px;
       align-items: center;
       justify-content: center;
       .cancel {

@@ -8,7 +8,7 @@
       <img src="../assets/imgs/zhifuchenggong.png" alt class="success">
       <p class="pay_ture">支付成功</p>
       <div class="mealDetail">
-        <p class="detail">订单详情</p>
+        <p class="detail" @click="goDing">订单详情</p>
         <img src="../assets/imgs/right.png" alt>
       </div>
     </div>
@@ -30,7 +30,7 @@ export default {
     goBack() {
       this.$router.push("/");
     },
-    goShare() {}
+    goDing() {}
   },
   created() {
     // document.title = "支付成功";

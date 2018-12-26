@@ -67,7 +67,12 @@ export default {
   },
   methods: {
     goTiXian() {
-      this.$router.push("/getMoney");
+      this.$router.push({
+        path: "/getMoney",
+        query: {
+          balance: this.balance
+        }
+      });
     },
     getList() {
       this.$axios

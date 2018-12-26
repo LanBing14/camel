@@ -21,7 +21,7 @@
       <img src="../assets/imgs/right.png" alt class="right">
     </div>
     <!--提示-->
-    <div class="hintBox">
+    <div class="hintBox" v-if="packageId > 0">
       <img src="../assets/imgs/jingao.png" alt class="jingao">
       <p class="hint">由于鸡蛋的配送的特殊性，部分地区暂时不能购买
         <br>
