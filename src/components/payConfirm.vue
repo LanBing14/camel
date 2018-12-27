@@ -163,6 +163,7 @@ export default {
       price: "",
       myaddress: [],
       morenArr: [],
+      address: null,
       packageId: "",
       myId: 0,
       name: ""
@@ -202,6 +203,22 @@ export default {
           duration: 1500
         });
         return false;
+      }
+      if (this.packageId > 0) {
+        if (
+          this.myprovince == "青海省" ||
+          this.myprovince == "西藏" ||
+          this.myprovince == "海南省" ||
+          this.myprovince == "新疆" ||
+          this.myprovince == "香港" ||
+          this.myprovince == "澳门"
+        ) {
+          Toast({
+            message: this.myprovince + "不发货",
+            duration: 1500
+          });
+          return false;
+        }
       }
       //生成订单
       this.getPayist();

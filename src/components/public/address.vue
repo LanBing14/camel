@@ -151,20 +151,7 @@ export default {
         return false;
       }
 
-      if (
-        this.address.substring(0, 3) == "青海省" ||
-        this.address.substring(0, 2) == "西藏" ||
-        this.address.substring(0, 3) == "海南省" ||
-        this.address.substring(0, 2) == "新疆" ||
-        this.address.substring(0, 2) == "香港" ||
-        this.address.substring(0, 2) == "澳门"
-      ) {
-        Toast({
-          message: "新疆、青海、香港、澳门、西藏、宁夏等地不发货",
-          duration: 1500
-        });
-        return false;
-      }
+     
       var addresss = new Array(); //定义一数组
       addresss = that.address.split("-"); //字符分割
       var i = 0;
